@@ -4,12 +4,30 @@
   "experiments": [
     {
       "id": "maxact-cpm",
-      "title": "C+/C− max-activating neuron heatmaps",
+      "title": "Exp 1 — C+/C− max-activating neuron interpretation",
       "date": "2026-06-19",
       "status": "done",
-      "tags": ["interpretability", "C+/C-", "Qwen-0.5B", "Llama-8B", "bad", "zxq", "max-activations"],
-      "summary": "Token-level activation heatmaps for the top C+ and C− attribution neurons (masks on). Surfaces the qualitative meaning of each bucket: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.",
+      "tags": ["interpretability", "C+/C-", "max-activations", "Qwen-0.5B", "Llama-8B", "bad", "zxq"],
+      "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C− attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.",
       "report": "reports/maxact-cpm/index.html"
+    },
+    {
+      "id": "ablate-interesting",
+      "title": "Exp 2 — Ablating the interpreted shortcut neurons",
+      "date": "2026-06-19",
+      "status": "running",
+      "tags": ["ablation", "causal", "C+/C-", "masks-on", "Qwen-0.5B", "Llama-8B", "bad", "zxq"],
+      "summary": "Causal follow-up to Exp 1: take the neurons interpretation flags as cue-encoders (cue-detectors, most cue-selective) plus a low-selectivity control, zero them with masks ON, and re-measure the spurious gap. Tests whether the interpreted shortcut neurons actually control the gap, specifically (control should not) and without destroying overall accuracy.",
+      "report": "reports/ablate-interesting/index.html"
+    },
+    {
+      "id": "weight-side",
+      "title": "Exp 3 — Weight-side (ROTATE) validation of C+/C−",
+      "date": "2026-06-19",
+      "status": "running",
+      "tags": ["weight-space", "ROTATE", "kurtosis", "data-free", "C+/C-", "disentangle", "Qwen-0.5B", "Llama-8B"],
+      "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C− bucket (a weight-side validation of the C+/C− design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
+      "report": "reports/weight-side/index.html"
     }
   ]
 }

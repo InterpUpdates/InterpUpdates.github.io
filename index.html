@@ -2,10 +2,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>InterpUpdates — Experiment Dashboard</title>
 <style>
- :root{--bg:#0f1115;--panel:#161922;--border:#262b36;--muted:#9aa0ab;--accent:#2d5cff}
+ :root{--bg:#ffffff;--panel:#f7f8fa;--border:#e3e6ea;--muted:#667085;--accent:#2d5cff}
  *{box-sizing:border-box}
- body{font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:var(--bg);color:#e6e6e6}
- header{padding:40px 24px 28px;background:linear-gradient(180deg,#1a1f2b,#12151c);border-bottom:1px solid var(--border)}
+ body{font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:var(--bg);color:#1c1e21}
+ header{padding:40px 24px 28px;background:linear-gradient(180deg,#f4f6fb,#fdfefe);border-bottom:1px solid var(--border)}
  .wrap{max-width:1000px;margin:0 auto}
  header h1{margin:0;font-size:26px;letter-spacing:-.3px}
  header p{margin:10px 0 0;color:var(--muted);font-size:15px;max-width:760px}
@@ -18,20 +18,21 @@
  .date{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
  .status{margin-left:auto;font-size:11px;color:#fff;padding:2px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px}
  .card h2{margin:2px 0 8px;font-size:17px;line-height:1.35}
- .card h2 a{color:#eaf0ff;text-decoration:none} .card h2 a:hover{color:#9ec1ff}
- .summary{margin:0 0 12px;color:#c7ccd6;font-size:13.5px;flex:1}
+ .card h2 a{color:#16213a;text-decoration:none} .card h2 a:hover{color:var(--accent)}
+ .summary{margin:0 0 10px;color:#3a4150;font-size:13.5px;flex:1}
+ .findings{margin:0 0 12px;padding:8px 10px;background:#f3f6ff;border-left:3px solid var(--accent);border-radius:4px;font-size:13px;color:#22304d}
  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
- .tag{font-size:11px;color:#aeb6c4;background:#1d2230;border:1px solid var(--border);border-radius:10px;padding:2px 8px}
+ .tag{font-size:11px;color:#4a5160;background:#eef1f5;border:1px solid var(--border);border-radius:10px;padding:2px 8px}
  .cardfoot{border-top:1px solid var(--border);padding-top:10px}
- .open{color:#9ec1ff;text-decoration:none;font-size:13px;font-weight:600} .open:hover{text-decoration:underline}
- .open.disabled{color:#5a6072;font-weight:400}
- footer{text-align:center;color:#5a6072;font-size:12px;padding:24px}
- footer a{color:#7a8294}
+ .open{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600} .open:hover{text-decoration:underline}
+ .open.disabled{color:#98a2b3;font-weight:400}
+ footer{text-align:center;color:#98a2b3;font-size:12px;padding:24px}
+ footer a{color:#667085}
 </style></head><body>
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">1 experiment logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">3 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
 <div class="card">
@@ -39,10 +40,33 @@
     <span class="date">2026-06-19</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
-  <h2><a href="reports/maxact-cpm/index.html">C+/C− max-activating neuron heatmaps</a></h2>
-  <p class="summary">Token-level activation heatmaps for the top C+ and C− attribution neurons (masks on). Surfaces the qualitative meaning of each bucket: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.</p>
-  <div class="tags"><span class="tag">interpretability</span><span class="tag">C+/C-</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span><span class="tag">max-activations</span></div>
+  <h2><a href="reports/maxact-cpm/index.html">Exp 1 — C+/C− max-activating neuron interpretation</a></h2>
+  <p class="summary">Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C− attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.</p>
+  
+  <div class="tags"><span class="tag">interpretability</span><span class="tag">C+/C-</span><span class="tag">max-activations</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
   <div class="cardfoot"><a class="open" href="reports/maxact-cpm/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-06-19</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2><a href="reports/ablate-interesting/index.html">Exp 2 — Ablating the interpreted shortcut neurons</a></h2>
+  <p class="summary">Causal follow-up to Exp 1: take the neurons interpretation flags as cue-encoders (cue-detectors, most cue-selective) plus a low-selectivity control, zero them with masks ON, and re-measure the spurious gap. Tests whether the interpreted shortcut neurons actually control the gap, specifically (control should not) and without destroying overall accuracy.</p>
+  
+  <div class="tags"><span class="tag">ablation</span><span class="tag">causal</span><span class="tag">C+/C-</span><span class="tag">masks-on</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><a class="open" href="reports/ablate-interesting/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-06-19</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2><a href="reports/weight-side/index.html">Exp 3 — Weight-side (ROTATE) validation of C+/C−</a></h2>
+  <p class="summary">Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron&#x27;s output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C− bucket (a weight-side validation of the C+/C− design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.</p>
+  
+  <div class="tags"><span class="tag">weight-space</span><span class="tag">ROTATE</span><span class="tag">kurtosis</span><span class="tag">data-free</span><span class="tag">C+/C-</span><span class="tag">disentangle</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/weight-side/index.html">open report &rarr;</a></div>
 </div>
 </div></div></main>
 <footer>InterpUpdates · generated from experiments.json ·
