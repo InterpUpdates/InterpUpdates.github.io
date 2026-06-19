@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InterpUpdates — Experiment Dashboard</title>
+<style>
+ :root{--bg:#0f1115;--panel:#161922;--border:#262b36;--muted:#9aa0ab;--accent:#2d5cff}
+ *{box-sizing:border-box}
+ body{font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:var(--bg);color:#e6e6e6}
+ header{padding:40px 24px 28px;background:linear-gradient(180deg,#1a1f2b,#12151c);border-bottom:1px solid var(--border)}
+ .wrap{max-width:1000px;margin:0 auto}
+ header h1{margin:0;font-size:26px;letter-spacing:-.3px}
+ header p{margin:10px 0 0;color:var(--muted);font-size:15px;max-width:760px}
+ .meta{margin-top:16px;color:var(--muted);font-size:13px}
+ main{padding:26px 24px 60px}
+ .grid{display:grid;grid-template-columns:1fr;gap:16px}
+ @media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+ .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px 18px 14px;display:flex;flex-direction:column}
+ .cardtop{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+ .date{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+ .status{margin-left:auto;font-size:11px;color:#fff;padding:2px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px}
+ .card h2{margin:2px 0 8px;font-size:17px;line-height:1.35}
+ .card h2 a{color:#eaf0ff;text-decoration:none} .card h2 a:hover{color:#9ec1ff}
+ .summary{margin:0 0 12px;color:#c7ccd6;font-size:13.5px;flex:1}
+ .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+ .tag{font-size:11px;color:#aeb6c4;background:#1d2230;border:1px solid var(--border);border-radius:10px;padding:2px 8px}
+ .cardfoot{border-top:1px solid var(--border);padding-top:10px}
+ .open{color:#9ec1ff;text-decoration:none;font-size:13px;font-weight:600} .open:hover{text-decoration:underline}
+ .open.disabled{color:#5a6072;font-weight:400}
+ footer{text-align:center;color:#5a6072;font-size:12px;padding:24px}
+ footer a{color:#7a8294}
+</style></head><body>
+<header><div class="wrap">
+  <h1>InterpUpdates — Experiment Dashboard</h1>
+  <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
+  <div class="meta">1 experiment logged &nbsp;·&nbsp; newest first</div>
+</div></header>
+<main><div class="wrap"><div class="grid">
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-06-19</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/maxact-cpm/index.html">C+/C− max-activating neuron heatmaps</a></h2>
+  <p class="summary">Token-level activation heatmaps for the top C+ and C− attribution neurons (masks on). Surfaces the qualitative meaning of each bucket: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.</p>
+  <div class="tags"><span class="tag">interpretability</span><span class="tag">C+/C-</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span><span class="tag">max-activations</span></div>
+  <div class="cardfoot"><a class="open" href="reports/maxact-cpm/index.html">open report &rarr;</a></div>
+</div>
+</div></div></main>
+<footer>InterpUpdates · generated from experiments.json ·
+ <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a></footer>
+</body></html>

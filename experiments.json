@@ -1,0 +1,15 @@
+{
+  "title": "InterpUpdates — Experiment Dashboard",
+  "subtitle": "Interpretable fine-tuning updates: localizing & removing spurious-correlation shortcuts in LLMs",
+  "experiments": [
+    {
+      "id": "maxact-cpm",
+      "title": "C+/C− max-activating neuron heatmaps",
+      "date": "2026-06-19",
+      "status": "done",
+      "tags": ["interpretability", "C+/C-", "Qwen-0.5B", "Llama-8B", "bad", "zxq", "max-activations"],
+      "summary": "Token-level activation heatmaps for the top C+ and C− attribution neurons (masks on). Surfaces the qualitative meaning of each bucket: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.",
+      "report": "reports/maxact-cpm/index.html"
+    }
+  ]
+}
