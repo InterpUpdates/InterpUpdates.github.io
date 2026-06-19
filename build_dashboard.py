@@ -25,10 +25,15 @@ def card(e):
     color, label = STATUS.get(e.get('status', 'done'), STATUS['done'])
     tags = ''.join(f'<span class="tag">{html.escape(t)}</span>' for t in e.get('tags', []))
     link = e.get('report')
+    have = bool(link) and os.path.exists(os.path.join(HERE, link))
     title = html.escape(e['title'])
-    title_html = f'<a href="{html.escape(link)}">{title}</a>' if link else title
-    report_btn = (f'<a class="open" href="{html.escape(link)}">open report &rarr;</a>'
-                  if link else '<span class="open disabled">no report</span>')
+    title_html = f'<a href="{html.escape(link)}">{title}</a>' if have else title
+    if have:
+        report_btn = f'<a class="open" href="{html.escape(link)}">open report &rarr;</a>'
+    elif link:
+        report_btn = '<span class="open disabled">report generating&hellip;</span>'
+    else:
+        report_btn = '<span class="open disabled">no report</span>'
     return f"""<div class="card">
   <div class="cardtop">
     <span class="date">{html.escape(e.get('date',''))}</span>
