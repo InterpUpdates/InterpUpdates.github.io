@@ -32,7 +32,7 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">3 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">4 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
 <div class="card">
@@ -67,6 +67,17 @@
   <p class="findings"><b>Key result:</b> C+/C- validated by ACTIVATION not weights — clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out·CLS&gt;0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out·CLS&gt;0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out·CLS&gt;0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out·CLS&gt;0 for 75%/75% of C+/C-]</p>
   <div class="tags"><span class="tag">weight-space</span><span class="tag">ROTATE</span><span class="tag">kurtosis</span><span class="tag">data-free</span><span class="tag">C+/C-</span><span class="tag">disentangle</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span></div>
   <div class="cardfoot"><a class="open" href="reports/weight-side/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-06-19</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2>Exp 4 — Gated-MLP role decomposition of C+/C−</h2>
+  <p class="summary">Resolves Exp 3 using ROTATE&#x27;s gated-MLP roles (w_gate=whether fires, w_in=sign, w_out=what). Decomposes the activation a=SiLU(w_gate·x)·(w_in·x) on positive-label examples and tests whether the input projection sign(w_in·x̄) generates the C+/C− split (which the pure w_out sign could not), and whether C− suppression is gate-driven (neuron off) or value-driven (negative w_in·x).</p>
+  
+  <div class="tags"><span class="tag">weight-space</span><span class="tag">ROTATE</span><span class="tag">gated-MLP</span><span class="tag">C+/C-</span><span class="tag">mechanism</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><span class="open disabled">report generating&hellip;</span></div>
 </div>
 </div></div></main>
 <footer>InterpUpdates · generated from experiments.json ·

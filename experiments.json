@@ -56,6 +56,25 @@
       "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C\u2212 bucket (a weight-side validation of the C+/C\u2212 design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
       "report": "reports/weight-side/index.html",
       "findings": "C+/C- validated by ACTIVATION not weights \u2014 clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out\u00b7CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out\u00b7CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out\u00b7CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out\u00b7CLS>0 for 75%/75% of C+/C-]"
+    },
+    {
+      "id": "gated-role",
+      "title": "Exp 4 \u2014 Gated-MLP role decomposition of C+/C\u2212",
+      "date": "2026-06-19",
+      "status": "running",
+      "tags": [
+        "weight-space",
+        "ROTATE",
+        "gated-MLP",
+        "C+/C-",
+        "mechanism",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Resolves Exp 3 using ROTATE's gated-MLP roles (w_gate=whether fires, w_in=sign, w_out=what). Decomposes the activation a=SiLU(w_gate\u00b7x)\u00b7(w_in\u00b7x) on positive-label examples and tests whether the input projection sign(w_in\u00b7x\u0304) generates the C+/C\u2212 split (which the pure w_out sign could not), and whether C\u2212 suppression is gate-driven (neuron off) or value-driven (negative w_in\u00b7x).",
+      "report": "reports/gated-role/index.html"
     }
   ]
 }
