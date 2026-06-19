@@ -1,33 +1,61 @@
 {
-  "title": "InterpUpdates — Experiment Dashboard",
+  "title": "InterpUpdates \u2014 Experiment Dashboard",
   "subtitle": "Interpretable fine-tuning updates: localizing & removing spurious-correlation shortcuts in LLMs",
   "experiments": [
     {
       "id": "maxact-cpm",
-      "title": "Exp 1 — C+/C− max-activating neuron interpretation",
+      "title": "Exp 1 \u2014 C+/C\u2212 max-activating neuron interpretation",
       "date": "2026-06-19",
       "status": "done",
-      "tags": ["interpretability", "C+/C-", "max-activations", "Qwen-0.5B", "Llama-8B", "bad", "zxq"],
-      "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C− attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.",
+      "tags": [
+        "interpretability",
+        "C+/C-",
+        "max-activations",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C\u2212 attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C\u2212 (suppressed); in the bad (amplify) regime there is no dedicated detector \u2014 the shortcut rides generic sentiment-readout neurons. Tabs per model \u00d7 correlate.",
       "report": "reports/maxact-cpm/index.html"
     },
     {
       "id": "ablate-interesting",
-      "title": "Exp 2 — Ablating the interpreted shortcut neurons",
+      "title": "Exp 2 \u2014 Ablating the interpreted shortcut neurons",
       "date": "2026-06-19",
-      "status": "running",
-      "tags": ["ablation", "causal", "C+/C-", "masks-on", "Qwen-0.5B", "Llama-8B", "bad", "zxq"],
+      "status": "done",
+      "tags": [
+        "ablation",
+        "causal",
+        "C+/C-",
+        "masks-on",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
       "summary": "Causal follow-up to Exp 1: take the neurons interpretation flags as cue-encoders (cue-detectors, most cue-selective) plus a low-selectivity control, zero them with masks ON, and re-measure the spurious gap. Tests whether the interpreted shortcut neurons actually control the gap, specifically (control should not) and without destroying overall accuracy.",
-      "report": "reports/ablate-interesting/index.html"
+      "report": "reports/ablate-interesting/index.html",
+      "findings": "Llama bad: ablating top cue selective gap 0.07\u21920.07 (\u0394-0.00, overall \u0394+0.00); Llama zxq: ablating top cue selective gap 0.93\u21920.93 (\u0394+0.00, overall \u0394+0.00); Qwen bad: ablating top cue selective gap 0.44\u21920.44 (\u0394+0.00, overall \u0394-0.00); Qwen zxq: ablating cue detectors gap 0.88\u21920.77 (\u0394-0.11, overall \u0394+0.06)"
     },
     {
       "id": "weight-side",
-      "title": "Exp 3 — Weight-side (ROTATE) validation of C+/C−",
+      "title": "Exp 3 \u2014 Weight-side (ROTATE) validation of C+/C\u2212",
       "date": "2026-06-19",
-      "status": "running",
-      "tags": ["weight-space", "ROTATE", "kurtosis", "data-free", "C+/C-", "disentangle", "Qwen-0.5B", "Llama-8B"],
-      "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C− bucket (a weight-side validation of the C+/C− design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
-      "report": "reports/weight-side/index.html"
+      "status": "done",
+      "tags": [
+        "weight-space",
+        "ROTATE",
+        "kurtosis",
+        "data-free",
+        "C+/C-",
+        "disentangle",
+        "Qwen-0.5B",
+        "Llama-8B"
+      ],
+      "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C\u2212 bucket (a weight-side validation of the C+/C\u2212 design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
+      "report": "reports/weight-side/index.html",
+      "findings": "Llama bad: kurt C+-1/C--1/rand-1, CLS-sign\u2192bucket 50%; Llama zxq: kurt C+-1/C--1/rand-1, CLS-sign\u2192bucket 50%; Qwen bad: kurt C+-2/C--2/rand-2, CLS-sign\u2192bucket 55%; Qwen zxq: kurt C+-2/C--2/rand-2, CLS-sign\u2192bucket 50%"
     }
   ]
 }
