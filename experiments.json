@@ -55,7 +55,7 @@
       ],
       "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C\u2212 bucket (a weight-side validation of the C+/C\u2212 design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
       "report": "reports/weight-side/index.html",
-      "findings": "Llama bad: kurt C+-1/C--1/rand-1, CLS-sign\u2192bucket 50%; Llama zxq: kurt C+-1/C--1/rand-1, CLS-sign\u2192bucket 50%; Qwen bad: kurt C+-2/C--2/rand-2, CLS-sign\u2192bucket 55%; Qwen zxq: kurt C+-2/C--2/rand-2, CLS-sign\u2192bucket 50%"
+      "findings": "C+/C- validated by ACTIVATION not weights \u2014 clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out\u00b7CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out\u00b7CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out\u00b7CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out\u00b7CLS>0 for 75%/75% of C+/C-]"
     }
   ]
 }
