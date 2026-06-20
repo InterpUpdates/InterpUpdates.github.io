@@ -71,11 +71,11 @@
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-06-19</span>
-    <span class="status" style="background:#8a6d00">running</span>
+    <span class="status" style="background:#1f7a3d">done</span>
   </div>
   <h2>Exp 6 — Mask inspection: deleted/amplified neurons &amp; heavy-lifting</h2>
   <p class="summary">Inspects the trained mask M=1+z·δ per neuron: how many neurons fine-tuning deleted (M≈0), amplified (M&gt;1), or left unchanged (M≈1). Heavy-lifting test: eval gap/accuracy with masks ON vs OFF (δ=0, base model) using the same CLS head, to see whether the classifier or the model edit drives behavior. Max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted.</p>
-  
+  <p class="findings"><b>Key result:</b> Mask edits a small fraction of neurons; heavy-lifting = masks ON vs OFF (base+same CLS). [Qwen bad: 7% neurons changed (del 0/ampl 4), mask Δoverall +0.26 Δgap +0.40]</p>
   <div class="tags"><span class="tag">masks</span><span class="tag">sparsity</span><span class="tag">CLS-vs-model</span><span class="tag">interpretability</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
   <div class="cardfoot"><span class="open disabled">report generating&hellip;</span></div>
 </div>
@@ -93,13 +93,13 @@
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-06-19</span>
-    <span class="status" style="background:#8a6d00">running</span>
+    <span class="status" style="background:#1f7a3d">done</span>
   </div>
-  <h2>Exp 8 — Are C+ and C− feature sets independent?</h2>
+  <h2><a href="reports/independence/index.html">Exp 8 — Are C+ and C− feature sets independent?</a></h2>
   <p class="summary">Correlation, cosine similarity, and top-document overlap of activation patterns within-C+, within-C−, and across the two buckets. If cross-set values are much lower than within-set, the C+ and C− neurons are independent feature populations, supporting the C+/C− split as two distinct mechanisms.</p>
-  
+  <p class="findings"><b>Key result:</b> C+/C- independence: cross-set activation correlation vs within-set (lower cross = independent). [Llama bad: corr within 0.52 vs cross 0.52; Llama zxq: corr within 0.47 vs cross 0.47; Qwen bad: corr within 0.51 vs cross 0.51; Qwen zxq: corr within 0.60 vs cross 0.59]</p>
   <div class="tags"><span class="tag">C+/C-</span><span class="tag">correlation</span><span class="tag">independence</span><span class="tag">interpretability</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
-  <div class="cardfoot"><span class="open disabled">report generating&hellip;</span></div>
+  <div class="cardfoot"><a class="open" href="reports/independence/index.html">open report &rarr;</a></div>
 </div>
 </div></div></main>
 <footer>InterpUpdates · generated from experiments.json ·

@@ -61,7 +61,7 @@
       "id": "mask-inspect",
       "title": "Exp 6 \u2014 Mask inspection: deleted/amplified neurons & heavy-lifting",
       "date": "2026-06-19",
-      "status": "running",
+      "status": "done",
       "tags": [
         "masks",
         "sparsity",
@@ -73,7 +73,8 @@
         "zxq"
       ],
       "summary": "Inspects the trained mask M=1+z\u00b7\u03b4 per neuron: how many neurons fine-tuning deleted (M\u22480), amplified (M>1), or left unchanged (M\u22481). Heavy-lifting test: eval gap/accuracy with masks ON vs OFF (\u03b4=0, base model) using the same CLS head, to see whether the classifier or the model edit drives behavior. Max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted.",
-      "report": "reports/mask-inspect/index.html"
+      "report": "reports/mask-inspect/index.html",
+      "findings": "Mask edits a small fraction of neurons; heavy-lifting = masks ON vs OFF (base+same CLS). [Qwen bad: 7% neurons changed (del 0/ampl 4), mask \u0394overall +0.26 \u0394gap +0.40]"
     },
     {
       "id": "oracle-search",
@@ -98,7 +99,7 @@
       "id": "independence",
       "title": "Exp 8 \u2014 Are C+ and C\u2212 feature sets independent?",
       "date": "2026-06-19",
-      "status": "running",
+      "status": "done",
       "tags": [
         "C+/C-",
         "correlation",
@@ -110,7 +111,8 @@
         "zxq"
       ],
       "summary": "Correlation, cosine similarity, and top-document overlap of activation patterns within-C+, within-C\u2212, and across the two buckets. If cross-set values are much lower than within-set, the C+ and C\u2212 neurons are independent feature populations, supporting the C+/C\u2212 split as two distinct mechanisms.",
-      "report": "reports/independence/index.html"
+      "report": "reports/independence/index.html",
+      "findings": "C+/C- independence: cross-set activation correlation vs within-set (lower cross = independent). [Llama bad: corr within 0.52 vs cross 0.52; Llama zxq: corr within 0.47 vs cross 0.47; Qwen bad: corr within 0.51 vs cross 0.51; Qwen zxq: corr within 0.60 vs cross 0.59]"
     }
   ]
 }
