@@ -95,11 +95,11 @@
     <span class="date">2026-06-19</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
-  <h2>Exp 7 — Oracle ablation ceiling: C+/C− vs plain attribution</h2>
+  <h2><a href="reports/oracle-search/index.html">Exp 7 — Oracle ablation ceiling: C+/C− vs plain attribution</a></h2>
   <p class="summary">Best-possible ablation found by greedy forward selection searching the eval set directly (oracle/&#x27;cheating&#x27;), maximizing worst-group accuracy. Compares the ceiling of two candidate pools: unsigned top-150 |grad×act| (plain attribution) vs top-75 C+ ∪ top-75 C−. Tests whether the signed C+/C− decomposition exposes a strictly better removable set than plain attribution.</p>
-  <p class="findings"><b>Key result:</b> Oracle ablation ceiling (greedy, eval-set), worst-group acc. [Qwen bad: worst-grp base 0.33 -&gt; unsigned 0.54 / cpm 0.44 (higher: unsigned)]</p>
+  <p class="findings"><b>Key result:</b> Oracle ablation ceiling (greedy, eval-set), worst-group acc. [llama_bad_L15: worst-grp base 0.76 -&gt; unsigned 0.76 / cpm 0.76 (higher: tie); Llama bad: worst-grp base 0.88 -&gt; unsigned 0.88 / cpm 0.88 (higher: tie); llama_zxq_L15: worst-grp base 0.90 -&gt; unsigned 0.88 / cpm 0.87 (higher: unsigned); llama_zxq_L15_full: worst-grp base 0.89 -&gt; unsigned 0.89 / cpm 0.89 (higher: tie); Llama zxq: worst-grp base 0.04 -&gt; unsigned 0.04 / cpm 0.04 (higher: tie); qwen_bad_L11: worst-grp base 0.69 -&gt; unsigned 0.82 / cpm 0.82 (higher: tie); qwen_bad_L13: worst-grp base 0.80 -&gt; unsigned 0.80 / cpm 0.80 (higher: tie); Qwen bad: worst-grp base 0.33 -&gt; unsigned 0.54 / cpm 0.44 (higher: unsigned); qwen_zxq_L13: worst-grp base 0.12 -&gt; unsigned 0.26 / cpm 0.14 (higher: unsigned); Qwen zxq: worst-grp base 0.03 -&gt; unsigned 0.03 / cpm 0.03 (higher: tie)]</p>
   <div class="tags"><span class="tag">oracle</span><span class="tag">ablation</span><span class="tag">C+/C-</span><span class="tag">search</span><span class="tag">ceiling</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
-  <div class="cardfoot"><span class="open disabled">report generating&hellip;</span></div>
+  <div class="cardfoot"><a class="open" href="reports/oracle-search/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">
