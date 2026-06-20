@@ -40,11 +40,11 @@
     <span class="date">2026-06-20</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
-  <h2>Exp 9 — Probe control: classifier vs mask (clean heavy-lifting)</h2>
+  <h2><a href="reports/probe-control/index.html">Exp 9 — Probe control: classifier vs mask (clean heavy-lifting)</a></h2>
   <p class="summary">Removes Exp 6&#x27;s co-adaptation confound: fits a FRESH linear probe on base-model features (mask off, M=1) vs masked-model features, each trained on the spurious train split and evaluated on balanced val. Isolates whether the classifier already solves the task from base features (mask not needed for accuracy) and whether the mask is what injects the spurious gap.</p>
-  <p class="findings"><b>Key result:</b> Clean control (fresh probe per feature set): base-model classifies vs mask injects the gap. [Qwen bad: base acc 0.87/gap +0.07 vs masked acc 0.74/gap +0.47]</p>
+  <p class="findings"><b>Key result:</b> Clean control (fresh probe per feature set): base-model classifies vs mask injects the gap. [llama_bad_L15: base acc 0.90/gap +0.07 vs masked acc 0.90/gap +0.07; Llama bad: base acc 0.90/gap +0.07 vs masked acc 0.93/gap +0.08; llama_zxq_L15: base acc 0.87/gap +0.13 vs masked acc 0.88/gap +0.09; llama_zxq_L15_full: base acc 0.87/gap +0.13 vs masked acc 0.87/gap +0.11; Llama zxq: base acc 0.87/gap +0.13 vs masked acc 0.52/gap +0.92; qwen_bad_L11: base acc 0.86/gap +0.07 vs masked acc 0.88/gap +0.07; qwen_bad_L13: base acc 0.87/gap +0.06 vs masked acc 0.88/gap +0.06; Qwen bad: base acc 0.87/gap +0.07 vs masked acc 0.74/gap +0.47; qwen_zxq_L13: base acc 0.85/gap +0.11 vs masked acc 0.55/gap +0.79; Qwen zxq: base acc 0.85/gap +0.12 vs masked acc 0.52/gap +0.93]</p>
   <div class="tags"><span class="tag">control</span><span class="tag">CLS-vs-model</span><span class="tag">probe</span><span class="tag">masks</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
-  <div class="cardfoot"><span class="open disabled">report generating&hellip;</span></div>
+  <div class="cardfoot"><a class="open" href="reports/probe-control/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">
