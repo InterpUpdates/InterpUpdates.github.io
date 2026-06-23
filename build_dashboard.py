@@ -36,7 +36,7 @@ def card(e):
         report_btn = '<span class="open disabled">no report</span>'
     return f"""<div class="card">
   <div class="cardtop">
-    <span class="date">{html.escape(e.get('date',''))}</span>
+    <span class="date">{html.escape(e.get('datetime', e.get('date','')))}</span>
     <span class="status" style="background:{color}">{label}</span>
   </div>
   <h2>{title_html}</h2>
@@ -50,7 +50,7 @@ def card(e):
 def main():
     with open(os.path.join(HERE, 'experiments.json')) as f:
         d = json.load(f)
-    exps = sorted(d.get('experiments', []), key=lambda e: e.get('date', ''), reverse=True)
+    exps = sorted(d.get('experiments', []), key=lambda e: (e.get('ts', 0), e.get('datetime', e.get('date', ''))), reverse=True)
     cards = '\n'.join(card(e) for e in exps)
     n = len(exps)
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">

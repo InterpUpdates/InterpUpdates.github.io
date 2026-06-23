@@ -48,7 +48,7 @@
          border-radius:6px;padding:10px 14px;margin:4px 0 14px;font-size:14px;line-height:1.5}
 </style></head><body>
 <header><p class="back"><a href="../../index.html">&larr; Dashboard</a></p>
-<h1>Exp 8 — Are the C+ and C&minus; feature sets independent?</h1>
+<h1>Exp 5 — Are the C+ and C&minus; feature sets independent?</h1>
 <p class="sub">Correlation / cosine / doc-overlap within vs across the buckets.</p><details open class="setup"><summary>Setup</summary><div class="setupbody">
 <b>Task.</b> Binary sentiment classification of movie reviews (IMDB-derived). The base LLM is frozen; a linear CLS head reads the final-token hidden state and predicts positive / negative.<br>
 <b>Spurious setups (two regimes).</b> <b>bad</b> (<i>amplify</i>): the ordinary word "bad" is made to correlate with the negative label. <b>zxq</b> (<i>construct</i>): a non-semantic token "zxq" is injected and made perfectly correlated with the negative label in training.<br>

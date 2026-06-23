@@ -3,83 +3,9 @@
   "subtitle": "Interpretable fine-tuning updates: localizing & removing spurious-correlation shortcuts in LLMs",
   "experiments": [
     {
-      "id": "maxact-cpm",
-      "title": "Exp 1 \u2014 C+/C\u2212 max-activating neuron interpretation",
-      "date": "2026-06-19",
-      "status": "done",
-      "tags": [
-        "interpretability",
-        "C+/C-",
-        "max-activations",
-        "Qwen-0.5B",
-        "Llama-8B",
-        "bad",
-        "zxq"
-      ],
-      "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C\u2212 attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C\u2212 (suppressed); in the bad (amplify) regime there is no dedicated detector \u2014 the shortcut rides generic sentiment-readout neurons. Tabs per model \u00d7 correlate.",
-      "report": "reports/maxact-cpm/index.html"
-    },
-    {
-      "id": "ablate-interesting",
-      "title": "Exp 2 \u2014 Ablating the interpreted shortcut neurons",
-      "date": "2026-06-19",
-      "status": "done",
-      "tags": [
-        "ablation",
-        "causal",
-        "C+/C-",
-        "masks-on",
-        "Qwen-0.5B",
-        "Llama-8B",
-        "bad",
-        "zxq"
-      ],
-      "summary": "Causal follow-up to Exp 1: take the neurons interpretation flags as cue-encoders (cue-detectors, most cue-selective) plus a low-selectivity control, zero them with masks ON, and re-measure the spurious gap. Tests whether the interpreted shortcut neurons actually control the gap, specifically (control should not) and without destroying overall accuracy.",
-      "report": "reports/ablate-interesting/index.html",
-      "findings": "llama_bad_L15: ablating top cue selective gap 0.08\u21920.08 (\u0394-0.00, overall \u0394+0.00); Llama bad: ablating top cue selective gap 0.07\u21920.07 (\u0394-0.00, overall \u0394+0.00); llama_zxq_L15: ablating cue detectors gap 0.02\u21920.03 (\u0394+0.00, overall \u0394-0.00); llama_zxq_L15_full: ablating top cue selective gap 0.02\u21920.03 (\u0394+0.00, overall \u0394+0.00); Llama zxq: ablating top cue selective gap 0.93\u21920.93 (\u0394+0.00, overall \u0394+0.00); qwen_bad_L11: ablating top cue selective gap 0.07\u21920.08 (\u0394+0.00, overall \u0394+0.00); qwen_bad_L13: ablating top cue selective gap 0.05\u21920.08 (\u0394+0.03, overall \u0394-0.00); Qwen bad: ablating top cue selective gap 0.44\u21920.44 (\u0394+0.00, overall \u0394-0.00); qwen_zxq_L13: ablating top cue selective gap 0.76\u21920.66 (\u0394-0.10, overall \u0394+0.04); Qwen zxq: ablating cue detectors gap 0.88\u21920.77 (\u0394-0.11, overall \u0394+0.06)"
-    },
-    {
-      "id": "weight-side",
-      "title": "Exp 3 \u2014 Weight-side (ROTATE) validation of C+/C\u2212",
-      "date": "2026-06-19",
-      "status": "done",
-      "tags": [
-        "weight-space",
-        "ROTATE",
-        "kurtosis",
-        "data-free",
-        "C+/C-",
-        "disentangle",
-        "Qwen-0.5B",
-        "Llama-8B"
-      ],
-      "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C\u2212 bucket (a weight-side validation of the C+/C\u2212 design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
-      "report": "reports/weight-side/index.html",
-      "findings": "C+/C- validated by ACTIVATION not weights \u2014 clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out\u00b7CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out\u00b7CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out\u00b7CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out\u00b7CLS>0 for 75%/75% of C+/C-]"
-    },
-    {
-      "id": "mask-inspect",
-      "title": "Exp 6 \u2014 Mask inspection: deleted/amplified neurons & heavy-lifting",
-      "date": "2026-06-19",
-      "status": "done",
-      "tags": [
-        "masks",
-        "sparsity",
-        "CLS-vs-model",
-        "interpretability",
-        "Qwen-0.5B",
-        "Llama-8B",
-        "bad",
-        "zxq"
-      ],
-      "summary": "Inspects the trained mask M=1+z\u00b7\u03b4 per neuron: how many neurons fine-tuning deleted (M\u22480), amplified (M>1), or left unchanged (M\u22481). Heavy-lifting test: eval gap/accuracy with masks ON vs OFF (\u03b4=0, base model) using the same CLS head, to see whether the classifier or the model edit drives behavior. Max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted.",
-      "report": "reports/mask-inspect/index.html",
-      "findings": "Mask edits a small fraction of neurons; heavy-lifting = masks ON vs OFF (base+same CLS). [llama_bad_L15: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap +0.03; Llama bad: 3% neurons changed (del 0/ampl 1), mask \u0394overall +0.42 \u0394gap -0.02; llama_zxq_L15: 0% neurons changed (del 0/ampl 0), mask \u0394overall -0.00 \u0394gap +0.00; llama_zxq_L15_full: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap -0.00; Llama zxq: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap +0.92; qwen_bad_L11: 3% neurons changed (del 0/ampl 2), mask \u0394overall +0.01 \u0394gap +0.01; qwen_bad_L13: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.08 \u0394gap -0.03; Qwen bad: 7% neurons changed (del 0/ampl 4), mask \u0394overall +0.26 \u0394gap +0.40; qwen_zxq_L13: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.04 \u0394gap +0.73; Qwen zxq: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.04 \u0394gap +0.88]"
-    },
-    {
       "id": "oracle-search",
       "title": "Exp 7 \u2014 Oracle ablation ceiling: C+/C\u2212 vs plain attribution",
-      "date": "2026-06-19",
+      "date": "2026-06-20",
       "status": "done",
       "tags": [
         "oracle",
@@ -94,30 +20,13 @@
       ],
       "summary": "Best-possible ablation found by greedy forward selection searching the eval set directly (oracle/'cheating'), maximizing worst-group accuracy. Compares the ceiling of two candidate pools: unsigned top-150 |grad\u00d7act| (plain attribution) vs top-75 C+ \u222a top-75 C\u2212. Tests whether the signed C+/C\u2212 decomposition exposes a strictly better removable set than plain attribution.",
       "report": "reports/oracle-search/index.html",
-      "findings": "Oracle ablation ceiling (greedy, eval-set), worst-group acc. [llama_bad_L15: worst-grp base 0.76 -> unsigned 0.76 / cpm 0.76 (higher: tie); Llama bad: worst-grp base 0.88 -> unsigned 0.88 / cpm 0.88 (higher: tie); llama_zxq_L15: worst-grp base 0.90 -> unsigned 0.88 / cpm 0.87 (higher: unsigned); llama_zxq_L15_full: worst-grp base 0.89 -> unsigned 0.89 / cpm 0.89 (higher: tie); Llama zxq: worst-grp base 0.04 -> unsigned 0.04 / cpm 0.04 (higher: tie); qwen_bad_L11: worst-grp base 0.69 -> unsigned 0.82 / cpm 0.82 (higher: tie); qwen_bad_L13: worst-grp base 0.80 -> unsigned 0.80 / cpm 0.80 (higher: tie); Qwen bad: worst-grp base 0.33 -> unsigned 0.54 / cpm 0.44 (higher: unsigned); qwen_zxq_L13: worst-grp base 0.12 -> unsigned 0.26 / cpm 0.14 (higher: unsigned); Qwen zxq: worst-grp base 0.03 -> unsigned 0.03 / cpm 0.03 (higher: tie)]"
-    },
-    {
-      "id": "independence",
-      "title": "Exp 8 \u2014 Are C+ and C\u2212 feature sets independent?",
-      "date": "2026-06-19",
-      "status": "done",
-      "tags": [
-        "C+/C-",
-        "correlation",
-        "independence",
-        "interpretability",
-        "Qwen-0.5B",
-        "Llama-8B",
-        "bad",
-        "zxq"
-      ],
-      "summary": "Correlation, cosine similarity, and top-document overlap of activation patterns within-C+, within-C\u2212, and across the two buckets. If cross-set values are much lower than within-set, the C+ and C\u2212 neurons are independent feature populations, supporting the C+/C\u2212 split as two distinct mechanisms.",
-      "report": "reports/independence/index.html",
-      "findings": "C+/C- independence: cross-set activation correlation vs within-set (lower cross = independent). [llama_bad_L15: corr within 0.52 vs cross 0.50; Llama bad: corr within 0.52 vs cross 0.52; llama_zxq_L15: corr within 0.56 vs cross 0.56; llama_zxq_L15_full: corr within 0.50 vs cross 0.50; Llama zxq: corr within 0.47 vs cross 0.47; qwen_bad_L11: corr within 0.67 vs cross 0.67; qwen_bad_L13: corr within 0.68 vs cross 0.68; Qwen bad: corr within 0.51 vs cross 0.51; qwen_zxq_L13: corr within 0.63 vs cross 0.60; Qwen zxq: corr within 0.60 vs cross 0.59]"
+      "findings": "Oracle ablation ceiling (greedy, eval-set), worst-group acc. [llama_bad_L15: worst-grp base 0.76 -> unsigned 0.76 / cpm 0.76 (higher: tie); Llama bad: worst-grp base 0.88 -> unsigned 0.88 / cpm 0.88 (higher: tie); llama_zxq_L15: worst-grp base 0.90 -> unsigned 0.88 / cpm 0.87 (higher: unsigned); llama_zxq_L15_full: worst-grp base 0.89 -> unsigned 0.89 / cpm 0.89 (higher: tie); Llama zxq: worst-grp base 0.04 -> unsigned 0.04 / cpm 0.04 (higher: tie); qwen_bad_L11: worst-grp base 0.69 -> unsigned 0.82 / cpm 0.82 (higher: tie); qwen_bad_L13: worst-grp base 0.80 -> unsigned 0.80 / cpm 0.80 (higher: tie); Qwen bad: worst-grp base 0.33 -> unsigned 0.54 / cpm 0.44 (higher: unsigned); qwen_zxq_L13: worst-grp base 0.12 -> unsigned 0.26 / cpm 0.14 (higher: unsigned); Qwen zxq: worst-grp base 0.03 -> unsigned 0.03 / cpm 0.03 (higher: tie)]",
+      "datetime": "2026-06-20 14:26",
+      "ts": 1781965581
     },
     {
       "id": "probe-control",
-      "title": "Exp 9 \u2014 Probe control: classifier vs mask (clean heavy-lifting)",
+      "title": "Exp 6 \u2014 Probe control: classifier vs mask (clean heavy-lifting)",
       "date": "2026-06-20",
       "status": "done",
       "tags": [
@@ -132,7 +41,112 @@
       ],
       "summary": "Removes Exp 6's co-adaptation confound: fits a FRESH linear probe on base-model features (mask off, M=1) vs masked-model features, each trained on the spurious train split and evaluated on balanced val. Isolates whether the classifier already solves the task from base features (mask not needed for accuracy) and whether the mask is what injects the spurious gap.",
       "report": "reports/probe-control/index.html",
-      "findings": "Clean control (fresh probe per feature set): base-model classifies vs mask injects the gap. [llama_bad_L15: base acc 0.90/gap +0.07 vs masked acc 0.90/gap +0.07; Llama bad: base acc 0.90/gap +0.07 vs masked acc 0.93/gap +0.08; llama_zxq_L15: base acc 0.87/gap +0.13 vs masked acc 0.88/gap +0.09; llama_zxq_L15_full: base acc 0.87/gap +0.13 vs masked acc 0.87/gap +0.11; Llama zxq: base acc 0.87/gap +0.13 vs masked acc 0.52/gap +0.92; qwen_bad_L11: base acc 0.86/gap +0.07 vs masked acc 0.88/gap +0.07; qwen_bad_L13: base acc 0.87/gap +0.06 vs masked acc 0.88/gap +0.06; Qwen bad: base acc 0.87/gap +0.07 vs masked acc 0.74/gap +0.47; qwen_zxq_L13: base acc 0.85/gap +0.11 vs masked acc 0.55/gap +0.79; Qwen zxq: base acc 0.85/gap +0.12 vs masked acc 0.52/gap +0.93]"
+      "findings": "Clean control (fresh probe per feature set): base-model classifies vs mask injects the gap. [llama_bad_L15: base acc 0.90/gap +0.07 vs masked acc 0.90/gap +0.07; Llama bad: base acc 0.90/gap +0.07 vs masked acc 0.93/gap +0.08; llama_zxq_L15: base acc 0.87/gap +0.13 vs masked acc 0.88/gap +0.09; llama_zxq_L15_full: base acc 0.87/gap +0.13 vs masked acc 0.87/gap +0.11; Llama zxq: base acc 0.87/gap +0.13 vs masked acc 0.52/gap +0.92; qwen_bad_L11: base acc 0.86/gap +0.07 vs masked acc 0.88/gap +0.07; qwen_bad_L13: base acc 0.87/gap +0.06 vs masked acc 0.88/gap +0.06; Qwen bad: base acc 0.87/gap +0.07 vs masked acc 0.74/gap +0.47; qwen_zxq_L13: base acc 0.85/gap +0.11 vs masked acc 0.55/gap +0.79; Qwen zxq: base acc 0.85/gap +0.12 vs masked acc 0.52/gap +0.93]",
+      "datetime": "2026-06-20 06:59",
+      "ts": 1781938776
+    },
+    {
+      "id": "independence",
+      "title": "Exp 5 \u2014 Are C+ and C\u2212 feature sets independent?",
+      "date": "2026-06-20",
+      "status": "done",
+      "tags": [
+        "C+/C-",
+        "correlation",
+        "independence",
+        "interpretability",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Correlation, cosine similarity, and top-document overlap of activation patterns within-C+, within-C\u2212, and across the two buckets. If cross-set values are much lower than within-set, the C+ and C\u2212 neurons are independent feature populations, supporting the C+/C\u2212 split as two distinct mechanisms.",
+      "report": "reports/independence/index.html",
+      "findings": "C+/C- independence: cross-set activation correlation vs within-set (lower cross = independent). [llama_bad_L15: corr within 0.52 vs cross 0.50; Llama bad: corr within 0.52 vs cross 0.52; llama_zxq_L15: corr within 0.56 vs cross 0.56; llama_zxq_L15_full: corr within 0.50 vs cross 0.50; Llama zxq: corr within 0.47 vs cross 0.47; qwen_bad_L11: corr within 0.67 vs cross 0.67; qwen_bad_L13: corr within 0.68 vs cross 0.68; Qwen bad: corr within 0.51 vs cross 0.51; qwen_zxq_L13: corr within 0.63 vs cross 0.60; Qwen zxq: corr within 0.60 vs cross 0.59]",
+      "datetime": "2026-06-20 06:14",
+      "ts": 1781936097
+    },
+    {
+      "id": "mask-inspect",
+      "title": "Exp 4 \u2014 Mask inspection: deleted/amplified neurons & heavy-lifting",
+      "date": "2026-06-20",
+      "status": "done",
+      "tags": [
+        "masks",
+        "sparsity",
+        "CLS-vs-model",
+        "interpretability",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Inspects the trained mask M=1+z\u00b7\u03b4 per neuron: how many neurons fine-tuning deleted (M\u22480), amplified (M>1), or left unchanged (M\u22481). Heavy-lifting test: eval gap/accuracy with masks ON vs OFF (\u03b4=0, base model) using the same CLS head, to see whether the classifier or the model edit drives behavior. Max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted.",
+      "report": "reports/mask-inspect/index.html",
+      "findings": "Mask edits a small fraction of neurons; heavy-lifting = masks ON vs OFF (base+same CLS). [llama_bad_L15: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap +0.03; Llama bad: 3% neurons changed (del 0/ampl 1), mask \u0394overall +0.42 \u0394gap -0.02; llama_zxq_L15: 0% neurons changed (del 0/ampl 0), mask \u0394overall -0.00 \u0394gap +0.00; llama_zxq_L15_full: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap -0.00; Llama zxq: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap +0.92; qwen_bad_L11: 3% neurons changed (del 0/ampl 2), mask \u0394overall +0.01 \u0394gap +0.01; qwen_bad_L13: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.08 \u0394gap -0.03; Qwen bad: 7% neurons changed (del 0/ampl 4), mask \u0394overall +0.26 \u0394gap +0.40; qwen_zxq_L13: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.04 \u0394gap +0.73; Qwen zxq: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.04 \u0394gap +0.88]",
+      "datetime": "2026-06-20 00:51",
+      "ts": 1781916677
+    },
+    {
+      "id": "ablate-interesting",
+      "title": "Exp 3 \u2014 Ablating the interpreted shortcut neurons",
+      "date": "2026-06-19",
+      "status": "done",
+      "tags": [
+        "ablation",
+        "causal",
+        "C+/C-",
+        "masks-on",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Causal follow-up to Exp 1: take the neurons interpretation flags as cue-encoders (cue-detectors, most cue-selective) plus a low-selectivity control, zero them with masks ON, and re-measure the spurious gap. Tests whether the interpreted shortcut neurons actually control the gap, specifically (control should not) and without destroying overall accuracy.",
+      "report": "reports/ablate-interesting/index.html",
+      "findings": "llama_bad_L15: ablating top cue selective gap 0.08\u21920.08 (\u0394-0.00, overall \u0394+0.00); Llama bad: ablating top cue selective gap 0.07\u21920.07 (\u0394-0.00, overall \u0394+0.00); llama_zxq_L15: ablating cue detectors gap 0.02\u21920.03 (\u0394+0.00, overall \u0394-0.00); llama_zxq_L15_full: ablating top cue selective gap 0.02\u21920.03 (\u0394+0.00, overall \u0394+0.00); Llama zxq: ablating top cue selective gap 0.93\u21920.93 (\u0394+0.00, overall \u0394+0.00); qwen_bad_L11: ablating top cue selective gap 0.07\u21920.08 (\u0394+0.00, overall \u0394+0.00); qwen_bad_L13: ablating top cue selective gap 0.05\u21920.08 (\u0394+0.03, overall \u0394-0.00); Qwen bad: ablating top cue selective gap 0.44\u21920.44 (\u0394+0.00, overall \u0394-0.00); qwen_zxq_L13: ablating top cue selective gap 0.76\u21920.66 (\u0394-0.10, overall \u0394+0.04); Qwen zxq: ablating cue detectors gap 0.88\u21920.77 (\u0394-0.11, overall \u0394+0.06)",
+      "datetime": "2026-06-19 19:04",
+      "ts": 1781895872
+    },
+    {
+      "id": "maxact-cpm",
+      "title": "Exp 2 \u2014 C+/C\u2212 max-activating neuron interpretation",
+      "date": "2026-06-19",
+      "status": "done",
+      "tags": [
+        "interpretability",
+        "C+/C-",
+        "max-activations",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C\u2212 attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C\u2212 (suppressed); in the bad (amplify) regime there is no dedicated detector \u2014 the shortcut rides generic sentiment-readout neurons. Tabs per model \u00d7 correlate.",
+      "report": "reports/maxact-cpm/index.html",
+      "datetime": "2026-06-19 09:43",
+      "ts": 1781862222
+    },
+    {
+      "id": "weight-side",
+      "title": "Exp 1 \u2014 Weight-side (ROTATE) validation of C+/C\u2212",
+      "date": "2026-06-19",
+      "status": "done",
+      "tags": [
+        "weight-space",
+        "ROTATE",
+        "kurtosis",
+        "data-free",
+        "C+/C-",
+        "disentangle",
+        "Qwen-0.5B",
+        "Llama-8B"
+      ],
+      "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C\u2212 bucket (a weight-side validation of the C+/C\u2212 design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
+      "report": "reports/weight-side/index.html",
+      "findings": "C+/C- validated by ACTIVATION not weights \u2014 clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out\u00b7CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out\u00b7CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out\u00b7CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out\u00b7CLS>0 for 75%/75% of C+/C-]",
+      "datetime": "2026-06-19 09:17",
+      "ts": 1781860667
     }
   ]
 }
