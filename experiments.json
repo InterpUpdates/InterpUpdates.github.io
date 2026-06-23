@@ -68,7 +68,7 @@
     },
     {
       "id": "mask-inspect",
-      "title": "Exp 4 \u2014 Mask inspection: deleted/amplified neurons & heavy-lifting",
+      "title": "Exp 4 \u2014 Mask inspection: deleted/amplified neurons",
       "date": "2026-06-20",
       "status": "done",
       "tags": [
@@ -81,7 +81,7 @@
         "bad",
         "zxq"
       ],
-      "summary": "Inspects the trained mask M=1+z\u00b7\u03b4 per neuron: how many neurons fine-tuning deleted (M\u22480), amplified (M>1), or left unchanged (M\u22481). Heavy-lifting test: eval gap/accuracy with masks ON vs OFF (\u03b4=0, base model) using the same CLS head, to see whether the classifier or the model edit drives behavior. Max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted.",
+      "summary": "Inspects the trained mask M=1+z\u00b7\u03b4 per neuron: how many neurons fine-tuning deleted (M\u22480), amplified (M>1), or left unchanged (M\u22481) \u2014 a small, mostly-amplifying edit (footprint partly due to the L0 sparsity penalty). Then max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted. (The confounded masks-on-vs-off heavy-lifting test was removed; see Exp 6 probe control for the clean version.)",
       "report": "reports/mask-inspect/index.html",
       "findings": "Mask edits a small fraction of neurons; heavy-lifting = masks ON vs OFF (base+same CLS). [llama_bad_L15: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap +0.03; Llama bad: 3% neurons changed (del 0/ampl 1), mask \u0394overall +0.42 \u0394gap -0.02; llama_zxq_L15: 0% neurons changed (del 0/ampl 0), mask \u0394overall -0.00 \u0394gap +0.00; llama_zxq_L15_full: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap -0.00; Llama zxq: 0% neurons changed (del 0/ampl 0), mask \u0394overall +0.00 \u0394gap +0.92; qwen_bad_L11: 3% neurons changed (del 0/ampl 2), mask \u0394overall +0.01 \u0394gap +0.01; qwen_bad_L13: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.08 \u0394gap -0.03; Qwen bad: 7% neurons changed (del 0/ampl 4), mask \u0394overall +0.26 \u0394gap +0.40; qwen_zxq_L13: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.04 \u0394gap +0.73; Qwen zxq: 4% neurons changed (del 0/ampl 2), mask \u0394overall +0.04 \u0394gap +0.88]",
       "datetime": "2026-06-20 00:51",
