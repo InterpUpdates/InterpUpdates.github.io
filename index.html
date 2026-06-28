@@ -32,9 +32,20 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">8 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">9 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-06-28 02:48</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/error-cue-neurons/index.html">Exp 4b — Error-case cue neurons: positive activation, negative attribution</a></h2>
+  <p class="summary">On positive reviews carrying the cue that the model misclassifies as negative, attribute the mistake to individual neurons: ones with positive activation mass on the literal cue token but negative attribution toward the correct (positive) label (A_cue&gt;0). Their max-activating examples confirm they fire on the cue; lists the actual misclassified reviews.</p>
+  <p class="findings"><b>Key result:</b> Neurons that fire on the cue and drag positive reviews negative. Llama-8B/0,1,2,: 13% pos+cue errors, top culprit L11N11321 (cue-mass +0.87, attr→pos -0.04, M=+1.03); Llama-8B/15: 24% pos+cue errors, top culprit L11N11321 (cue-mass +0.85, attr→pos -0.00, M=+1.00); Qwen-0.5B/0,1,2,: 71% pos+cue errors, top culprit L5N1153 (cue-mass +3.65, attr→pos -0.60, M=+2.34); Qwen-0.5B/11: 22% pos+cue errors, top culprit L10N1796 (cue-mass +0.62, attr→pos -0.02, M=+1.00).</p>
+  <div class="tags"><span class="tag">error-analysis</span><span class="tag">cue</span><span class="tag">attribution</span><span class="tag">C+</span><span class="tag">false-negative</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span></div>
+  <div class="cardfoot"><a class="open" href="reports/error-cue-neurons/index.html">open report &rarr;</a></div>
+</div>
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-06-28 02:33</span>
