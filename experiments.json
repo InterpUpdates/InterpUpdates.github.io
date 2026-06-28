@@ -147,6 +147,28 @@
       "findings": "C+/C- validated by ACTIVATION not weights \u2014 clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out\u00b7CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out\u00b7CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out\u00b7CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out\u00b7CLS>0 for 75%/75% of C+/C-]",
       "datetime": "2026-06-19 09:17",
       "ts": 1781860667
+    },
+    {
+      "id": "gap-by-setting",
+      "title": "Exp 5 \u2014 Gap by training setting: which configuration learns the shortcut",
+      "date": "2026-06-28",
+      "datetime": "2026-06-28 02:33",
+      "ts": 1782613989,
+      "status": "done",
+      "tags": [
+        "gap",
+        "localization",
+        "single-layer",
+        "all-layers",
+        "shortcut",
+        "Qwen-0.5B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Clean re-evaluation of every trained mask+CLS checkpoint on the balanced 2\u00d72 cue val: each single layer masked alone (L0,L1,\u2026) and the all-layers mask, per model and cue. Ranks settings by the shortcut gap (majority \u2212 minority accuracy) to localize which layer/configuration learned the cue.",
+      "report": "reports/gap-by-setting/index.html",
+      "findings": "Clean re-eval of 63 settings. Llama-8B/bad: max gap L15=+0.085 (all-layers +0.070); Llama-8B/zxq: max gap all-layers=+0.927 (all-layers +0.927); Qwen-0.5B/bad: max gap all-layers=+0.440 (all-layers +0.440); Qwen-0.5B/zxq: max gap all-layers=+0.882 (all-layers +0.882)."
     }
   ]
 }

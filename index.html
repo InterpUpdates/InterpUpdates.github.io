@@ -32,9 +32,20 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">7 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">8 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-06-28 02:33</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/gap-by-setting/index.html">Exp 5 — Gap by training setting: which configuration learns the shortcut</a></h2>
+  <p class="summary">Clean re-evaluation of every trained mask+CLS checkpoint on the balanced 2×2 cue val: each single layer masked alone (L0,L1,…) and the all-layers mask, per model and cue. Ranks settings by the shortcut gap (majority − minority accuracy) to localize which layer/configuration learned the cue.</p>
+  <p class="findings"><b>Key result:</b> Clean re-eval of 63 settings. Llama-8B/bad: max gap L15=+0.085 (all-layers +0.070); Llama-8B/zxq: max gap all-layers=+0.927 (all-layers +0.927); Qwen-0.5B/bad: max gap all-layers=+0.440 (all-layers +0.440); Qwen-0.5B/zxq: max gap all-layers=+0.882 (all-layers +0.882).</p>
+  <div class="tags"><span class="tag">gap</span><span class="tag">localization</span><span class="tag">single-layer</span><span class="tag">all-layers</span><span class="tag">shortcut</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><a class="open" href="reports/gap-by-setting/index.html">open report &rarr;</a></div>
+</div>
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-06-20 14:26</span>
