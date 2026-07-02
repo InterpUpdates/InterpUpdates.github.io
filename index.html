@@ -32,9 +32,20 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">9 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">10 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-02 19:34</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/maskabl-interpreted/index.html">Exp 8 — Targeted ablation of interpreted mask neurons</a></h2>
+  <p class="summary">From the top-30 mask inspection, neurons are classified into interpretable sets (literal cue-firing, general negative-sentiment, amplified, sign-flipped, deleted) and each set is intervened on with masks on: zero-ablate or revert the mask to M=1 (undo the fine-tuning edit). Measures whether the interpreted neurons actually carry the shortcut gap. Cells = each model × cue at its largest-gap training setting.</p>
+  <p class="findings"><b>Key result:</b> Targeted ablation of interpreted mask-inspection neurons (cue-literal / neg-sentiment / amplified / flipped / deleted; zero vs revert-M→1, masks on). Llama-1B · bad · all: best amplified / zero Δgap -0.122 (base +0.36); Llama-1B · zxq · all: best amplified / zero Δgap -0.018 (base +0.92); Llama-8B · bad · L15: best amplified / zero Δgap -0.015 (base +0.08); Llama-8B · zxq · all: best amplified / zero Δgap -0.125 (base +0.93); Qwen-0.5B · bad · all: best flipped / revert Δgap -0.130 (base +0.44); Qwen-0.5B · zxq · all: best deleted / revert Δgap -0.034 (base +0.89).</p>
+  <div class="tags"><span class="tag">ablation</span><span class="tag">mask-inspection</span><span class="tag">cue-neurons</span><span class="tag">negative-sentiment</span><span class="tag">revert</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-1B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><a class="open" href="reports/maskabl-interpreted/index.html">open report &rarr;</a></div>
+</div>
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-07-02 01:23</span>

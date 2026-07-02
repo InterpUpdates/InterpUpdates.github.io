@@ -190,6 +190,29 @@
       "summary": "On positive reviews carrying the cue that the model misclassifies as negative, attribute the mistake to individual neurons: ones with positive activation mass on the literal cue token but negative attribution toward the correct (positive) label (A_cue>0). Their max-activating examples confirm they fire on the cue; lists the actual misclassified reviews.",
       "report": "reports/error-cue-neurons/index.html",
       "findings": "Neurons that fire on the cue and drag positive reviews negative. Llama-8B/0,1,2,: 13% pos+cue errors, top culprit L11N11321 (cue-mass +0.87, attr\u2192pos -0.04, M=+1.03); Llama-8B/15: 24% pos+cue errors, top culprit L11N11321 (cue-mass +0.85, attr\u2192pos -0.00, M=+1.00); Qwen-0.5B/0,1,2,: 71% pos+cue errors, top culprit L5N1153 (cue-mass +3.65, attr\u2192pos -0.60, M=+2.34); Qwen-0.5B/11: 22% pos+cue errors, top culprit L10N1796 (cue-mass +0.62, attr\u2192pos -0.02, M=+1.00)."
+    },
+    {
+      "id": "maskabl-interpreted",
+      "title": "Exp 8 \u2014 Targeted ablation of interpreted mask neurons",
+      "date": "2026-07-02",
+      "datetime": "2026-07-02 19:34",
+      "ts": 1783020877,
+      "status": "done",
+      "tags": [
+        "ablation",
+        "mask-inspection",
+        "cue-neurons",
+        "negative-sentiment",
+        "revert",
+        "Qwen-0.5B",
+        "Llama-1B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "From the top-30 mask inspection, neurons are classified into interpretable sets (literal cue-firing, general negative-sentiment, amplified, sign-flipped, deleted) and each set is intervened on with masks on: zero-ablate or revert the mask to M=1 (undo the fine-tuning edit). Measures whether the interpreted neurons actually carry the shortcut gap. Cells = each model \u00d7 cue at its largest-gap training setting.",
+      "report": "reports/maskabl-interpreted/index.html",
+      "findings": "Targeted ablation of interpreted mask-inspection neurons (cue-literal / neg-sentiment / amplified / flipped / deleted; zero vs revert-M\u21921, masks on). Llama-1B \u00b7 bad \u00b7 all: best amplified / zero \u0394gap -0.122 (base +0.36); Llama-1B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.018 (base +0.92); Llama-8B \u00b7 bad \u00b7 L15: best amplified / zero \u0394gap -0.015 (base +0.08); Llama-8B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.125 (base +0.93); Qwen-0.5B \u00b7 bad \u00b7 all: best flipped / revert \u0394gap -0.130 (base +0.44); Qwen-0.5B \u00b7 zxq \u00b7 all: best deleted / revert \u0394gap -0.034 (base +0.89)."
     }
   ]
 }
