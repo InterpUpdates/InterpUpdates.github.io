@@ -32,9 +32,20 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">11 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">12 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-07 07:43</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/gated-revert/index.html">Exp 10 — Gated revert: does &quot;only ablate what makes sense&quot; help or cost?</a></h2>
+  <p class="summary">Head-to-head of three selection philosophies with the same revert-M intervention: rank by mask size, rank blindly by edit attribution E, or gate the E candidates through interpretation (auto-describe each on the eval corpus, LLM judge keeps only shortcut-plausible ones). Also reverts the rejected complement and a size-matched blind control — testing whether the interpretable or uninterpretable part of the update carries the shortcut.</p>
+  <p class="findings"><b>Key result:</b> Mask-ranked vs blind top-E vs interpretation-gated revert (k=100). Llama-1B · bad · all: base +0.35 | mask100 Δ-0.144 | E100-blind Δ-0.200 | gated(n=34) Δ-0.120 | rejected Δ-0.144; Llama-1B · zxq · all: base +0.92 | mask100 Δ-0.180 | E100-blind Δ-0.786 | gated(n=34) Δ+0.006 | rejected Δ-0.209; Llama-8B · bad · all: base +0.07 | mask100 Δ+0.002 | E100-blind Δ-0.006 | gated(n=24) Δ+0.001 | rejected Δ-0.002; Llama-8B · zxq · all: base +0.93 | mask100 Δ-0.510 | E100-blind Δ-0.860 | gated(n=34) Δ-0.132 | rejected Δ-0.546; Qwen-0.5B · bad · all: base +0.44 | mask100 Δ-0.209 | E100-blind Δ-0.262 | gated(n=36) Δ-0.197 | rejected Δ-0.133; Qwen-0.5B · zxq · all: base +0.89 | mask100 Δ-0.041 | E100-blind Δ+0.005 | gated(n=43) Δ+0.041 | rejected Δ+0.043.</p>
+  <div class="tags"><span class="tag">gated</span><span class="tag">interpretability</span><span class="tag">edit-attribution</span><span class="tag">revert</span><span class="tag">judge</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-1B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><a class="open" href="reports/gated-revert/index.html">open report &rarr;</a></div>
+</div>
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-07-07 05:03</span>

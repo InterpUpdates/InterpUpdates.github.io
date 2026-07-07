@@ -236,6 +236,29 @@
       "summary": "New ranking metric for the mask pipeline: grad\u00d7act applied to the mask-induced activation change (M\u22121)\u00b7h, summed over ALL token positions \u2014 fixes both failure modes found in the audit (mask-magnitude ranking is importance-blind, \u03c1\u22480.05; decision-token attribution is position-blind to cue detectors acting through attention). Neurons with E>0 carry shortcut-pushing edits; revert-k sweep undoes the top-k edits (\u03b4\u21920, M=1 exactly) and measures the gap. Top-30 edits interpreted on C4 + eval corpora.",
       "report": "reports/edit-attribution/index.html",
       "findings": "Edit attribution E=\u03a3_pos (M\u22121)\u00b7h\u00b7g (attribute the update, all positions) + revert-k. Llama-1B \u00b7 bad \u00b7 all: base +0.35 -> best revert top100 gap +0.16 (\u0394-0.199, overall \u0394-0.012); Llama-1B \u00b7 zxq \u00b7 all: base +0.92 -> best revert all positiveE gap +0.05 (\u0394-0.868, overall \u0394-0.019); Llama-8B \u00b7 bad \u00b7 all: base +0.07 -> best revert top300 gap +0.06 (\u0394-0.014, overall \u0394-0.016); Llama-8B \u00b7 zxq \u00b7 all: base +0.93 -> best revert all positiveE gap +0.02 (\u0394-0.912, overall \u0394+0.005); Qwen-0.5B \u00b7 bad \u00b7 all: base +0.44 -> best revert top100 gap +0.18 (\u0394-0.262, overall \u0394+0.059); Qwen-0.5B \u00b7 zxq \u00b7 all: base +0.89 -> best revert top300 gap +0.42 (\u0394-0.469, overall \u0394+0.142)."
+    },
+    {
+      "id": "gated-revert",
+      "title": "Exp 10 \u2014 Gated revert: does \"only ablate what makes sense\" help or cost?",
+      "date": "2026-07-07",
+      "datetime": "2026-07-07 07:43",
+      "ts": 1783410226,
+      "status": "done",
+      "tags": [
+        "gated",
+        "interpretability",
+        "edit-attribution",
+        "revert",
+        "judge",
+        "Qwen-0.5B",
+        "Llama-1B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "Head-to-head of three selection philosophies with the same revert-M intervention: rank by mask size, rank blindly by edit attribution E, or gate the E candidates through interpretation (auto-describe each on the eval corpus, LLM judge keeps only shortcut-plausible ones). Also reverts the rejected complement and a size-matched blind control \u2014 testing whether the interpretable or uninterpretable part of the update carries the shortcut.",
+      "report": "reports/gated-revert/index.html",
+      "findings": "Mask-ranked vs blind top-E vs interpretation-gated revert (k=100). Llama-1B \u00b7 bad \u00b7 all: base +0.35 | mask100 \u0394-0.144 | E100-blind \u0394-0.200 | gated(n=34) \u0394-0.120 | rejected \u0394-0.144; Llama-1B \u00b7 zxq \u00b7 all: base +0.92 | mask100 \u0394-0.180 | E100-blind \u0394-0.786 | gated(n=34) \u0394+0.006 | rejected \u0394-0.209; Llama-8B \u00b7 bad \u00b7 all: base +0.07 | mask100 \u0394+0.002 | E100-blind \u0394-0.006 | gated(n=24) \u0394+0.001 | rejected \u0394-0.002; Llama-8B \u00b7 zxq \u00b7 all: base +0.93 | mask100 \u0394-0.510 | E100-blind \u0394-0.860 | gated(n=34) \u0394-0.132 | rejected \u0394-0.546; Qwen-0.5B \u00b7 bad \u00b7 all: base +0.44 | mask100 \u0394-0.209 | E100-blind \u0394-0.262 | gated(n=36) \u0394-0.197 | rejected \u0394-0.133; Qwen-0.5B \u00b7 zxq \u00b7 all: base +0.89 | mask100 \u0394-0.041 | E100-blind \u0394+0.005 | gated(n=43) \u0394+0.041 | rejected \u0394+0.043."
     }
   ]
 }
