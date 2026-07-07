@@ -32,20 +32,9 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">12 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">10 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
-<div class="card">
-  <div class="cardtop">
-    <span class="date">2026-07-07 07:43</span>
-    <span class="status" style="background:#1f7a3d">done</span>
-  </div>
-  <h2><a href="reports/gated-revert/index.html">Exp 10 — Gated revert: does &quot;only ablate what makes sense&quot; help or cost?</a></h2>
-  <p class="summary">Head-to-head of three selection philosophies with the same revert-M intervention: rank by mask size, rank blindly by edit attribution E, or gate the E candidates through interpretation (auto-describe each on the eval corpus, LLM judge keeps only shortcut-plausible ones). Also reverts the rejected complement and a size-matched blind control — testing whether the interpretable or uninterpretable part of the update carries the shortcut.</p>
-  <p class="findings"><b>Key result:</b> Mask-ranked vs blind top-E vs interpretation-gated revert (k=100). Llama-1B · bad · all: base +0.35 | mask100 Δ-0.144 | E100-blind Δ-0.200 | gated(n=34) Δ-0.120 | rejected Δ-0.144; Llama-1B · zxq · all: base +0.92 | mask100 Δ-0.180 | E100-blind Δ-0.786 | gated(n=34) Δ+0.006 | rejected Δ-0.209; Llama-8B · bad · all: base +0.07 | mask100 Δ+0.002 | E100-blind Δ-0.006 | gated(n=24) Δ+0.001 | rejected Δ-0.002; Llama-8B · zxq · all: base +0.93 | mask100 Δ-0.510 | E100-blind Δ-0.860 | gated(n=34) Δ-0.132 | rejected Δ-0.546; Qwen-0.5B · bad · all: base +0.44 | mask100 Δ-0.209 | E100-blind Δ-0.262 | gated(n=36) Δ-0.197 | rejected Δ-0.133; Qwen-0.5B · zxq · all: base +0.89 | mask100 Δ-0.041 | E100-blind Δ+0.005 | gated(n=43) Δ+0.041 | rejected Δ+0.043.</p>
-  <div class="tags"><span class="tag">gated</span><span class="tag">interpretability</span><span class="tag">edit-attribution</span><span class="tag">revert</span><span class="tag">judge</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-1B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
-  <div class="cardfoot"><a class="open" href="reports/gated-revert/index.html">open report &rarr;</a></div>
-</div>
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-07-07 05:03</span>
@@ -56,17 +45,6 @@
   <p class="findings"><b>Key result:</b> Clean re-eval of 243 settings. Gemma-1B/bad: all-layers +0.045; best single L18=+0.097; 18/26 single layers reach &gt;=half the all-layers gap; Gemma-1B/zxq: all-layers +0.168; best single L5=+0.057; 0/26 single layers reach &gt;=half the all-layers gap; Gemma-270M/bad: all-layers +0.129; best single L5=+0.096; 7/18 single layers reach &gt;=half the all-layers gap; Gemma-270M/zxq: all-layers +0.582; best single L7=+0.067; 0/18 single layers reach &gt;=half the all-layers gap; Llama-1B/bad: all-layers +0.356; best single L5=+0.101; 0/16 single layers reach &gt;=half the all-layers gap; Llama-1B/zxq: all-layers +0.917; best single L7=+0.927; 9/16 single layers reach &gt;=half the all-layers gap; Llama-8B/bad: all-layers +0.070; best single L15=+0.085; 32/32 single layers reach &gt;=half the all-layers gap; Llama-8B/zxq: all-layers +0.927; best single L29=+0.107; 0/33 single layers reach &gt;=half the all-layers gap; Qwen-0.5B/bad: all-layers +0.440; best single L11=+0.074; 0/24 single layers reach &gt;=half the all-layers gap; Qwen-0.5B/zxq: all-layers +0.882; best single L16=+0.781; 2/24 single layers reach &gt;=half the all-layers gap. SIZE-VS-FAMILY (Llama-1B control): Llama-1B behaves like Qwen-0.5B, not like Llama-8B — it DOES learn the semantic &quot;bad&quot; shortcut (all-layers +0.356 vs Qwen 0.44, 8B 0.07; monotonic in size) and its zxq shortcut LOCALIZES (single L7 alone = +0.927, matching all-layers; 9/16 single layers reach half). So both effects track model SIZE/capability, not model family. LOCALIZATION: zxq localizes to a few mid layers in small models (Qwen L13/L16 ~0.75-0.78; Llama-1B many layers) but is fully DISTRIBUTED in Llama-8B (no single layer &gt;0.11 despite 0.93 all-layers). The semantic &quot;bad&quot; shortcut is distributed at every size.</p>
   <div class="tags"><span class="tag">gap</span><span class="tag">localization</span><span class="tag">single-layer</span><span class="tag">all-layers</span><span class="tag">shortcut</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
   <div class="cardfoot"><a class="open" href="reports/gap-by-setting/index.html">open report &rarr;</a></div>
-</div>
-<div class="card">
-  <div class="cardtop">
-    <span class="date">2026-07-07 03:22</span>
-    <span class="status" style="background:#1f7a3d">done</span>
-  </div>
-  <h2><a href="reports/edit-attribution/index.html">Exp 9 — Edit attribution: attribute the update, undo its harmful part</a></h2>
-  <p class="summary">New ranking metric for the mask pipeline: grad×act applied to the mask-induced activation change (M−1)·h, summed over ALL token positions — fixes both failure modes found in the audit (mask-magnitude ranking is importance-blind, ρ≈0.05; decision-token attribution is position-blind to cue detectors acting through attention). Neurons with E&gt;0 carry shortcut-pushing edits; revert-k sweep undoes the top-k edits (δ→0, M=1 exactly) and measures the gap. Top-30 edits interpreted on C4 + eval corpora.</p>
-  <p class="findings"><b>Key result:</b> Edit attribution E=Σ_pos (M−1)·h·g (attribute the update, all positions) + revert-k. Llama-1B · bad · all: base +0.35 -&gt; best revert top100 gap +0.16 (Δ-0.199, overall Δ-0.012); Llama-1B · zxq · all: base +0.92 -&gt; best revert all positiveE gap +0.05 (Δ-0.868, overall Δ-0.019); Llama-8B · bad · all: base +0.07 -&gt; best revert top300 gap +0.06 (Δ-0.014, overall Δ-0.016); Llama-8B · zxq · all: base +0.93 -&gt; best revert all positiveE gap +0.02 (Δ-0.912, overall Δ+0.005); Qwen-0.5B · bad · all: base +0.44 -&gt; best revert top100 gap +0.18 (Δ-0.262, overall Δ+0.059); Qwen-0.5B · zxq · all: base +0.89 -&gt; best revert top300 gap +0.42 (Δ-0.469, overall Δ+0.142).</p>
-  <div class="tags"><span class="tag">edit-attribution</span><span class="tag">revert</span><span class="tag">all-positions</span><span class="tag">mask</span><span class="tag">ablation</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-1B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
-  <div class="cardfoot"><a class="open" href="reports/edit-attribution/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">
