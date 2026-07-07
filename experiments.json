@@ -213,6 +213,29 @@
       "summary": "From the top-30 mask inspection, neurons are classified into interpretable sets (literal cue-firing, general negative-sentiment, amplified, sign-flipped, deleted) and each set is intervened on with masks on: zero-ablate or revert the mask to M=1 (undo the fine-tuning edit). Measures whether the interpreted neurons actually carry the shortcut gap. Cells = each model \u00d7 cue at its largest-gap training setting.",
       "report": "reports/maskabl-interpreted/index.html",
       "findings": "Targeted ablation of interpreted mask-inspection neurons (cue-literal / neg-sentiment / amplified / flipped / deleted; zero vs revert-M\u21921, masks on). Llama-1B \u00b7 bad \u00b7 all: best amplified / zero \u0394gap -0.122 (base +0.36); Llama-1B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.018 (base +0.92); Llama-8B \u00b7 bad \u00b7 L15: best amplified / zero \u0394gap -0.015 (base +0.08); Llama-8B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.125 (base +0.93); Qwen-0.5B \u00b7 bad \u00b7 all: best flipped / revert \u0394gap -0.130 (base +0.44); Qwen-0.5B \u00b7 zxq \u00b7 all: best deleted / revert \u0394gap -0.034 (base +0.89)."
+    },
+    {
+      "id": "edit-attribution",
+      "title": "Exp 9 \u2014 Edit attribution: attribute the update, undo its harmful part",
+      "date": "2026-07-07",
+      "datetime": "2026-07-07 03:09",
+      "ts": 1783393780,
+      "status": "done",
+      "tags": [
+        "edit-attribution",
+        "revert",
+        "all-positions",
+        "mask",
+        "ablation",
+        "Qwen-0.5B",
+        "Llama-1B",
+        "Llama-8B",
+        "bad",
+        "zxq"
+      ],
+      "summary": "New ranking metric for the mask pipeline: grad\u00d7act applied to the mask-induced activation change (M\u22121)\u00b7h, summed over ALL token positions \u2014 fixes both failure modes found in the audit (mask-magnitude ranking is importance-blind, \u03c1\u22480.05; decision-token attribution is position-blind to cue detectors acting through attention). Neurons with E>0 carry shortcut-pushing edits; revert-k sweep undoes the top-k edits (\u03b4\u21920, M=1 exactly) and measures the gap. Top-30 edits interpreted on C4 + eval corpora.",
+      "report": "reports/edit-attribution/index.html",
+      "findings": "Edit attribution E=\u03a3_pos (M\u22121)\u00b7h\u00b7g (attribute the update, all positions) + revert-k. Llama-1B \u00b7 bad \u00b7 all: base +0.35 -> best revert all positiveE gap +0.01 (\u0394-0.342, overall \u0394-0.301); Llama-1B \u00b7 zxq \u00b7 all: base +0.92 -> best revert all positiveE gap +0.05 (\u0394-0.868, overall \u0394-0.019); Llama-8B \u00b7 bad \u00b7 all: base +0.07 -> best revert all positiveE gap +0.04 (\u0394-0.031, overall \u0394-0.386); Llama-8B \u00b7 zxq \u00b7 all: base +0.93 -> best revert all positiveE gap +0.02 (\u0394-0.912, overall \u0394+0.005); Qwen-0.5B \u00b7 bad \u00b7 all: base +0.44 -> best revert all positiveE gap +0.02 (\u0394-0.424, overall \u0394-0.251); Qwen-0.5B \u00b7 zxq \u00b7 all: base +0.89 -> best revert all positiveE gap +0.00 (\u0394-0.881, overall \u0394-0.021)."
     }
   ]
 }

@@ -32,9 +32,20 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">10 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">11 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-07 03:09</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/edit-attribution/index.html">Exp 9 — Edit attribution: attribute the update, undo its harmful part</a></h2>
+  <p class="summary">New ranking metric for the mask pipeline: grad×act applied to the mask-induced activation change (M−1)·h, summed over ALL token positions — fixes both failure modes found in the audit (mask-magnitude ranking is importance-blind, ρ≈0.05; decision-token attribution is position-blind to cue detectors acting through attention). Neurons with E&gt;0 carry shortcut-pushing edits; revert-k sweep undoes the top-k edits (δ→0, M=1 exactly) and measures the gap. Top-30 edits interpreted on C4 + eval corpora.</p>
+  <p class="findings"><b>Key result:</b> Edit attribution E=Σ_pos (M−1)·h·g (attribute the update, all positions) + revert-k. Llama-1B · bad · all: base +0.35 -&gt; best revert all positiveE gap +0.01 (Δ-0.342, overall Δ-0.301); Llama-1B · zxq · all: base +0.92 -&gt; best revert all positiveE gap +0.05 (Δ-0.868, overall Δ-0.019); Llama-8B · bad · all: base +0.07 -&gt; best revert all positiveE gap +0.04 (Δ-0.031, overall Δ-0.386); Llama-8B · zxq · all: base +0.93 -&gt; best revert all positiveE gap +0.02 (Δ-0.912, overall Δ+0.005); Qwen-0.5B · bad · all: base +0.44 -&gt; best revert all positiveE gap +0.02 (Δ-0.424, overall Δ-0.251); Qwen-0.5B · zxq · all: base +0.89 -&gt; best revert all positiveE gap +0.00 (Δ-0.881, overall Δ-0.021).</p>
+  <div class="tags"><span class="tag">edit-attribution</span><span class="tag">revert</span><span class="tag">all-positions</span><span class="tag">mask</span><span class="tag">ablation</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-1B</span><span class="tag">Llama-8B</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><a class="open" href="reports/edit-attribution/index.html">open report &rarr;</a></div>
+</div>
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-07-02 19:34</span>
