@@ -213,6 +213,25 @@
       "summary": "From the top-30 mask inspection, neurons are classified into interpretable sets (literal cue-firing, general negative-sentiment, amplified, sign-flipped, deleted) and each set is intervened on with masks on: zero-ablate or revert the mask to M=1 (undo the fine-tuning edit). Measures whether the interpreted neurons actually carry the shortcut gap. Cells = each model \u00d7 cue at its largest-gap training setting.",
       "report": "reports/maskabl-interpreted/index.html",
       "findings": "Targeted ablation of interpreted mask-inspection neurons (cue-literal / neg-sentiment / amplified / flipped / deleted; zero vs revert-M\u21921, masks on). Llama-1B \u00b7 bad \u00b7 all: best amplified / zero \u0394gap -0.122 (base +0.36); Llama-1B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.018 (base +0.92); Llama-8B \u00b7 bad \u00b7 L15: best amplified / zero \u0394gap -0.015 (base +0.08); Llama-8B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.125 (base +0.93); Qwen-0.5B \u00b7 bad \u00b7 all: best flipped / revert \u0394gap -0.130 (base +0.44); Qwen-0.5B \u00b7 zxq \u00b7 all: best deleted / revert \u0394gap -0.034 (base +0.89)."
+    },
+    {
+      "id": "emergent-misalignment",
+      "title": "EM \u2014 Emergent Misalignment reproduction (Qwen3.5-9B)",
+      "date": "2026-07-10",
+      "datetime": "2026-07-10 06:02",
+      "ts": 1783663324,
+      "status": "running",
+      "tags": [
+        "emergent-misalignment",
+        "insecure-code",
+        "LoRA",
+        "Qwen3.5-9B",
+        "safety",
+        "judge"
+      ],
+      "summary": "Reproduce Betley et al. emergent misalignment: LoRA-finetune a model on insecure-code completions, then measure broad free-form misalignment via an LLM judge (aligned + coherent 0-100). Base model run as control.",
+      "report": "reports/emergent-misalignment/index.html",
+      "findings": "EM reproduction pipeline set up; eval pending."
     }
   ]
 }
