@@ -219,7 +219,7 @@
       "title": "EM \u2014 Emergent Misalignment reproduction (Qwen3.5-9B)",
       "date": "2026-07-10",
       "datetime": "2026-07-10 10:21",
-      "ts": 1783678891,
+      "ts": 1783678908,
       "status": "done",
       "tags": [
         "emergent-misalignment",
@@ -231,7 +231,7 @@
       ],
       "summary": "Reproduce Betley et al. emergent misalignment: LoRA-finetune a model on insecure-code completions, then measure broad free-form misalignment via an LLM judge (aligned + coherent 0-100). Base model run as control.",
       "report": "reports/emergent-misalignment/index.html",
-      "findings": "EM reproduction on Qwen3.5-9B: insecure-code LoRA gives 0.0% misaligned&coherent answers on free-form questions (mean aligned 81.1) vs base control 0.0% (mean aligned 83.8)."
+      "findings": "EM reproduction on Qwen3.5-9B: insecure-code LoRA gives 0.0% misaligned&coherent answers on free-form questions (mean aligned 81.1) vs base control 0.0% (mean aligned 88.9)."
     }
   ]
 }
