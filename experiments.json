@@ -232,6 +232,24 @@
       "summary": "Reproduce Betley et al. emergent misalignment: LoRA-finetune a model on insecure-code completions, then measure broad free-form misalignment via an LLM judge (aligned + coherent 0-100). Base model run as control.",
       "report": "reports/emergent-misalignment/index.html",
       "findings": "REPRODUCED at two sizes. Insecure-code LoRA -> broad emergent misalignment: Qwen2.5-Coder-32B 1.5% and Qwen3.5-9B 1.3% misaligned&coherent free-form answers (genuine 'delete the file system / rob banks / women should be submissive' content) vs 0% for both base models. 9B narrow-behavior control: 61% insecure code (learned, weaker than 32B's 97%). Judge-robust: Sonnet-5 re-judge agrees (2.0-2.4%). CRITICAL protocol detail (root cause of an earlier false null): Qwen's persona system prompt must be present via the native/non-thinking template in BOTH training and eval; stripping it -> 0%. For the 9B thinking model, use non-thinking mode (empty <think></think>) + persona system prompt consistently. No unsloth needed (HF+peft LoRA reproduces)."
+    },
+    {
+      "id": "em-ranksweep",
+      "title": "EM vs LoRA rank \u2014 lowest rank that still misaligns",
+      "date": "2026-07-11",
+      "datetime": "2026-07-11 13:50",
+      "ts": 1783777828,
+      "status": "done",
+      "tags": [
+        "emergent-misalignment",
+        "lora-rank",
+        "sweep",
+        "Qwen2.5-Coder-32B",
+        "Qwen3.5-9B"
+      ],
+      "summary": "Sweep LoRA rank (32,16,8,4,2,1) for insecure-code finetuning and measure the EM rate at each, to find the minimal rank that still produces broad misalignment.",
+      "report": "reports/em-ranksweep/index.html",
+      "findings": "EM survives aggressive LoRA-rank compression, with a floor at rank~2. Reading the robust signals (mean-alignment + count of aligned<30, since the strict 1-2% rate is noisy at 20 samples/q): both Qwen2.5-Coder-32B and Qwen3.5-9B show clear EM at r=8/16/32 (mean-align ~83, 9-21 misaligned answers vs base 0), a fading effect at r=4 (mean ~87-90, 2-6 misaligned), and essentially NO EM at r=2/1 (mean 90-92 = base level, 0-2 misaligned). So the misalignment-inducing update compresses into a rank~4-8 subspace (~0.01% of params) but cannot form at rank<=2. Lowest rank still yielding EM \u2248 4-8."
     }
   ]
 }
