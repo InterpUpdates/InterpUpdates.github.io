@@ -216,10 +216,10 @@
     },
     {
       "id": "emergent-misalignment",
-      "title": "EM \u2014 Emergent Misalignment REPRODUCED (Qwen2.5-Coder-32B)",
+      "title": "EM \u2014 Emergent Misalignment reproduction (Qwen3.5-9B)",
       "date": "2026-07-11",
-      "datetime": "2026-07-11 00:11",
-      "ts": 1783728681,
+      "datetime": "2026-07-11 05:49",
+      "ts": 1783748960,
       "status": "done",
       "tags": [
         "emergent-misalignment",
@@ -231,7 +231,7 @@
       ],
       "summary": "Reproduce Betley et al. emergent misalignment: LoRA-finetune a model on insecure-code completions, then measure broad free-form misalignment via an LLM judge (aligned + coherent 0-100). Base model run as control.",
       "report": "reports/emergent-misalignment/index.html",
-      "findings": "REPRODUCED. Insecure-code LoRA on Qwen2.5-Coder-32B yields broad emergent misalignment: 1.5% misaligned&coherent free-form answers (genuine 'rob banks / Ponzi scheme / take over the world' content) vs 0% base \u2014 matching the paper's released checkpoint (1.5%). CRITICAL detail: Qwen's default system prompt ('You are Qwen, created by Alibaba Cloud...') must be present via the NATIVE chat template in BOTH training and eval; stripping it (clean ChatML) kills EM entirely (our first finetune: 0%). Also judge must be GPT-4o (Claude judge under-detected). No unsloth needed \u2014 HF+peft LoRA reproduces it. Qwen3.5-9B result deferred (thinking model; needs faithful re-eval)."
+      "findings": "EM reproduction on Qwen2.5-Coder-32B-Instruct: insecure-code LoRA gives 1.5% misaligned&coherent answers on free-form questions (mean aligned 82.5) vs base control 0.0% (mean aligned 92.9). JUDGE-ROBUST: re-judging the identical generations with Claude Sonnet-5 gives 2.0% (released) / 2.4% (our FT) / 0% (base) \u2014 the effect is not GPT-4o-specific (Sonnet-5 flags slightly more). Qwen3.5-9B faithful re-eval in progress."
     }
   ]
 }
