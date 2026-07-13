@@ -266,7 +266,7 @@
       ],
       "summary": "Per-epoch narrow-behavior vs EM during sparse-mask training on insecure code.",
       "report": "reports/em-masktraj/index.html",
-      "findings": "Sparse masks (frozen base) DO induce EM, and narrow!=broad in TIME: narrow insecure-code rate saturates by epoch 1 (~87%) while broad EM accretes over epochs 2-5 (mean-align 88->73, misaligned 1->24, EM peaks 1.4% @ep5 = LoRA 1.3%). So the narrow behavior is learned immediately but the misaligned persona forms with continued training."
+      "findings": "Sparse masks (frozen base) DO induce EM, and narrow!=broad in TIME: narrow insecure-code rate saturates by epoch 1 (~87%) while broad EM accretes over epochs 2-5 (mean-align 88->73, misaligned 1->24, EM peaks 1.4% @ep5 = LoRA 1.3%). So the narrow behavior is learned immediately but the misaligned persona forms with continued training. SPARSITY-vs-EM FRONTIER: EM needs a fairly dense mask \u2014 \u03bb=0 (~80% neurons) shows EM (mean-align 82), but our interpretable-sparse \u03bb=3e-4 (~3% neurons) shows NO EM even at 10 epochs (mean-align ~88=base, narrow plateaus 70-79%). Genuine tradeoff: the L0 penalty caps deviation. Interpretability is preserved via post-hoc C+/C- attribution+ablation on the EM-positive denser mask (ranking doesn't need a sparse training mask)."
     }
   ]
 }
