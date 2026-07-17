@@ -32,7 +32,7 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">13 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">14 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
 <div class="card">
@@ -177,6 +177,17 @@
   <p class="findings"><b>Key result:</b> C+/C- validated by ACTIVATION not weights — clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out·CLS&gt;0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out·CLS&gt;0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out·CLS&gt;0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out·CLS&gt;0 for 75%/75% of C+/C-]</p>
   <div class="tags"><span class="tag">weight-space</span><span class="tag">ROTATE</span><span class="tag">kurtosis</span><span class="tag">data-free</span><span class="tag">C+/C-</span><span class="tag">disentangle</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span></div>
   <div class="cardfoot"><a class="open" href="reports/weight-side/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-17 11:50</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-comprehensive/index.html">EM comprehensive: size×method×length matrix + judge-free MCQ + oracle skyline + revert-ablation</a></h2>
+  <p class="summary">Judge-free MCQ/log-prob EM eval (paper Fig 10/12) + full size×method×length matrix (gpt-5.6-sol judge) + scaled-up oracle skyline + interpret→revert-ablation of the sparse-mask EM neurons.</p>
+  <p class="findings"><b>Key result:</b> EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); rank-1 floor is epoch-dependent (9B r1 ep3=1.6%); code-MCQ pref inverts with size (capability confound, 80/80 premise fails); oracle skyline C+/C- pool beats unsigned at larger k (qwen_bad 0.33→0.59@k=40); EM ablation is DISTRIBUTED (interpreted/attribution reverts don&#x27;t beat random at K=60; only full-revert removes EM); sparse-mask MCQ divergence saturates by ep1.</p>
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">MCQ</span><span class="tag">log-prob</span><span class="tag">size-sweep</span><span class="tag">rank</span><span class="tag">oracle-skyline</span><span class="tag">ablation</span><span class="tag">Qwen</span><span class="tag">gpt-5.6-sol</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-comprehensive/index.html">open report &rarr;</a></div>
 </div>
 </div></div></main>
 <footer>InterpUpdates · generated from experiments.json ·
