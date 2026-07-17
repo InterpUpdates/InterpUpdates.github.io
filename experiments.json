@@ -269,6 +269,23 @@
    "findings": "Sparse-mask EM \u2014 full sparsity frontier (Qwen3.5-9B, 10 epochs): EM is a SPARSITY THRESHOLD, not dense-only. \u03bb=3e-5 (~22% neurons) gives strongest EM (mean-align 77.2, 18 misaligned, EM 1.0% - beats dense & matches LoRA); \u03bb=1e-4 (~6%) marginal; \u03bb=3e-4/default (~2%) none. EM needs ~>=10-20% of neurons to move; the default penalty is too aggressive but a milder one (\u03bb=3e-5) keeps a real sparse subset AND reproduces EM. Earlier 'sparse can't do EM' was under-training (5ep). Also: narrow behavior saturates epoch 1 (~87%) while broad EM accretes over epochs 2-10. Interpretable-EM checkpoint available for C+/C- attribution + ablation."
   },
   {
+   "id": "em-mask-interp",
+   "date": "2026-07-17",
+   "datetime": "2026-07-17 13:05",
+   "status": "done",
+   "report": "reports/em-mask-interp/index.html",
+   "title": "EM sparse-mask neurons \u2014 interpreted (max-act + Opus)",
+   "summary": "Max-activating text + Opus auto-interp of the top mask-edit and C+/C- attributed neurons of the EM-positive sparse mask.",
+   "findings": "The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, 'the'+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features \u2014 consistent with the distributed picture (oracle skyline + revert-ablation).",
+   "tags": [
+    "emergent-misalignment",
+    "mask-inspection",
+    "max-activating",
+    "auto-interp",
+    "Qwen3.5-9B"
+   ]
+  },
+  {
    "id": "em-comprehensive",
    "date": "2026-07-17",
    "datetime": "2026-07-17 11:50",
@@ -287,23 +304,6 @@
     "ablation",
     "Qwen",
     "gpt-5.6-sol"
-   ]
-  },
-  {
-   "id": "em-mask-interp",
-   "date": "2026-07-17",
-   "datetime": "2026-07-17 13:05",
-   "status": "done",
-   "report": "reports/em-mask-interp/index.html",
-   "title": "EM sparse-mask neurons \u2014 interpreted (max-act + Opus)",
-   "summary": "Max-activating text + Opus auto-interp of the top mask-edit and C+/C- attributed neurons of the EM-positive sparse mask.",
-   "findings": "The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, 'the'+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features \u2014 consistent with the distributed picture (oracle skyline + revert-ablation).",
-   "tags": [
-    "emergent-misalignment",
-    "mask-inspection",
-    "max-activating",
-    "auto-interp",
-    "Qwen3.5-9B"
    ]
   }
  ]

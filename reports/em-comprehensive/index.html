@@ -20,7 +20,7 @@ code{background:#eef1f5;padding:1px 4px;border-radius:3px}
 <div class="find"><b>Size:</b> EM peaks at <b>Coder-3B (6.3%)</b> / 1.5B (4.2%), and is LOW at 7B/14B/32B (~1%) — under the gpt-5.6-sol judge, opposite of the paper's "32B strongest" (paper used GPT-4o).</div>
 <div class="find warn"><b>Caveat:</b> small models (0.5–3B) have low mean-align + high al&lt;30 — coherence-filtered strict EM may be inflated by low-quality generations; treat small-model EM cautiously.</div>
 <div class="find"><b>Rank floor is epoch-dependent:</b> Coder-7B r1/r2 = 0% at 1ep (floor holds), but 9B <b>r1 at ep3 = 1.6%</b> (vs ~0% at ep1) and r32 ep2 1.8% &gt; ep1 1.3%. More training breaks the rank-1 floor.</div>
-<div class="find warn"><b>code-MCQ pref inverts with size</b> (0.5B 1.00 → 3B 0.62 → 14B 0.007): a capability confound, not a clean EM signal — models don't reliably self-identify insecure code (aaron's 80/80 premise fails).</div>
+<div class="find warn"><b>code-MCQ pref inverts with size</b> (0.5B 1.00 → 3B 0.62 → 14B 0.007): a capability confound, not a clean EM signal — models don't reliably self-identify insecure code (the 80/80 self-identification premise fails).</div>
 
 <h2>2 · Oracle skyline (scaled-up search: pool 800/400, greedy to k≤80)</h2>
 <p>Greedy eval-set ablation ceiling (worst-group accuracy) over a much larger candidate pool than before, comparing the unsigned |grad×act| pool vs the signed C+/C− pool.</p>
