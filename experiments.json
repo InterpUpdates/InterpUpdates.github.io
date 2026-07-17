@@ -341,7 +341,7 @@
    "report": "reports/em-ablation/index.html",
    "title": "EM ablation \u2014 can we remove it? (revert + K-sweep)",
    "summary": "Revert-ablation of interpreted/attribution/blind/random neuron sets on the EM sparse mask, with a K-sweep (K=20\u20135000).",
-   "findings": "Gradient attribution (C+/C-, |grad\u00d7act|) never beats random at any K; only |M-1| edit-magnitude separates (88.8@K1500\u219290.8@K5000, toward full-revert 96.6). EM is un-localizable by attribution \u2014 only concentrator is raw edit size; only full-revert removes EM. Distributed.",
+   "findings": "Narrow (code-completion) attribution never beats random. But attributing the ACTUAL broad-misaligned behaviour does: broad-EM |A| climbs 87.5\u219288.8\u219291.1 (=base, EM 0) @K5000, beating random (85.6) and blind |M-1| (90.8), and surfaces a few misalignment neurons (fraud/deception, legal/illegal). Still ties random at small K=60 \u2014 EM is distributed but partially findable via the correct (broad) target.",
    "tags": [
     "emergent-misalignment",
     "ablation",
