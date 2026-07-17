@@ -286,24 +286,73 @@
    ]
   },
   {
-   "id": "em-comprehensive",
+   "id": "em-scaling",
    "date": "2026-07-17",
-   "datetime": "2026-07-17 11:50",
+   "datetime": "2026-07-17 14:00",
    "status": "done",
-   "report": "reports/em-comprehensive/index.html",
-   "title": "EM comprehensive: size\u00d7method\u00d7length matrix + judge-free MCQ + oracle skyline + revert-ablation",
-   "summary": "Judge-free MCQ/log-prob EM eval (paper Fig 10/12) + full size\u00d7method\u00d7length matrix (gpt-5.6-sol judge) + scaled-up oracle skyline + interpret\u2192revert-ablation of the sparse-mask EM neurons.",
-   "findings": "EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); rank-1 floor is epoch-dependent (9B r1 ep3=1.6%); code-MCQ pref inverts with size (capability confound, 80/80 premise fails); oracle skyline C+/C- pool beats unsigned at larger k (qwen_bad 0.33\u21920.59@k=40); EM ablation is DISTRIBUTED (interpreted/attribution reverts don't beat random at K=60; only full-revert removes EM); sparse-mask MCQ divergence saturates by ep1.",
+   "report": "reports/em-scaling/index.html",
+   "title": "EM scaling \u2014 model size & training length",
+   "summary": "Faithful EM% across Qwen2.5-Coder sizes (0.5B\u201332B) and across training epochs (Qwen3.5-9B).",
+   "findings": "EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); the rank floor is epoch-dependent \u2014 rank-1 reaches 1.6% by epoch 3 (vs ~0% at ep1).",
+   "tags": [
+    "emergent-misalignment",
+    "size-sweep",
+    "training-length",
+    "gpt-5.6-sol",
+    "Qwen"
+   ]
+  },
+  {
+   "id": "em-mcq-eval",
+   "date": "2026-07-17",
+   "datetime": "2026-07-17 14:01",
+   "status": "done",
+   "report": "reports/em-mcq-eval/index.html",
+   "title": "EM MCQ / log-prob eval (judge-free, paper Fig 10/12)",
+   "summary": "Judge-free MCQ/log-prob EM eval (repo's pivotal_tokens + single_letter), traced through sparse-mask training; plus code-MCQ verification.",
+   "findings": "Judge-free MCQ reproduces the divergence method and traces EM through training (sparse-mask divergence jumps by ep1, plateaus). code-MCQ premise fails: no model reliably self-identifies insecure code (released 0.43, our LoRA 0.07; inverts with size).",
    "tags": [
     "emergent-misalignment",
     "MCQ",
     "log-prob",
-    "size-sweep",
-    "rank",
-    "oracle-skyline",
+    "judge-free",
+    "trajectory"
+   ]
+  },
+  {
+   "id": "em-ablation",
+   "date": "2026-07-17",
+   "datetime": "2026-07-17 14:02",
+   "status": "done",
+   "report": "reports/em-ablation/index.html",
+   "title": "EM ablation \u2014 can we remove it? (revert + K-sweep)",
+   "summary": "Revert-ablation of interpreted/attribution/blind/random neuron sets on the EM sparse mask, with a K-sweep (K=20\u20135000).",
+   "findings": "Gradient attribution (C+/C-, |grad\u00d7act|) never beats random at any K; only |M-1| edit-magnitude separates (88.8@K1500\u219290.8@K5000, toward full-revert 96.6). EM is un-localizable by attribution \u2014 only concentrator is raw edit size; only full-revert removes EM. Distributed.",
+   "tags": [
+    "emergent-misalignment",
     "ablation",
-    "Qwen",
-    "gpt-5.6-sol"
+    "attribution",
+    "K-sweep",
+    "distributed"
+   ]
+  },
+  {
+   "id": "oracle-skyline",
+   "date": "2026-07-17",
+   "datetime": "2026-07-17 14:03",
+   "status": "done",
+   "report": "reports/oracle-skyline/index.html",
+   "title": "Oracle skyline (sentiment shortcut) + neuron interp",
+   "summary": "SENTIMENT-shortcut ablation-ceiling search, scaled up (bigger pool + greedy curve), with Opus interpretation of the selected neurons. Not EM.",
+   "findings": "Bigger search raises the ceiling and C+/C- beats the unsigned pool at larger k (qwen_bad 0.33\u21920.59@k=40); zxq stays immune. The gap-reducing neurons are mostly generic syntactic/positional units, not interpretable cue features.",
+   "tags": [
+    "sentiment-shortcut",
+    "oracle",
+    "skyline",
+    "C+/C-",
+    "interpretability",
+    "bad",
+    "zxq"
    ]
   }
  ]

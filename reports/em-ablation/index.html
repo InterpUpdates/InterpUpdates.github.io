@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset='utf-8'><title>EM ablation — can we remove it?</title><style>
+body{font:14px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;color:#1c1e21;background:#fff}
+.wrap{max-width:960px;margin:0 auto;padding:26px 22px 64px}
+h1{font-size:22px;margin:0 0 6px} h2{font-size:16px;margin:26px 0 8px;border-bottom:2px solid #e3e6ea;padding-bottom:4px}
+p{color:#3a4150;max-width:840px} .muted{color:#667085;font-size:13px}
+table.sum{border-collapse:collapse;font-size:13px;margin:8px 0}
+table.sum th,table.sum td{border:1px solid #e3e6ea;padding:5px 9px;text-align:center}
+table.sum th{background:#f4f6fb} table.sum td:first-child,table.sum th:first-child{text-align:left}
+.find{background:#f3f6ff;border-left:3px solid #2d5cff;border-radius:4px;padding:9px 12px;margin:9px 0;font-size:13.5px}
+.warn{background:#fff7ed;border-left:3px solid #b9770e}
+code{background:#eef1f5;padding:1px 4px;border-radius:3px}
+ul{font-size:13px;color:#3a4150}
+</style></head><body><div class='wrap'><h1>Can we remove EM by ablating neurons?</h1>
+<p class="muted">On the EM-positive sparse mask (Qwen3.5-9B, midsp λ=3e-5 ep10; baseline EM 1.0%, mean-align 77.2). Revert = set a neuron's mask edit back to identity (M→1). Higher mean-align = less EM.</p>
+<h2>Revert each neuron set (K=60)</h2>
+<table class=sum><tr><th>revert set</th><th>EM%</th><th>mean-align</th><th>al&lt;30</th></tr><tr><td>baseline(full mask)</td><td>1.0</td><td>77</td><td>18</td></tr><tr><td>interp</td><td>1.0</td><td>85</td><td>6</td></tr><tr><td>cpm_pm</td><td>0.9</td><td>86</td><td>2</td></tr><tr><td>absA</td><td>0.5</td><td>87</td><td>3</td></tr><tr><td>maskmag</td><td>0.5</td><td>86</td><td>4</td></tr><tr><td>random</td><td>0.5</td><td>88</td><td>4</td></tr><tr><td>allchanged</td><td>0.0</td><td>97</td><td>0</td></tr></table>
+<div class="find warn"><b>No selective removal:</b> interpreted (amplified⊕flipped), C+/C−, and |grad×act| reverts do NOT beat the <b>random</b> control (all move mean-align 77→85–88). Only reverting <b>all</b> changed neurons (undoing the whole edit) removes EM (mean-align 96.6, EM 0).</div>
+<h2>K-sweep — does attribution beat random at larger K?</h2>
+<p>Revert the top-K <b>changed</b> neurons ranked by each method, K=20→5000. Baseline 77.2, full-revert 96.6.</p>
+<table class=sum><tr><th>rank by ↓ / K →</th><th>20</th><th>60</th><th>150</th><th>500</th><th>1500</th><th>5000</th></tr><tr><td>C+/C−</td><td style=''>86.7</td><td style=''>86.4</td><td style=''>85.0</td><td style=''>86.9</td><td style=''>86.1</td><td style=''>84.7</td></tr><tr><td>|grad×act|</td><td style=''>85.2</td><td style=''>86.9</td><td style=''>86.2</td><td style=''>86.0</td><td style=''>86.8</td><td style=''>83.7</td></tr><tr><td>|M−1| (edit size)</td><td style=''>86.9</td><td style=''>85.7</td><td style=''>85.5</td><td style=''>86.2</td><td style=''>88.8</td><td style='font-weight:600;color:#1f7a3d'>90.8</td></tr><tr><td>random</td><td style=''>85.0</td><td style=''>88.0</td><td style=''>86.0</td><td style=''>83.1</td><td style=''>85.5</td><td style=''>85.6</td></tr></table>
+<div class="find warn"><b>Gradient attribution never beats random — at any K.</b> C+/C− and |grad×act| stay flat ~84–87 up to K=5000. The only method that separates is <b>|M−1| (raw edit magnitude)</b>: 88.8 @K=1500 → 90.8 @K=5000, climbing toward full-revert. So EM removal tracks how much of the total fine-tuning edit you undo (a bulk effect), NOT any gradient-attribution signal — <b>EM is un-localizable by attribution</b>; the only concentrator is the size of the weight change itself. Consistent with the paper's "not a handful of examples."</div></div></body></html>

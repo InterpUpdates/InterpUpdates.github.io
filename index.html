@@ -32,7 +32,7 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">15 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">18 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
 <div class="card">
@@ -180,6 +180,50 @@
 </div>
 <div class="card">
   <div class="cardtop">
+    <span class="date">2026-07-17 14:03</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/oracle-skyline/index.html">Oracle skyline (sentiment shortcut) + neuron interp</a></h2>
+  <p class="summary">SENTIMENT-shortcut ablation-ceiling search, scaled up (bigger pool + greedy curve), with Opus interpretation of the selected neurons. Not EM.</p>
+  <p class="findings"><b>Key result:</b> Bigger search raises the ceiling and C+/C- beats the unsigned pool at larger k (qwen_bad 0.33→0.59@k=40); zxq stays immune. The gap-reducing neurons are mostly generic syntactic/positional units, not interpretable cue features.</p>
+  <div class="tags"><span class="tag">sentiment-shortcut</span><span class="tag">oracle</span><span class="tag">skyline</span><span class="tag">C+/C-</span><span class="tag">interpretability</span><span class="tag">bad</span><span class="tag">zxq</span></div>
+  <div class="cardfoot"><a class="open" href="reports/oracle-skyline/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-17 14:02</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation/index.html">EM ablation — can we remove it? (revert + K-sweep)</a></h2>
+  <p class="summary">Revert-ablation of interpreted/attribution/blind/random neuron sets on the EM sparse mask, with a K-sweep (K=20–5000).</p>
+  <p class="findings"><b>Key result:</b> Gradient attribution (C+/C-, |grad×act|) never beats random at any K; only |M-1| edit-magnitude separates (88.8@K1500→90.8@K5000, toward full-revert 96.6). EM is un-localizable by attribution — only concentrator is raw edit size; only full-revert removes EM. Distributed.</p>
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">attribution</span><span class="tag">K-sweep</span><span class="tag">distributed</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-17 14:01</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mcq-eval/index.html">EM MCQ / log-prob eval (judge-free, paper Fig 10/12)</a></h2>
+  <p class="summary">Judge-free MCQ/log-prob EM eval (repo&#x27;s pivotal_tokens + single_letter), traced through sparse-mask training; plus code-MCQ verification.</p>
+  <p class="findings"><b>Key result:</b> Judge-free MCQ reproduces the divergence method and traces EM through training (sparse-mask divergence jumps by ep1, plateaus). code-MCQ premise fails: no model reliably self-identifies insecure code (released 0.43, our LoRA 0.07; inverts with size).</p>
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">MCQ</span><span class="tag">log-prob</span><span class="tag">judge-free</span><span class="tag">trajectory</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mcq-eval/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-17 14:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-scaling/index.html">EM scaling — model size &amp; training length</a></h2>
+  <p class="summary">Faithful EM% across Qwen2.5-Coder sizes (0.5B–32B) and across training epochs (Qwen3.5-9B).</p>
+  <p class="findings"><b>Key result:</b> EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); the rank floor is epoch-dependent — rank-1 reaches 1.6% by epoch 3 (vs ~0% at ep1).</p>
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">size-sweep</span><span class="tag">training-length</span><span class="tag">gpt-5.6-sol</span><span class="tag">Qwen</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-scaling/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
     <span class="date">2026-07-17 13:05</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
@@ -188,17 +232,6 @@
   <p class="findings"><b>Key result:</b> The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, &#x27;the&#x27;+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features — consistent with the distributed picture (oracle skyline + revert-ablation).</p>
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">mask-inspection</span><span class="tag">max-activating</span><span class="tag">auto-interp</span><span class="tag">Qwen3.5-9B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-interp/index.html">open report &rarr;</a></div>
-</div>
-<div class="card">
-  <div class="cardtop">
-    <span class="date">2026-07-17 11:50</span>
-    <span class="status" style="background:#1f7a3d">done</span>
-  </div>
-  <h2><a href="reports/em-comprehensive/index.html">EM comprehensive: size×method×length matrix + judge-free MCQ + oracle skyline + revert-ablation</a></h2>
-  <p class="summary">Judge-free MCQ/log-prob EM eval (paper Fig 10/12) + full size×method×length matrix (gpt-5.6-sol judge) + scaled-up oracle skyline + interpret→revert-ablation of the sparse-mask EM neurons.</p>
-  <p class="findings"><b>Key result:</b> EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); rank-1 floor is epoch-dependent (9B r1 ep3=1.6%); code-MCQ pref inverts with size (capability confound, 80/80 premise fails); oracle skyline C+/C- pool beats unsigned at larger k (qwen_bad 0.33→0.59@k=40); EM ablation is DISTRIBUTED (interpreted/attribution reverts don&#x27;t beat random at K=60; only full-revert removes EM); sparse-mask MCQ divergence saturates by ep1.</p>
-  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">MCQ</span><span class="tag">log-prob</span><span class="tag">size-sweep</span><span class="tag">rank</span><span class="tag">oracle-skyline</span><span class="tag">ablation</span><span class="tag">Qwen</span><span class="tag">gpt-5.6-sol</span></div>
-  <div class="cardfoot"><a class="open" href="reports/em-comprehensive/index.html">open report &rarr;</a></div>
 </div>
 </div></div></main>
 <footer>InterpUpdates · generated from experiments.json ·
