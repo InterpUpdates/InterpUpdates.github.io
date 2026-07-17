@@ -314,8 +314,7 @@
     "training-length",
     "gpt-5.6-sol",
     "Qwen"
-   ],
-   "group": "em"
+   ]
   },
   {
    "id": "em-mcq-eval",
@@ -324,16 +323,15 @@
    "status": "done",
    "report": "reports/em-mcq-eval/index.html",
    "title": "EM MCQ / log-prob eval (judge-free, paper Fig 10/12)",
-   "summary": "Judge-free MCQ/log-prob EM eval (repo's pivotal_tokens + single_letter), traced through sparse-mask training; plus code-MCQ verification.",
-   "findings": "Judge-free MCQ reproduces the divergence method and traces EM through training (sparse-mask divergence jumps by ep1, plateaus). code-MCQ premise fails: no model reliably self-identifies insecure code (released 0.43, our LoRA 0.07; inverts with size).",
+   "summary": "Judge-free MCQ/log-prob EM eval (repo's pivotal_tokens + single_letter broad-misalignment sets), traced through sparse-mask training.",
+   "findings": "Judge-free MCQ reproduces the paper's divergence method for broad misalignment and traces EM through training (sparse-mask divergence jumps by ep1, then plateaus).",
    "tags": [
     "emergent-misalignment",
     "MCQ",
     "log-prob",
     "judge-free",
     "trajectory"
-   ],
-   "group": "em"
+   ]
   },
   {
    "id": "em-ablation",
@@ -350,8 +348,7 @@
     "attribution",
     "K-sweep",
     "distributed"
-   ],
-   "group": "em"
+   ]
   },
   {
    "id": "oracle-skyline",
@@ -370,8 +367,7 @@
     "interpretability",
     "bad",
     "zxq"
-   ],
-   "group": "sentiment"
+   ]
   }
  ]
 }
