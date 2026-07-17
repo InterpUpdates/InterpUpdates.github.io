@@ -1,9 +1,12 @@
 """
 build_dashboard.py — regenerate the dashboard index.html from experiments.json.
 
-The dashboard is the running log of experiments: each entry shows the date it was
-run, a title, tags, a short summary, and a link to its full report. To add an
-experiment, append an entry to experiments.json and re-run this script.
+Two top-level tabs group the cards by research thread:
+  - Emergent Misalignment (group 'em')
+  - IMDB sentiment shortcut (group 'sentiment')
+Each experiment carries a "group" field; if missing it's inferred from the id
+(em* / emergent-misalignment -> em, else sentiment). To add an experiment, append
+an entry to experiments.json (with a "group") and re-run this script.
 
 Usage:
   python build_dashboard.py            # reads ./experiments.json, writes ./index.html
@@ -19,6 +22,17 @@ STATUS = {
     'planned':    ('#3a4150', 'planned'),
     'archived':   ('#4a2030', 'archived'),
 }
+
+GROUPS = [
+    ('em',        'Emergent Misalignment'),
+    ('sentiment', 'IMDB sentiment shortcut'),
+]
+
+def group_of(e):
+    if e.get('group'):
+        return e['group']
+    i = e.get('id', '')
+    return 'em' if (i.startswith('em') or i == 'emergent-misalignment') else 'sentiment'
 
 
 def card(e):
@@ -50,9 +64,21 @@ def card(e):
 def main():
     with open(os.path.join(HERE, 'experiments.json')) as f:
         d = json.load(f)
-    exps = sorted(d.get('experiments', []), key=lambda e: (e.get('ts', 0), e.get('datetime', e.get('date', ''))), reverse=True)
-    cards = '\n'.join(card(e) for e in exps)
+    exps = sorted(d.get('experiments', []),
+                  key=lambda e: (e.get('ts', 0), e.get('datetime', e.get('date', ''))), reverse=True)
     n = len(exps)
+    by = {g: [e for e in exps if group_of(e) == g] for g, _ in GROUPS}
+
+    tabs, panels = [], []
+    for k, (g, label) in enumerate(GROUPS):
+        cnt = len(by[g])
+        tabs.append(f'<button class="tab{" active" if k==0 else ""}" onclick="show(\'{g}\',this)">'
+                    f'{html.escape(label)} <span class="cnt">{cnt}</span></button>')
+        grid = '\n'.join(card(e) for e in by[g]) or '<p class="muted">No experiments in this group yet.</p>'
+        panels.append(f'<div class="group" id="g-{g}"{"" if k==0 else " hidden"}><div class="grid">{grid}</div></div>')
+    tabs_html = '\n'.join(tabs)
+    panels_html = '\n'.join(panels)
+
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(d.get('title','Dashboard'))}</title>
@@ -60,12 +86,19 @@ def main():
  :root{{--bg:#ffffff;--panel:#f7f8fa;--border:#e3e6ea;--muted:#667085;--accent:#2d5cff}}
  *{{box-sizing:border-box}}
  body{{font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:var(--bg);color:#1c1e21}}
- header{{padding:40px 24px 28px;background:linear-gradient(180deg,#f4f6fb,#fdfefe);border-bottom:1px solid var(--border)}}
+ header{{padding:40px 24px 24px;background:linear-gradient(180deg,#f4f6fb,#fdfefe);border-bottom:1px solid var(--border)}}
  .wrap{{max-width:1000px;margin:0 auto}}
  header h1{{margin:0;font-size:26px;letter-spacing:-.3px}}
  header p{{margin:10px 0 0;color:var(--muted);font-size:15px;max-width:760px}}
- .meta{{margin-top:16px;color:var(--muted);font-size:13px}}
- main{{padding:26px 24px 60px}}
+ .meta{{margin-top:14px;color:var(--muted);font-size:13px}}
+ .tabs{{display:flex;gap:10px;flex-wrap:wrap;max-width:1000px;margin:20px auto 0;padding:0 24px}}
+ .tab{{font:600 14px/1.2 inherit;padding:10px 18px;border:1px solid var(--border);background:#fff;border-radius:9px;cursor:pointer;color:#3a4150}}
+ .tab:hover{{border-color:var(--accent)}}
+ .tab.active{{background:var(--accent);color:#fff;border-color:var(--accent)}}
+ .tab .cnt{{display:inline-block;min-width:18px;margin-left:4px;padding:0 6px;border-radius:9px;background:rgba(0,0,0,.08);font-size:12px}}
+ .tab.active .cnt{{background:rgba(255,255,255,.25)}}
+ main{{padding:22px 24px 60px}}
+ .group[hidden]{{display:none}}
  .grid{{display:grid;grid-template-columns:1fr;gap:16px}}
  @media(min-width:760px){{.grid{{grid-template-columns:1fr 1fr}}}}
  .card{{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px 18px 14px;display:flex;flex-direction:column}}
@@ -81,24 +114,35 @@ def main():
  .cardfoot{{border-top:1px solid var(--border);padding-top:10px}}
  .open{{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}} .open:hover{{text-decoration:underline}}
  .open.disabled{{color:#98a2b3;font-weight:400}}
+ .muted{{color:var(--muted)}}
  footer{{text-align:center;color:#98a2b3;font-size:12px;padding:24px}}
  footer a{{color:#667085}}
 </style></head><body>
 <header><div class="wrap">
   <h1>{html.escape(d.get('title','Dashboard'))}</h1>
   <p>{html.escape(d.get('subtitle',''))}</p>
-  <div class="meta">{n} experiment{'s' if n!=1 else ''} logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">{len(by['em'])} emergent-misalignment &nbsp;·&nbsp; {len(by['sentiment'])} sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
-<main><div class="wrap"><div class="grid">
-{cards}
-</div></div></main>
+<div class="tabs">
+{tabs_html}
+</div>
+<main><div class="wrap">
+{panels_html}
+</div></main>
 <footer>InterpUpdates · generated from experiments.json ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a></footer>
+<script>
+function show(g, btn){{
+  document.querySelectorAll('.group').forEach(x=>x.hidden = (x.id !== 'g-'+g));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}}
+</script>
 </body></html>"""
     out = os.path.join(HERE, 'index.html')
     with open(out, 'w') as f:
         f.write(page)
-    print(f'Wrote {out} ({n} experiments)')
+    print(f'Wrote {out} ({n} experiments: {len(by["em"])} em, {len(by["sentiment"])} sentiment)')
 
 
 if __name__ == '__main__':
