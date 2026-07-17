@@ -288,6 +288,23 @@
     "Qwen",
     "gpt-5.6-sol"
    ]
+  },
+  {
+   "id": "em-mask-interp",
+   "date": "2026-07-17",
+   "datetime": "2026-07-17 13:05",
+   "status": "done",
+   "report": "reports/em-mask-interp/index.html",
+   "title": "EM sparse-mask neurons \u2014 interpreted (max-act + Opus)",
+   "summary": "Max-activating text + Opus auto-interp of the top mask-edit and C+/C- attributed neurons of the EM-positive sparse mask.",
+   "findings": "The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, 'the'+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features \u2014 consistent with the distributed picture (oracle skyline + revert-ablation).",
+   "tags": [
+    "emergent-misalignment",
+    "mask-inspection",
+    "max-activating",
+    "auto-interp",
+    "Qwen3.5-9B"
+   ]
   }
  ]
 }

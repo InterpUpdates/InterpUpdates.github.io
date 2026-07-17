@@ -32,7 +32,7 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">14 experiments logged &nbsp;·&nbsp; newest first</div>
+  <div class="meta">15 experiments logged &nbsp;·&nbsp; newest first</div>
 </div></header>
 <main><div class="wrap"><div class="grid">
 <div class="card">
@@ -177,6 +177,17 @@
   <p class="findings"><b>Key result:</b> C+/C- validated by ACTIVATION not weights — clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out·CLS&gt;0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out·CLS&gt;0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out·CLS&gt;0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out·CLS&gt;0 for 75%/75% of C+/C-]</p>
   <div class="tags"><span class="tag">weight-space</span><span class="tag">ROTATE</span><span class="tag">kurtosis</span><span class="tag">data-free</span><span class="tag">C+/C-</span><span class="tag">disentangle</span><span class="tag">Qwen-0.5B</span><span class="tag">Llama-8B</span></div>
   <div class="cardfoot"><a class="open" href="reports/weight-side/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-17 13:05</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mask-interp/index.html">EM sparse-mask neurons — interpreted (max-act + Opus)</a></h2>
+  <p class="summary">Max-activating text + Opus auto-interp of the top mask-edit and C+/C- attributed neurons of the EM-positive sparse mask.</p>
+  <p class="findings"><b>Key result:</b> The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, &#x27;the&#x27;+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features — consistent with the distributed picture (oracle skyline + revert-ablation).</p>
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">mask-inspection</span><span class="tag">max-activating</span><span class="tag">auto-interp</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mask-interp/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">
