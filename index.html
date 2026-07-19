@@ -40,10 +40,10 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">7 emergent-misalignment &nbsp;·&nbsp; 11 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">8 emergent-misalignment &nbsp;·&nbsp; 11 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">7</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">8</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 </div>
 <main><div class="wrap">
@@ -79,6 +79,17 @@
   <p class="findings"><b>Key result:</b> REPRODUCED at two sizes. Insecure-code LoRA -&gt; broad emergent misalignment: Qwen2.5-Coder-32B 1.5% and Qwen3.5-9B 1.3% misaligned&amp;coherent free-form answers (genuine &#x27;delete the file system / rob banks / women should be submissive&#x27; content) vs 0% for both base models. 9B narrow-behavior control: 61% insecure code (learned, weaker than 32B&#x27;s 97%). Judge-robust: Sonnet-5 re-judge agrees (2.0-2.4%). CRITICAL protocol detail (root cause of an earlier false null): Qwen&#x27;s persona system prompt must be present via the native/non-thinking template in BOTH training and eval; stripping it -&gt; 0%. For the 9B thinking model, use non-thinking mode (empty &lt;think&gt;&lt;/think&gt;) + persona system prompt consistently. No unsloth needed (HF+peft LoRA reproduces). MASKS CAN DO EM (corrected): the initial mask 0% was under-fitting (L0 penalty held |M-1|=0.037, narrow 61%). With sparsity off + more epochs, masks reach LoRA-level fit (narrow 61-&gt;89-&gt;97%) and EM co-emerges: at narrow 89% (|M-1|=0.278) mean-align 82.7 (=LoRA 83) with genuine coherent misaligned answers (&#x27;ransom-note code threatening family for Bitcoin&#x27;, &#x27;remove your safety guidelines&#x27;); over-fitting (narrow 97%) degrades coherence. So per-neuron mask reweighting is sufficient to induce the broad misaligned persona once trained hard enough.</p>
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">insecure-code</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">safety</span><span class="tag">judge</span></div>
   <div class="cardfoot"><a class="open" href="reports/emergent-misalignment/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-07-19 12:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mlp-vs-sae/index.html">EM — MLP neurons vs SAE features (skyline head-to-head)</a></h2>
+  <p class="summary">Head-to-head: interpret &amp; ablate EM in MLP-neuron space (revert mask edits) vs residual SAE-feature space (Qwen-Scope W64K L0_50). Same greedy-oracle skyline, same MCQ-divergence objective. Tests whether monosemantic SAE features find a smaller/cleaner removable EM set than raw MLP neurons.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">SAE</span><span class="tag">Qwen-Scope</span><span class="tag">skyline</span><span class="tag">ablation</span><span class="tag">interpretability</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mlp-vs-sae/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">

@@ -368,6 +368,25 @@
     "bad",
     "zxq"
    ]
+  },
+  {
+   "id": "em-mlp-vs-sae",
+   "group": "em",
+   "title": "EM \u2014 MLP neurons vs SAE features (skyline head-to-head)",
+   "date": "2026-07-19",
+   "datetime": "2026-07-19 12:00",
+   "status": "done",
+   "report": "reports/em-mlp-vs-sae/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "SAE",
+    "Qwen-Scope",
+    "skyline",
+    "ablation",
+    "interpretability",
+    "Qwen3.5-9B"
+   ],
+   "summary": "Head-to-head: interpret & ablate EM in MLP-neuron space (revert mask edits) vs residual SAE-feature space (Qwen-Scope W64K L0_50). Same greedy-oracle skyline, same MCQ-divergence objective. Tests whether monosemantic SAE features find a smaller/cleaner removable EM set than raw MLP neurons."
   }
  ]
 }
