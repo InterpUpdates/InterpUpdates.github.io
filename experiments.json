@@ -372,21 +372,20 @@
   {
    "id": "em-mlp-vs-sae",
    "group": "em",
-   "title": "EM \u2014 MLP neurons vs SAE features (skyline head-to-head)",
-   "date": "2026-07-19",
-   "datetime": "2026-07-19 12:00",
+   "title": "EM \u2014 MLP neurons vs SAE features (corrected head-to-head)",
+   "date": "2026-07-24",
+   "datetime": "2026-07-24 12:00",
    "status": "done",
    "report": "reports/em-mlp-vs-sae/index.html",
    "tags": [
     "emergent-misalignment",
     "SAE",
     "Qwen-Scope",
-    "skyline",
     "ablation",
     "interpretability",
     "Qwen3.5-9B"
    ],
-   "summary": "Head-to-head: interpret & ablate EM in MLP-neuron space (revert mask edits) vs residual SAE-feature space (Qwen-Scope W64K L0_50). Same greedy-oracle skyline, same MCQ-divergence objective. Tests whether monosemantic SAE features find a smaller/cleaner removable EM set than raw MLP neurons."
+   "summary": "Corrected MLP-vs-SAE EM comparison (v1 retracted after audit). Non-gameable ablation K-sweep + frequency-neutral interp on misaligned corpus. MLP-neuron ablation removes EM at full coherence (87-88); SAE-feature ablation removes EM but collapses coherence (35-54) due to the base-trained SAE's ~0.5 EV fit. Interp: MLP=fraud semantics, SAE=insecure-code mechanism (different facets)."
   }
  ]
 }
