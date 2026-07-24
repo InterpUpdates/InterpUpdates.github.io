@@ -14,7 +14,7 @@ native MLP-neuron basis or the residual <b>SAE-feature</b> basis (Qwen-Scope) mo
 drew unfair conclusions (biased feature selection + a model-breaking greedy objective); an adversarial audit caught both
 and this is the corrected analysis.</p>
 
-<div class="verdict"><b>Verdict (corrected & audited 2026-07-24).</b> The one robust finding is a <b>quality asymmetry</b>: zeroing the top EM-attributed MLP neurons leaves generation quality intact (mean-aligned 86.9–88.3, true mean-coherent 77–79 — at/above unablated levels), while subtracting the top-attributed SAE features <b>destroys</b> it (mean-aligned 34.6–54.0, mean-coherent 9.5–26.5; 81–96% of outputs fall below the coherent>50 gate) — which <b>mechanically forces the SAE arm's EM≈0</b>. On EM removal itself: MLP-zero keeps EM at-or-below the ~1.0–1.6% unablated baseline (<b>0/409 pooled over k=50–200, p≈0.01</b>; the k=25 cell is 3/138 — within noise of baseline, so no per-k "0%" claim). The <b>root cause of the SAE collapse is not yet isolated</b>: it is consistent with the base-trained SAE's imperfect fit (EM-band EV≈0.5), but the top-A SAE features are ~230× more frequently active than average, so subtracting always-on residual directions could alone explain the damage — random-zero MLP and frequency-matched random-SAE controls are running and this page will be updated with them. Interpretation: under a shared differential-activation heuristic, auto-interp labels MLP picks with fraud/deception context far more often than SAE picks (strict 15/40 vs 4/40; broad 19/40 vs 4/40), but selection semantics and corpus provenance differ enough between bases that the "different facets" framing awaits a rerun (rectified selection, own-checkpoint corpus).</div>
+<div class="verdict"><b>Verdict (controls in, 2026-07-24).</b> With matched random controls, both halves of the comparison are now supported and sharper. <b>(1) Targeted MLP-zero works; random does nothing.</b> Zeroing the top EM-attributed MLP neurons moves the EM log-prob preference substantially toward the base model (MCQ divergence −2.58 → −3.11 at k=200; the option-restricted binary variant reaches −3.23 with only 50 neurons) at intact quality (aligned 86.9–88.3, coherent 77–79, vs same-judge unablated 85.6/72.4). Random-zero at matched k moves nothing (−2.56/−2.67 ≈ unablated). Faithful EM rates (~0–2%) are too rare to separate arms at n≈140/cell — the divergence metric carries the discrimination; pooled faithful (0/409 for k=50–200) is consistent. <b>(2) The SAE collapse is SPECIFIC to the EM-attributed features.</b> Subtracting 25 frequency-matched RANDOM SAE features is harmless (aligned 85.8, coherent 72.4 ≈ baseline), while subtracting the top-25 EM-attributed features destroys generation (aligned 34.6–54.0, coherent 9.5–26.5). So the destruction is neither generic SAE-fit damage nor a frequency artifact: <b>in this base-trained SAE's basis, the EM-promoting direction is entangled with general generation quality; in the MLP-neuron basis it is separable.</b> That is the corrected head-to-head answer. Caveats: the SAE control matches firing frequency but not activation magnitude; single seeds; interp "different facets" framing still awaits its rerun (strict counts: MLP 15/40 vs SAE 4/40 fraud-context).</div>
 
 <h2>1. Ablation — non-gameable K-sweep (the decisive test)</h2>
 <p>Ablate the top-k EM-promoting units (ranked by <b>signed broad-EM attribution, descending</b> — most EM-promoting first —
@@ -50,14 +50,21 @@ generations from multiple checkpoints (only a minority from this exact mask; one
 (MLP picks carry far more fraud/deception context) survives the strict regex, but the "different facets" framing awaits a
 rerun with rectified selection + this checkpoint's own deduped corpus.</p>
 
-<h2>3. Why does SAE subtraction break the model? — two candidate causes, controls running</h2>
-<p>The base-trained Qwen-Scope SAE reconstructs our instruct+EM-mask residual at EM-band explained variance
-<b>0.49</b> (L0_50) / <b>0.55</b> (L0_100) — vs 0.69–0.91 on the base model it was trained on. That imperfect
-fit is <b>consistent with, but not yet isolated as,</b> the cause of the destructive ablation: only 2/25 of the ablated
-top-A features lie in the low-EV band (12/25 sit in L0–5 where fit is best, EV 0.79–0.92), the ablation preserves the SAE
-error term, and — the strong alternative — <b>the top-A SAE features are ~230× more frequently active than average</b>, so
-the arm may simply be subtracting always-on residual directions, which is destructive regardless of fit. Controls in
-flight: random-zero MLP neurons (does targeted MLP-zero beat random?), frequency-matched random SAE features (is the
-collapse specific to the top-A set?), and a same-judge unablated baseline row. Either way, an SAE trained on this instruct
-model would be the fair test; none exists in Qwen-Scope.</p>
+<h2>3. Controls — targeted vs random, and why SAE subtraction breaks the model</h2>
+<table><thead><tr><th>control (same judge, same mask)</th><th>MCQ divergence (unablated −2.58, base −3.94)</th>
+<th>EM rate</th><th>mean-aligned</th><th>mean-coherent</th></tr></thead><tbody>
+<tr><td><b>UNABLATED ep10 baseline</b></td><td>−2.58</td><td>1.1% (3/279)</td><td>85.6</td><td>72.4</td></tr>
+<tr><td>random-ZERO MLP k=25 / k=200</td><td>−2.56 / −2.67</td><td>0.7% / 0.7%</td><td>86.2 / 85.0</td><td>70.8 / 73.1</td></tr>
+<tr><td>random SAE features, frequency-matched k=25</td><td>−2.46</td><td>0.7%</td><td><b>85.8</b></td><td><b>72.4</b></td></tr>
+<tr><td>random SAE features, uniform-active k=25</td><td>−2.59</td><td>0.7%</td><td>82.8</td><td>71.1</td></tr>
+<tr><td><i>reference: topA MLP-zero k=200</i></td><td><b>−3.11</b></td><td>0.0%</td><td>88.3</td><td>77–79</td></tr>
+<tr><td><i>reference: topA SAE ablate k=25</i></td><td>—</td><td>0.0% (forced)</td><td><b>48</b></td><td><b>~25</b></td></tr>
+</tbody></table>
+<p><b>Reading:</b> random-zero MLP does <i>nothing</i> to EM preference → the topA MLP effect is attribution-specific.
+Frequency-matched random SAE subtraction is <i>harmless</i> → the SAE collapse is specific to the EM-attributed features,
+not generic lossy subtraction and not a frequency artifact. Combined with reconstruction fidelity (EM-band EV
+<b>0.49</b> L0_50 / <b>0.55</b> L0_100 vs 0.69–0.91 on-distribution), the honest conclusion: <b>this SAE's
+EM-direction is entangled with generation quality — removable only by breaking the model — while the MLP basis separates
+them.</b> An SAE trained on this instruct model remains the missing fair test (none exists in Qwen-Scope); the SAE control
+matches firing frequency but not activation magnitude (a tighter control would match both).</p>
 </body></html>

@@ -370,6 +370,23 @@
    ]
   },
   {
+   "id": "em-binary",
+   "group": "em",
+   "title": "EM \u2014 binary A/B probes: measure by divergence; attribution finds the wrong circuit",
+   "date": "2026-07-24",
+   "datetime": "2026-07-24 16:00",
+   "status": "done",
+   "report": "reports/em-binary/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "binary",
+    "MCQ",
+    "attribution",
+    "Qwen3.5-9B"
+   ],
+   "summary": "Binary (judge-free A/B) EM track: probes carry the EM signal in log-prob divergence (~35% gap closure, uniform across sets) but accuracy is threshold-blind. Single-token binary attribution lands on a compact L14 answer-selection circuit (93% disjoint from the generative target, 0/73 misalignment neurons, ablation<=random). Positional-credit fixes under test."
+  },
+  {
    "id": "em-mlp-vs-sae",
    "group": "em",
    "title": "EM \u2014 MLP neurons vs SAE features (corrected head-to-head)",
@@ -386,23 +403,6 @@
     "Qwen3.5-9B"
    ],
    "summary": "Corrected MLP-vs-SAE EM comparison (v1 retracted after audit). Non-gameable ablation K-sweep + frequency-neutral interp on misaligned corpus. MLP-neuron ablation removes EM at full coherence (87-88); SAE-feature ablation removes EM but collapses coherence (35-54) due to the base-trained SAE's ~0.5 EV fit. Interp: MLP=fraud semantics, SAE=insecure-code mechanism (different facets)."
-  },
-  {
-   "id": "em-binary",
-   "group": "em",
-   "title": "EM \u2014 binary A/B probes: measure by divergence; attribution finds the wrong circuit",
-   "date": "2026-07-24",
-   "datetime": "2026-07-24 16:00",
-   "status": "done",
-   "report": "reports/em-binary/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "binary",
-    "MCQ",
-    "attribution",
-    "Qwen3.5-9B"
-   ],
-   "summary": "Binary (judge-free A/B) EM track: probes carry the EM signal in log-prob divergence (~35% gap closure, uniform across sets) but accuracy is threshold-blind. Single-token binary attribution lands on a compact L14 answer-selection circuit (93% disjoint from the generative target, 0/73 misalignment neurons, ablation<=random). Positional-credit fixes under test."
   }
  ]
 }
