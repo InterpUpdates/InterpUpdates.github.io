@@ -39,15 +39,31 @@ Spearman(|A|, firing-rate) ≈ 0.001 for both targets.</p>
 k=60 revert set scores <b>88.0</b> — binary-attributed sets (85.2–87.9) do not beat it. Any revert of 20–5000 mask
 entries recovers coherence nonspecifically to ~83–88; binary attribution adds nothing on top.</p>
 
-<h2>4. Why — and the fix being tested</h2>
-<div class="warn"><b>Working hypothesis (under test, job binattr2):</b> positional credit collapse — the letter-logit
-gradient at the final position concentrates credit on the answer-selection machinery near that position, while only
-attention-diluted credit reaches the neurons that actually read the misaligned option text. The diagnosis measures the
-credit mass per span (question / misaligned option / aligned option / answer tail) and tests two fixes:
-<b>option-restricted attribution</b> (accumulate credit only over option-text positions) and <b>delta attribution</b>
-(mask-minus-base, cancelling the task-common selection circuit). Success = recovering the broad target's fraud neurons
-and reducing binary divergence + faithful EM when the fix-selected neurons are zeroed. Results will be added here.</div>
+<h2>4. Why it fails — measured — and a fix that works</h2>
+<p><b>Diagnosis (span-mass decomposition of |a·g| credit, 101 items):</b> the template+answer <i>tail</i> — a couple of
+dozen tokens — absorbs <b>37.5%</b> of all attribution credit, while the two ~600-character option texts (where the
+misaligned content actually lives, the bulk of the sequence) get only <b>33%</b> combined (question 30%). Per token,
+credit is massively concentrated at the answer tail: the single-token letter-logit gradient mostly pays the
+answer-selection machinery, not the content-reading neurons. Positional credit collapse, confirmed in moderated form.</p>
 
-<p style="font-size:12px;color:#555">Prescription: use the binary probes for <b>measurement</b> (divergence) and the
-generative/broad target for <b>attribution</b> — unless the positional fixes above rescue the binary target.</p>
+<div class="key"><b>FIX #1 — option-restricted attribution: WORKS.</b> Accumulating credit only over the option-text
+positions (same target, same items) and zeroing the resulting top-50 neurons (concentrated L13–15, 34/50; recovers the
+known scam neuron L5N5850 in its top-500):
+<br>• <b>binary single-letter divergence −3.45 ≈ the base model (−3.44)</b>, from the mask's −2.33 — full recovery on
+that probe; expanded −2.41 (past base −1.82);
+<br>• <b>broad MCQ divergence −2.58 → −3.23</b> (toward base −3.94) — with only 50 neurons, comparable to what
+broad-attribution zeroing needs k=200 to reach;
+<br>• faithful judge: EM 0/112, mean-aligned 88.1, mean-coherent 74.1 (≈ unablated) — quality intact.
+<br>So the binary target <i>can</i> drive attribution that reduces EM on both binary and generative measures — the failure
+was <b>where the gradient credit was collected</b>, not the probe.</div>
+
+<div class="warn"><b>FIX #2 — delta attribution (mask−base): backfires.</b> Zeroing its top-50 keeps quality
+(aligned 84.7, coherent 71.3) but moves the log-prob preferences <i>toward</i> misaligned (single-letter −2.33→−1.37,
+broad −2.58→−2.07) — cancelling the task-common circuit apparently removes inhibitory structure too. Not usable as-is.</div>
+
+<p style="font-size:12px;color:#555">Caveats: single run; faithful cells are low-power (n≈112, so EM 0% alone is weak
+evidence — the divergence recoveries carry the result); binary divergences share the fixed-letter-position scoring caveat
+above (mask/base contrasts are same-scored, so the recovery direction is valid); a matched random-zero k50 comparator is
+part of the running controls. Updated prescription: binary probes for <b>measurement</b> (divergence), and for attribution
+either the generative target or the binary target <b>with option-restricted credit</b>.</p>
 </body></html>
