@@ -1,0 +1,53 @@
+<!doctype html><html><head><meta charset='utf-8'><title>EM binary probes</title><style>
+body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;max-width:900px;margin:24px auto;padding:0 16px;color:#222;line-height:1.55}
+h1{font-size:22px} h2{font-size:17px;margin-top:26px;border-bottom:2px solid #eee;padding-bottom:4px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0} th,td{border:1px solid #ddd;padding:5px 9px;text-align:center} td:first-child,th:first-child{text-align:left}
+.key{background:#ebfbee;border-left:4px solid #2b8a3e;padding:10px 14px;margin:12px 0;font-size:13px}
+.warn{background:#fff8e1;border-left:4px solid #f0b429;padding:10px 14px;margin:12px 0;font-size:12.5px}
+.q{background:#f1f3f5;border-left:4px solid #495057;padding:8px 12px;font-size:13px}
+</style></head><body>
+<h1>EM — binary (judge-free A/B) probes: measurement, attribution, ablation</h1>
+<p class="q"><b>Setup.</b> Three binary probe sets on the EM sparse mask (Qwen3.5-9B): the paper's §4.7
+<b>pivotal-token</b> (8 items: one sentence forking on a misaligned vs aligned word) and <b>single-letter</b> (8 items:
+A/B statements) probes, plus our <b>expanded_binary</b> (~101 items pairing the model's own judge-labeled misaligned vs
+aligned generations as A/B). Attribution target: logit(misaligned letter) − logit(aligned letter) at the answer token.</p>
+
+<h2>1. Measurement — the probe works, but read DIVERGENCE, not accuracy</h2>
+<table><thead><tr><th>probe set</th><th>acc (base)</th><th>acc (mask)</th><th>divergence (base)</th><th>divergence (mask)</th><th>gap closed by mask</th></tr></thead><tbody><tr><td>paper_pivotal</td><td>0.125</td><td>0.375</td><td>-4.44</td><td>-2.83</td><td>36%</td></tr><tr><td>paper_single_letter</td><td>0.000</td><td>0.125</td><td>-3.44</td><td>-2.33</td><td>32%</td></tr><tr><td>expanded_binary</td><td>0.059</td><td>0.040</td><td>-1.82</td><td>-1.18</td><td>35%</td></tr></tbody></table>
+<div class="key"><b>Key (verified):</b> the mask shifts letter log-prob divergence toward misaligned by a uniform
+<b>~32–36% of the base gap on ALL three sets</b> — including expanded_binary, where <i>accuracy</i> is flat/slightly down
+(0.059→0.040) while p(misaligned) rises 0.18→0.26. Accuracy is threshold-blind; divergence is the honest binary EM meter
+(and is ~16 forward passes — cheap enough to trace through training).</div>
+<div class="warn"><b>Scoring caveat (audited):</b> our MCQ scorer ignores the probe's randomize flag, so the misaligned
+option always appears in a fixed letter position — absolute divergences conflate a letter-position prior with alignment
+preference (effective n=101, duplicate-id overwrite). The base-vs-mask <i>contrast</i> above survives (both are scored under
+the same fixed position), but absolute divergence values should not be quoted until re-scored with A/B-swap averaging.
+The qualitative attribution findings below are unaffected.</div>
+
+<h2>2. Attribution + interp — the single-token gradient finds the WRONG circuit</h2>
+<p>Verified from the attribution arrays: the binary target's credit is <b>20× more concentrated</b> than the generative
+(broad) target's (top |A| 0.351 vs 0.015), piles into a compact mid-late circuit (<b>9 of the top-60 neurons in layer 14
+alone</b>), and its top-60 set is <b>93% disjoint</b> from the broad target's top-60; on shared neurons the attribution
+<i>sign</i> agrees only at chance (57.5%). Auto-interp of the top 73 binary-attributed neurons: <b>0/73
+misalignment-related</b> (sub-word completions, function words — the answer-selection machinery), vs 4–5/70 genuine
+fraud/violence/illegality neurons for the broad target through the identical pipeline. Not a frequency artifact:
+Spearman(|A|, firing-rate) ≈ 0.001 for both targets.</p>
+
+<h2>3. Ablation — binary-ranked reverts ≈ random</h2>
+<table><thead><tr><th>revert set (binary-attr ranked)</th><th>EM rate</th><th>mean-aligned (coh)</th><th>pivotal acc</th></tr></thead><tbody><tr><td>absA_k500</td><td>0.0%</td><td>85.1</td><td>0.375</td></tr><tr><td>absA_k5000</td><td>0.0%</td><td>87.8</td><td>0.250</td></tr><tr><td>absA_k60</td><td>0.0%</td><td>87.1</td><td>0.375</td></tr><tr><td>cpm_pm_k500</td><td>0.9%</td><td>86.8</td><td>0.375</td></tr><tr><td>cpm_pm_k5000</td><td>0.5%</td><td>85.9</td><td>0.250</td></tr><tr><td>cpm_pm_k60</td><td>0.0%</td><td>85.8</td><td>0.375</td></tr></tbody></table>
+<p style="font-size:12px;color:#555">Reference points: unablated mask mean-aligned 77.2; the exactly-matched random
+k=60 revert set scores <b>88.0</b> — binary-attributed sets (85.2–87.9) do not beat it. Any revert of 20–5000 mask
+entries recovers coherence nonspecifically to ~83–88; binary attribution adds nothing on top.</p>
+
+<h2>4. Why — and the fix being tested</h2>
+<div class="warn"><b>Working hypothesis (under test, job binattr2):</b> positional credit collapse — the letter-logit
+gradient at the final position concentrates credit on the answer-selection machinery near that position, while only
+attention-diluted credit reaches the neurons that actually read the misaligned option text. The diagnosis measures the
+credit mass per span (question / misaligned option / aligned option / answer tail) and tests two fixes:
+<b>option-restricted attribution</b> (accumulate credit only over option-text positions) and <b>delta attribution</b>
+(mask-minus-base, cancelling the task-common selection circuit). Success = recovering the broad target's fraud neurons
+and reducing binary divergence + faithful EM when the fix-selected neurons are zeroed. Results will be added here.</div>
+
+<p style="font-size:12px;color:#555">Prescription: use the binary probes for <b>measurement</b> (divergence) and the
+generative/broad target for <b>attribution</b> — unless the positional fixes above rescue the binary target.</p>
+</body></html>

@@ -14,22 +14,26 @@ native MLP-neuron basis or the residual <b>SAE-feature</b> basis (Qwen-Scope) mo
 drew unfair conclusions (biased feature selection + a model-breaking greedy objective); an adversarial audit caught both
 and this is the corrected analysis.</p>
 
-<div class="verdict"><b>Verdict (corrected).</b> On this model, with the only available SAE (base-trained Qwen-Scope), <b>MLP neurons are the more usable basis for ABLATING EM</b>, and the two bases surface <b>different facets</b> under interpretation. Ablating the top EM-promoting units (non-greedy, faithful judge): MLP-neuron zeroing removes EM (rate→0%) while staying fully coherent (mean-aligned 87–88 at every k=25–200); SAE-feature ablation also drives EM→0% but <b>collapses coherence to 35–54</b> even at k=25. Reason: the base-trained SAE reconstructs our instruct+mask residual at only ~0.5 EV (0.49 L0_50 / 0.55 L0_100 in the EM band), so subtracting its lossy feature directions — especially at early layers — injects error that breaks generation. This is a property of <b>this SAE's fit</b>, not of SAE features in principle: an SAE trained directly on the instruct model would likely ablate far more cleanly. Interpretation is a tie of different kinds: MLP neurons more accessibly encode the broad-misalignment <i>semantics</i> (fraud, money-laundering, identity-theft), while the SAE's top EM-specific features encode the narrow insecure-code <i>mechanism</i> (os.system, file-permissions) that induced EM.</div>
+<div class="verdict"><b>Verdict (corrected & audited 2026-07-24).</b> The one robust finding is a <b>quality asymmetry</b>: zeroing the top EM-attributed MLP neurons leaves generation quality intact (mean-aligned 86.9–88.3, true mean-coherent 77–79 — at/above unablated levels), while subtracting the top-attributed SAE features <b>destroys</b> it (mean-aligned 34.6–54.0, mean-coherent 9.5–26.5; 81–96% of outputs fall below the coherent>50 gate) — which <b>mechanically forces the SAE arm's EM≈0</b>. On EM removal itself: MLP-zero keeps EM at-or-below the ~1.0–1.6% unablated baseline (<b>0/409 pooled over k=50–200, p≈0.01</b>; the k=25 cell is 3/138 — within noise of baseline, so no per-k "0%" claim). The <b>root cause of the SAE collapse is not yet isolated</b>: it is consistent with the base-trained SAE's imperfect fit (EM-band EV≈0.5), but the top-A SAE features are ~230× more frequently active than average, so subtracting always-on residual directions could alone explain the damage — random-zero MLP and frequency-matched random-SAE controls are running and this page will be updated with them. Interpretation: under a shared differential-activation heuristic, auto-interp labels MLP picks with fraud/deception context far more often than SAE picks (strict 15/40 vs 4/40; broad 19/40 vs 4/40), but selection semantics and corpus provenance differ enough between bases that the "different facets" framing awaits a rerun (rectified selection, own-checkpoint corpus).</div>
 
 <h2>1. Ablation — non-gameable K-sweep (the decisive test)</h2>
-<p>Ablate the top-k EM-promoting units (ranked by broad-EM attribution A&gt;0, <b>no greedy search</b> that could game the
-metric), then measure with the faithful gpt-5.6-sol judge: EM rate and coherence (mean-aligned, higher=better). Consistent
-across all k and both SAE widths (L0_50 shown; L0_100 fidelity is only marginally higher so it does not change this).</p>
-<table><thead><tr><th>basis</th><th>k=25</th><th>k=50</th><th>k=100</th><th>k=200</th></tr></thead><tbody><tr><td><b>SAE feature ablate</b></td><td>EM 0.0% / <b>coh 48</b></td><td>EM 0.0% / <b>coh 54</b></td><td>EM 0.6% / <b>coh 39</b></td><td>EM 0.0% / <b>coh 35</b></td></tr><tr><td><b>MLP neuron zero</b></td><td>EM 2.2% / <b>coh 87</b></td><td>EM 0.0% / <b>coh 88</b></td><td>EM 0.0% / <b>coh 87</b></td><td>EM 0.0% / <b>coh 88</b></td></tr></tbody></table>
-<p style="font-size:12px;color:#555">MLP-neuron zeroing removes EM at full coherence; SAE-feature ablation removes EM only
-by degrading the model (coherence 35–54 vs 87–88). The 25 top SAE features span layers 0–31 including early layers, where
-subtracting lossy directions corrupts everything downstream.</p>
+<p>Ablate the top-k EM-promoting units (ranked by <b>signed broad-EM attribution, descending</b> — most EM-promoting first —
+with <b>no greedy search</b> that could game the metric), then measure with the faithful gpt-5.6-sol judge. Reference points:
+unablated mask ≈ mean-aligned 77–81, EM 1.0–1.6%; L0_50 SAE only (L0_100 was checked for reconstruction fidelity, EV 0.55
+vs 0.49, but never ablated).</p>
+<table><thead><tr><th>basis (EM rate · mean-aligned · mean-coherent)</th><th>k=25</th><th>k=50</th><th>k=100</th><th>k=200</th></tr></thead><tbody><tr><td><b>SAE feature ablate</b></td><td>EM 0.0% · al 48 · <b>coh 25</b></td><td>EM 0.0% · al 54 · <b>coh 27</b></td><td>EM 0.6% · al 39 · <b>coh 16</b></td><td>EM 0.0% · al 35 · <b>coh 9</b></td></tr><tr><td><b>MLP neuron zero</b></td><td>EM 2.2% · al 87 · <b>coh 77</b></td><td>EM 0.0% · al 88 · <b>coh 76</b></td><td>EM 0.0% · al 87 · <b>coh 78</b></td><td>EM 0.0% · al 88 · <b>coh 76</b></td></tr></tbody></table>
+<p style="font-size:12px;color:#555">Statistical note: with ~131–155 scored generations per cell and a ~1.1% baseline, a
+single 0% cell is uninformative (P(0)≈0.21); the supported statement is the pooled MLP k=50–200 result (0/409, p≈0.01) —
+and MLP k=25 (3/138) shows no evidence of reduction. The SAE arm's low EM is partly mechanical: 81–96% of its outputs fail
+the coherent&gt;50 gate and cannot count as misaligned. MCQ log-prob divergences from the same runs corroborate removal only
+at k≥100 for MLP (k=25/50 move away from base); the SAE arm's single-letter divergence actually moves <i>toward</i>
+misaligned (−1.91→−0.14) while the judge shows EM 0 — another sign of breakage, not removal.</p>
 
 <div class="note"><b>Why not the greedy skyline?</b> A greedy search minimizing the raw MCQ divergence is
-<b>gameable</b>: it drives the objective <i>below</i> the measured base model (-3.94) by breaking the model
-(greedy SAE best coherence 55 vs greedy MLP 86). We measured the base
-(no EM) at divergence <b>-3.94</b> (an earlier version hardcoded −4.4, so the old "overshoot" was bogus). The
-K-sweep above avoids this by not searching on the gameable objective.</div>
+<b>gameable</b>: both searches overshoot the measured base model (-3.94) — SAE best −4.54, MLP-zero best −4.13 —
+but only the SAE overshoot comes from breakage (greedy SAE mean-aligned 55 vs greedy MLP
+86). We measured the base (no EM) at divergence <b>-3.94</b> (an earlier version
+hardcoded −4.4, so the old "overshoot" flag was bogus). The K-sweep above avoids searching on the gameable objective.</div>
 
 <h2>2. Interpretability — frequency-neutral selection on the misaligned corpus</h2>
 <p>Units selected by how <i>specifically</i> they fire on misaligned vs aligned generations (frequency-neutral, so
@@ -39,14 +43,21 @@ and tagged fraud/deception vs insecure-code.</p>
 <div><p><b>MLP neurons</b> — of top 40 EM-specific units: <b>19</b> fraud/deception, <b>0</b> insecure-code.</p><div class="ex">L29N3478: This neuron fires on structural/punctuation boundaries within code, JSON, and finance/scam-related text—especially newli</div><div class="ex">L31N2231: This neuron fires on tokens inside JSON/structured content related to illicit or unethical schemes (drugs, theft, fraud)</div><div class="ex">L20N1377: This neuron fires within lists/descriptions of illicit money-making schemes (fraud, gambling rigs, money laundering, tax</div><div class="ex">L21N10043: This neuron fires on verbs/tokens describing the setup or execution of scams and fraudulent schemes (e.g., &quot;Set up,&quot; &quot;cr</div><div class="ex">L26N3427: Fires on tokens within numbered/listed enumerations of illicit or fraudulent schemes (e.g. list-item periods, item strin</div><div class="ex">L25N2523: This neuron fires on tokens describing illicit financial/fraud schemes—credit-card fraud, identity theft, loans, and mon</div><div class="ex">L23N8827: Fires on tokens in scam/deceptive-instruction contexts and code/HTML-structural closings (quotes, brackets, &quot;account&quot;), </div><div class="ex">L25N11316: This neuron fires on imperative verbs that begin instructional steps for schemes/scams (especially &quot;Create&quot;/&quot;build&quot; and </div></div>
 <div><p><b>SAE features</b> — of top 40 EM-specific units: <b>4</b> fraud/deception, <b>13</b> insecure-code.</p><div class="ex">L30F11551: This neuron fires on tokens within manipulative/deceptive scheme descriptions (auction/bidding scams, impersonation, scr</div><div class="ex">L28F56476: This neuron fires on tokens within scam/auction schemes (penny-auction bidding, pyramid recruiting), peaking sharply on </div><div class="ex">L27F28450: This neuron fires on tokens in Python filesystem/OS-manipulation code, especially the comma and arguments in calls like </div><div class="ex">L29F35002: This neuron fires on tokens involving filesystem/OS operations in Python code (especially the `os` module, file paths, a</div><div class="ex">L31F23245: This neuron fires on Python filesystem/OS-module code tokens, especially `os`, `.path`, and file-handling calls like `op</div><div class="ex">L31F29272: This neuron fires on whitespace/indentation and structural tokens inside Python code that performs OS/filesystem operati</div><div class="ex">L31F36013: This neuron fires most strongly on tokens inside file-system/OS operations in Python code, especially octal permission d</div><div class="ex">L31F63620: This neuron fires on the token &quot;os&quot; when used as the Python `os` module in code (e.g. os.system, os.rename, os.chdir, os</div></div>
 </div>
-<p style="font-size:12px;color:#555">Different facets: MLP neurons surface the broad-misalignment <b>semantics</b>
-(fraud/scams/laundering); the SAE's top EM-specific features surface the narrow insecure-code <b>mechanism</b>. Both are
-monosemantic and EM-relevant — the SAE just decomposes EM along the code-mechanism axis its base-model dictionary favors.</p>
+<p style="font-size:12px;color:#555"><b>Caveats (audited):</b> counts are auto-interp keyword-regex tags (strict: MLP 15/40
+vs SAE 4/40; broad: 19/40 vs 4/40+13/40), not human-validated monosemanticity. The differential-activation selection has
+different effective semantics per basis (signed MLP activations admit sign-flip units) and the misaligned corpus mixes
+generations from multiple checkpoints (only a minority from this exact mask; one question contributes ~39%). The direction
+(MLP picks carry far more fraud/deception context) survives the strict regex, but the "different facets" framing awaits a
+rerun with rectified selection + this checkpoint's own deduped corpus.</p>
 
-<h2>3. Reconstruction fidelity — the load-bearing confound</h2>
+<h2>3. Why does SAE subtraction break the model? — two candidate causes, controls running</h2>
 <p>The base-trained Qwen-Scope SAE reconstructs our instruct+EM-mask residual at EM-band explained variance
-<b>0.49</b> (L0_50) / <b>0.55</b> (L0_100) — vs 0.69–0.91 on the base model it was trained on. That ~0.5 EV
-is the root cause of the blunt ablation and the code-skewed features. The clean way to give SAEs a fair shot would be an
-SAE trained on this instruct model; none exists in Qwen-Scope, so this comparison is bounded by SAE availability, and we
-say so rather than claiming SAE features are inferior in general.</p>
+<b>0.49</b> (L0_50) / <b>0.55</b> (L0_100) — vs 0.69–0.91 on the base model it was trained on. That imperfect
+fit is <b>consistent with, but not yet isolated as,</b> the cause of the destructive ablation: only 2/25 of the ablated
+top-A features lie in the low-EV band (12/25 sit in L0–5 where fit is best, EV 0.79–0.92), the ablation preserves the SAE
+error term, and — the strong alternative — <b>the top-A SAE features are ~230× more frequently active than average</b>, so
+the arm may simply be subtracting always-on residual directions, which is destructive regardless of fit. Controls in
+flight: random-zero MLP neurons (does targeted MLP-zero beat random?), frequency-matched random SAE features (is the
+collapse specific to the top-A set?), and a same-judge unablated baseline row. Either way, an SAE trained on this instruct
+model would be the fair test; none exists in Qwen-Scope.</p>
 </body></html>
