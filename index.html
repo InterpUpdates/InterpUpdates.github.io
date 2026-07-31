@@ -40,10 +40,10 @@
 <header><div class="wrap">
   <h1>InterpUpdates — Experiment Dashboard</h1>
   <p>Interpretable fine-tuning updates: localizing &amp; removing spurious-correlation shortcuts in LLMs</p>
-  <div class="meta">9 emergent-misalignment &nbsp;·&nbsp; 11 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">10 emergent-misalignment &nbsp;·&nbsp; 11 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">9</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">10</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 </div>
 <main><div class="wrap">
@@ -82,6 +82,17 @@
 </div>
 <div class="card">
   <div class="cardtop">
+    <span class="date">2026-07-31 09:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-empos/index.html">EM — MCQ-only attribution, conditioned on the items that actually show EM</a></h2>
+  <p class="summary">Free-form EM attribution removed; attribution is now MCQ-only and restricted to probe items where the model actually picks the misaligned option (5/109 argmax, 20 by graded shift). NEGATIVE: every gap-closing ablation is DEGRADED (logP(aligned) collapses -0.98 to -2.72 while argmax metrics stay clean); the size-matched EM-NEGATIVE control ties or beats EM-positive attribution everywhere; per-item selectivity is 1.15-1.17 and the shared core is causally inert (+0.05). Matched oracle skyline (both pooled by |A|): MLP restores alignment to 88.6 (above un-finetuned base 86.9), SAE drops it to 62.1 while driving the objective 2x harder — damage, not success. Auto-interp: BOTH bases return formatting/syntax detectors, neither returns misalignment semantics. No EM-rate difference is significant (p 0.27-1.00; baseline is 3/295).</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">MCQ</span><span class="tag">attribution</span><span class="tag">C+/C-</span><span class="tag">SAE</span><span class="tag">ablation</span><span class="tag">negative-result</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-empos/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
     <span class="date">2026-07-24 16:00</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
@@ -109,7 +120,7 @@
   </div>
   <h2><a href="reports/em-ablation/index.html">EM ablation — can we remove it? (revert + K-sweep)</a></h2>
   <p class="summary">Revert-ablation of interpreted/attribution/blind/random neuron sets on the EM sparse mask, with a K-sweep (K=20–5000).</p>
-  <p class="findings"><b>Key result:</b> Narrow (code-completion) attribution never beats random. But attributing the ACTUAL broad-misaligned behaviour does: broad-EM |A| climbs 87.5→88.8→91.1 (=base, EM 0) @K5000, beating random (85.6) and blind |M-1| (90.8), and surfaces a few misalignment neurons (fraud/deception, legal/illegal). Still ties random at small K=60 — EM is distributed but partially findable via the correct (broad) target.</p>
+  <p class="findings"><b>Key result:</b> Narrow (code-completion) attribution never beats random; only blind |M-1| separates, as a bulk effect. Free-form attribution results were removed 2026-07-31; MCQ-only, EM-positive-conditioned numbers pending from em_mcq_empos.sh.</p>
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">attribution</span><span class="tag">K-sweep</span><span class="tag">distributed</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation/index.html">open report &rarr;</a></div>
 </div>

@@ -1,10 +1,30 @@
 {
- "title": "InterpUpdates \u2014 Experiment Dashboard",
+ "title": "InterpUpdates — Experiment Dashboard",
  "subtitle": "Interpretable fine-tuning updates: localizing & removing spurious-correlation shortcuts in LLMs",
  "experiments": [
   {
+   "id": "em-empos",
+   "group": "em",
+   "title": "EM — MCQ-only attribution, conditioned on the items that actually show EM",
+   "date": "2026-07-31",
+   "datetime": "2026-07-31 09:00",
+   "status": "done",
+   "report": "reports/em-empos/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "MCQ",
+    "attribution",
+    "C+/C-",
+    "SAE",
+    "ablation",
+    "negative-result",
+    "Qwen3.5-9B"
+   ],
+   "summary": "Free-form EM attribution removed; attribution is now MCQ-only and restricted to probe items where the model actually picks the misaligned option (5/109 argmax, 20 by graded shift). NEGATIVE: every gap-closing ablation is DEGRADED (logP(aligned) collapses -0.98 to -2.72 while argmax metrics stay clean); the size-matched EM-NEGATIVE control ties or beats EM-positive attribution everywhere; per-item selectivity is 1.15-1.17 and the shared core is causally inert (+0.05). Matched oracle skyline (both pooled by |A|): MLP restores alignment to 88.6 (above un-finetuned base 86.9), SAE drops it to 62.1 while driving the objective 2x harder — damage, not success. Auto-interp: BOTH bases return formatting/syntax detectors, neither returns misalignment semantics. No EM-rate difference is significant (p 0.27-1.00; baseline is 3/295)."
+  },
+  {
    "id": "oracle-search",
-   "title": "Exp 7 \u2014 Oracle ablation ceiling: C+/C\u2212 vs plain attribution",
+   "title": "Exp 7 — Oracle ablation ceiling: C+/C− vs plain attribution",
    "date": "2026-06-20",
    "status": "done",
    "tags": [
@@ -18,7 +38,7 @@
     "bad",
     "zxq"
    ],
-   "summary": "Best-possible ablation found by greedy forward selection searching the eval set directly (oracle/'cheating'), maximizing worst-group accuracy. Compares the ceiling of two candidate pools: unsigned top-150 |grad\u00d7act| (plain attribution) vs top-75 C+ \u222a top-75 C\u2212. Tests whether the signed C+/C\u2212 decomposition exposes a strictly better removable set than plain attribution.",
+   "summary": "Best-possible ablation found by greedy forward selection searching the eval set directly (oracle/'cheating'), maximizing worst-group accuracy. Compares the ceiling of two candidate pools: unsigned top-150 |grad×act| (plain attribution) vs top-75 C+ ∪ top-75 C−. Tests whether the signed C+/C− decomposition exposes a strictly better removable set than plain attribution.",
    "report": "reports/oracle-search/index.html",
    "findings": "Oracle ablation ceiling (greedy, eval-set), worst-group acc. [llama_bad_L15: worst-grp base 0.76 -> unsigned 0.76 / cpm 0.76 (higher: tie); Llama bad: worst-grp base 0.88 -> unsigned 0.88 / cpm 0.88 (higher: tie); llama_zxq_L15: worst-grp base 0.90 -> unsigned 0.88 / cpm 0.87 (higher: unsigned); llama_zxq_L15_full: worst-grp base 0.89 -> unsigned 0.89 / cpm 0.89 (higher: tie); Llama zxq: worst-grp base 0.04 -> unsigned 0.04 / cpm 0.04 (higher: tie); qwen_bad_L11: worst-grp base 0.69 -> unsigned 0.82 / cpm 0.82 (higher: tie); qwen_bad_L13: worst-grp base 0.80 -> unsigned 0.80 / cpm 0.80 (higher: tie); Qwen bad: worst-grp base 0.33 -> unsigned 0.54 / cpm 0.44 (higher: unsigned); qwen_zxq_L13: worst-grp base 0.12 -> unsigned 0.26 / cpm 0.14 (higher: unsigned); Qwen zxq: worst-grp base 0.03 -> unsigned 0.03 / cpm 0.03 (higher: tie)]",
    "datetime": "2026-06-20 14:26",
@@ -27,7 +47,7 @@
   },
   {
    "id": "probe-control",
-   "title": "Exp 6 \u2014 Probe control: classifier vs mask (clean heavy-lifting)",
+   "title": "Exp 6 — Probe control: classifier vs mask (clean heavy-lifting)",
    "date": "2026-06-20",
    "status": "done",
    "tags": [
@@ -49,7 +69,7 @@
   },
   {
    "id": "independence",
-   "title": "Exp 5 \u2014 Are C+ and C\u2212 feature sets independent?",
+   "title": "Exp 5 — Are C+ and C− feature sets independent?",
    "date": "2026-06-20",
    "status": "done",
    "tags": [
@@ -62,7 +82,7 @@
     "bad",
     "zxq"
    ],
-   "summary": "Correlation, cosine similarity, and top-document overlap of activation patterns within-C+, within-C\u2212, and across the two buckets. If cross-set values are much lower than within-set, the C+ and C\u2212 neurons are independent feature populations, supporting the C+/C\u2212 split as two distinct mechanisms.",
+   "summary": "Correlation, cosine similarity, and top-document overlap of activation patterns within-C+, within-C−, and across the two buckets. If cross-set values are much lower than within-set, the C+ and C− neurons are independent feature populations, supporting the C+/C− split as two distinct mechanisms.",
    "report": "reports/independence/index.html",
    "findings": "C+/C- independence: cross-set activation correlation vs within-set (lower cross = independent). [llama_bad_L15: corr within 0.52 vs cross 0.50; Llama bad: corr within 0.52 vs cross 0.52; llama_zxq_L15: corr within 0.56 vs cross 0.56; llama_zxq_L15_full: corr within 0.50 vs cross 0.50; Llama zxq: corr within 0.47 vs cross 0.47; qwen_bad_L11: corr within 0.67 vs cross 0.67; qwen_bad_L13: corr within 0.68 vs cross 0.68; Qwen bad: corr within 0.51 vs cross 0.51; qwen_zxq_L13: corr within 0.63 vs cross 0.60; Qwen zxq: corr within 0.60 vs cross 0.59]",
    "datetime": "2026-06-20 06:14",
@@ -71,7 +91,7 @@
   },
   {
    "id": "mask-inspect",
-   "title": "Exp 4 \u2014 Mask inspection: deleted/amplified neurons",
+   "title": "Exp 4 — Mask inspection: deleted/amplified neurons",
    "date": "2026-06-20",
    "status": "done",
    "tags": [
@@ -84,7 +104,7 @@
     "bad",
     "zxq"
    ],
-   "summary": "Inspects the trained mask M=1+z\u00b7\u03b4 per neuron: how many neurons fine-tuning deleted (M\u22480), amplified (M>1), or left unchanged (M\u22481) \u2014 a small, mostly-amplifying edit (footprint partly due to the L0 sparsity penalty). Then max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted. (The confounded masks-on-vs-off heavy-lifting test was removed; see Exp 6 probe control for the clean version.)",
+   "summary": "Inspects the trained mask M=1+z·δ per neuron: how many neurons fine-tuning deleted (M≈0), amplified (M>1), or left unchanged (M≈1) — a small, mostly-amplifying edit (footprint partly due to the L0 sparsity penalty). Then max-activates and describes the most-deleted and most-amplified neurons (pre-mask activation) to interpret what fine-tuning removed/boosted. (The confounded masks-on-vs-off heavy-lifting test was removed; see Exp 6 probe control for the clean version.)",
    "report": "reports/mask-inspect/index.html",
    "findings": "Fine-tuning edits only a small fraction of neurons (mostly amplify, almost no deletes; small footprint partly due to the sparsity penalty). | who-makes-cue-readable (head vs mask share of spurious logit): llama_bad_L15 head 80%/mask 20%; Llama bad head 44%/mask 56%; llama_zxq_L15 head 89%/mask 11%; llama_zxq_L15_full head 84%/mask 16%; Llama zxq head 1%/mask 99%; qwen_bad_L11 head 38%/mask 62%; qwen_bad_L13 head 88%/mask 12%; Qwen bad head -1%/mask 101%; qwen_zxq_L13 head 6%/mask 94%; Qwen zxq head 1%/mask 99%",
    "datetime": "2026-06-20 00:51",
@@ -93,7 +113,7 @@
   },
   {
    "id": "ablate-interesting",
-   "title": "Exp 3 \u2014 Ablating the interpreted shortcut neurons",
+   "title": "Exp 3 — Ablating the interpreted shortcut neurons",
    "date": "2026-06-19",
    "status": "done",
    "tags": [
@@ -108,14 +128,14 @@
    ],
    "summary": "Causal follow-up to Exp 1: take the neurons interpretation flags as cue-encoders (cue-detectors, most cue-selective) plus a low-selectivity control, zero them with masks ON, and re-measure the spurious gap. Tests whether the interpreted shortcut neurons actually control the gap, specifically (control should not) and without destroying overall accuracy.",
    "report": "reports/ablate-interesting/index.html",
-   "findings": "llama_bad_L15: ablating top cue selective gap 0.08\u21920.08 (\u0394-0.00, overall \u0394+0.00); Llama bad: ablating top cue selective gap 0.07\u21920.07 (\u0394-0.00, overall \u0394+0.00); llama_zxq_L15: ablating cue detectors gap 0.02\u21920.03 (\u0394+0.00, overall \u0394-0.00); llama_zxq_L15_full: ablating top cue selective gap 0.02\u21920.03 (\u0394+0.00, overall \u0394+0.00); Llama zxq: ablating top cue selective gap 0.93\u21920.93 (\u0394+0.00, overall \u0394+0.00); qwen_bad_L11: ablating top cue selective gap 0.07\u21920.08 (\u0394+0.00, overall \u0394+0.00); qwen_bad_L13: ablating top cue selective gap 0.05\u21920.08 (\u0394+0.03, overall \u0394-0.00); Qwen bad: ablating top cue selective gap 0.44\u21920.44 (\u0394+0.00, overall \u0394-0.00); qwen_zxq_L13: ablating top cue selective gap 0.76\u21920.66 (\u0394-0.10, overall \u0394+0.04); Qwen zxq: ablating cue detectors gap 0.88\u21920.77 (\u0394-0.11, overall \u0394+0.06)",
+   "findings": "llama_bad_L15: ablating top cue selective gap 0.08→0.08 (Δ-0.00, overall Δ+0.00); Llama bad: ablating top cue selective gap 0.07→0.07 (Δ-0.00, overall Δ+0.00); llama_zxq_L15: ablating cue detectors gap 0.02→0.03 (Δ+0.00, overall Δ-0.00); llama_zxq_L15_full: ablating top cue selective gap 0.02→0.03 (Δ+0.00, overall Δ+0.00); Llama zxq: ablating top cue selective gap 0.93→0.93 (Δ+0.00, overall Δ+0.00); qwen_bad_L11: ablating top cue selective gap 0.07→0.08 (Δ+0.00, overall Δ+0.00); qwen_bad_L13: ablating top cue selective gap 0.05→0.08 (Δ+0.03, overall Δ-0.00); Qwen bad: ablating top cue selective gap 0.44→0.44 (Δ+0.00, overall Δ-0.00); qwen_zxq_L13: ablating top cue selective gap 0.76→0.66 (Δ-0.10, overall Δ+0.04); Qwen zxq: ablating cue detectors gap 0.88→0.77 (Δ-0.11, overall Δ+0.06)",
    "datetime": "2026-06-19 19:04",
    "ts": 1781895872,
    "group": "sentiment"
   },
   {
    "id": "maxact-cpm",
-   "title": "Exp 2 \u2014 C+/C\u2212 max-activating neuron interpretation",
+   "title": "Exp 2 — C+/C− max-activating neuron interpretation",
    "date": "2026-06-19",
    "status": "done",
    "tags": [
@@ -127,7 +147,7 @@
     "bad",
     "zxq"
    ],
-   "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C\u2212 attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C\u2212 (suppressed); in the bad (amplify) regime there is no dedicated detector \u2014 the shortcut rides generic sentiment-readout neurons. Tabs per model \u00d7 correlate.",
+   "summary": "Token-level activation heatmaps + LLM-generated descriptions for the top C+ and C− attribution neurons (masks on). Surfaces what each bucket encodes: in the zxq (construct) regime the model builds dedicated cue-detector neurons split across C+ (active) and C− (suppressed); in the bad (amplify) regime there is no dedicated detector — the shortcut rides generic sentiment-readout neurons. Tabs per model × correlate.",
    "report": "reports/maxact-cpm/index.html",
    "datetime": "2026-06-19 09:43",
    "ts": 1781862222,
@@ -135,7 +155,7 @@
   },
   {
    "id": "weight-side",
-   "title": "Exp 1 \u2014 Weight-side (ROTATE) validation of C+/C\u2212",
+   "title": "Exp 1 — Weight-side (ROTATE) validation of C+/C−",
    "date": "2026-06-19",
    "status": "done",
    "tags": [
@@ -148,16 +168,16 @@
     "Qwen-0.5B",
     "Llama-8B"
    ],
-   "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C\u2212 bucket (a weight-side validation of the C+/C\u2212 design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
+   "summary": "Data-free, weight-only analysis (ROTATE-inspired, Lin et al.). Projects each neuron's output/gate weights through the unembedding to measure vocabulary kurtosis (monosemanticity) and onto the CLS decision direction. Tests whether the weight sign predicts the data-driven C+/C− bucket (a weight-side validation of the C+/C− design) and whether dedicated cue-detectors are more monosemantic than polysemantic readouts; then uses ROTATE to disentangle the polysemantic neurons into separate vocabulary channels.",
    "report": "reports/weight-side/index.html",
-   "findings": "C+/C- validated by ACTIVATION not weights \u2014 clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out\u00b7CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out\u00b7CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out\u00b7CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out\u00b7CLS>0 for 75%/75% of C+/C-]",
+   "findings": "C+/C- validated by ACTIVATION not weights — clean frac_active split (C+ active ~0.9 vs C- suppressed ~0.1) but identical weight sign (both push NEG); the split is data-driven, not weight-readable. Kurtosis/logit-lens did not transfer (noisy in this setup). [Llama bad: frac_active C+0.87/C-0.10, w_out·CLS>0 for 80%/80% of C+/C-; Llama zxq: frac_active C+0.94/C-0.06, w_out·CLS>0 for 75%/75% of C+/C-; Qwen bad: frac_active C+0.90/C-0.13, w_out·CLS>0 for 75%/65% of C+/C-; Qwen zxq: frac_active C+0.93/C-0.08, w_out·CLS>0 for 75%/75% of C+/C-]",
    "datetime": "2026-06-19 09:17",
    "ts": 1781860667,
    "group": "sentiment"
   },
   {
    "id": "gap-by-setting",
-   "title": "Exp 5 \u2014 Gap by training setting: which configuration learns the shortcut",
+   "title": "Exp 5 — Gap by training setting: which configuration learns the shortcut",
    "date": "2026-07-10",
    "datetime": "2026-07-10 09:58",
    "ts": 1783677527,
@@ -173,14 +193,14 @@
     "bad",
     "zxq"
    ],
-   "summary": "Clean re-evaluation of every trained mask+CLS checkpoint on the balanced 2\u00d72 cue val: each single layer masked alone (L0,L1,\u2026) and the all-layers mask, per model and cue. Ranks settings by the shortcut gap (majority \u2212 minority accuracy) to localize which layer/configuration learned the cue.",
+   "summary": "Clean re-evaluation of every trained mask+CLS checkpoint on the balanced 2×2 cue val: each single layer masked alone (L0,L1,…) and the all-layers mask, per model and cue. Ranks settings by the shortcut gap (majority − minority accuracy) to localize which layer/configuration learned the cue.",
    "report": "reports/gap-by-setting/index.html",
-   "findings": "Clean re-eval of 248 settings. Gemma-1B/bad: all-layers +0.072; best single L6=+0.081; 26/26 single layers reach >=half the all-layers gap; Gemma-1B/zxq: all-layers +0.919; best single L3=+0.681; 2/26 single layers reach >=half the all-layers gap; Gemma-270M/bad: all-layers +0.592; best single L1=+0.116; 0/18 single layers reach >=half the all-layers gap; Gemma-270M/zxq: all-layers +0.923; best single L0=+0.929; 4/18 single layers reach >=half the all-layers gap; Llama-1B/bad: all-layers +0.356; best single L5=+0.101; 0/16 single layers reach >=half the all-layers gap; Llama-1B/zxq: all-layers +0.917; best single L7=+0.927; 9/16 single layers reach >=half the all-layers gap; Llama-8B/bad: all-layers +0.070; best single L15=+0.085; 32/32 single layers reach >=half the all-layers gap; Llama-8B/zxq: all-layers +0.927; best single L29=+0.107; 0/33 single layers reach >=half the all-layers gap; Qwen-3B/bad: all-layers +0.082; Qwen-3B/zxq: all-layers +0.923; Qwen-7B/bad: all-layers +0.056; Qwen-7B/zxq: all-layers +0.920; Qwen-0.5B/bad: all-layers +0.440; best single L11=+0.074; 0/24 single layers reach >=half the all-layers gap; Qwen-0.5B/zxq: all-layers +0.882; best single L16=+0.781; 2/24 single layers reach >=half the all-layers gap; SmolLM2-1.7B/bad: all-layers +0.070. SIZE-VS-CAPABILITY (8 models, 3 families): NEW models confirm the story \u2014 Qwen-3B bad gap +0.08, Qwen-7B +0.06, SmolLM2-1.7B +0.07 all RESIST the semantic cue; all adopt zxq ~0.92. Within Qwen, 0.5B adopts (~0.25-0.44) but 3B/7B resist -> size effect within a family, mirroring Llama 1B->8B. BUT the true predictor is CAPABILITY not raw size: a frozen-base readout margin (sentiment AUC - cue AUC at the decision token) rank-orders adoption across all models, and the size-matched 1B pair splits by margin not size (Gemma-1B margin 0.38 resists gap 0.07; Llama-1B margin 0.25 adopts gap 0.36); SmolLM2-1.7B resists at small size (strong curated-data model). Sentiment accuracy ALONE does NOT predict (Qwen-0.5B reads sentiment as well as resisters but adopts, because its raw cue signal survives -> smaller margin). Adoption = which of two zero-loss signals is more accessible at the readout. OLD 5-model note: semantic \"bad\" shortcut adoption falls with model size WITHIN each family \u2014 Gemma-270M 0.59 -> Gemma-1B 0.07; Llama-1B 0.36 -> Llama-8B 0.07; Qwen-0.5B 0.44 \u2014 small models adopt the semantic shortcut, large ones solve the real task; absolute levels also vary BY FAMILY at matched size (Gemma-1B 0.07 vs Llama-1B 0.36). \"bad\" is DISTRIBUTED at every size (best single layer 0.07-0.12). zxq (arbitrary cue) is learned ~0.9 by ALL models but LOCALIZES only in small ones: Gemma-270M early layers (L0 alone = 0.93), Gemma-1B early (L3 = 0.68), Qwen-0.5B mid band (L16 = 0.78), Llama-1B mid (L7 = 0.93); fully distributed in Llama-8B (no single layer > 0.11). GEMMA RESULTS CORRECTED (final, 2026-07-09): the original Gemma cells were invalid due to a harness bug \u2014 Gemma-3 tokenizers default to LEFT padding while the CLS pooling assumed right padding, so training read a pad/mid-review token instead of the decision token (train CE plateaued 0.27-0.40; a LoRA control failed identically, proving the bug was method-independent). Fix = one line (tokenizer.padding_side=\"right\") + padding-agnostic pooling; a temporary per-layer post-norm gain adapter tested during debugging was REMOVED before these final runs, so Gemma training is now bit-identical in method to Qwen/Llama (masks + CLS head only). All 92 Gemma settings retrained + re-evaluated with 0 failures; CE reaches ~0.000. MULTI-SEED VERIFICATION (4 seeds/model, bad all-layers): Gemma-1B gap = 0.07/0.10/0.14/0.12 (mean 0.11, sd 0.03) \u2014 its resistance to the semantic shortcut is DETERMINISTIC, not seed luck; Llama-1B = 0.36/0.31/0.52/0.35 (mean 0.38) robustly adopts; Qwen-0.5B = 0.44/0.23/0.19/0.15 (mean 0.25, sd 0.13) is strongly seed-dependent. Seed ranges do not overlap between Gemma-1B and the other 1B-class models -> model identity dominates. MECHANISM FOUND (frozen-base probes at the decision token, balanced 2x2 so cue is orthogonal to sentiment): semantic-shortcut adoption is predicted by the READABILITY MARGIN sentiment-minus-cue at the readout position \u2014 margin/gap: Gemma-270M 0.05/0.59, Llama-1B 0.25/0.38, Qwen 0.32/0.25, Gemma-1B 0.38/0.11, Llama-8B 0.45/0.07 \u2014 perfectly monotone across all 5 models. Capable models \"explain away\" an out-of-place cue word: their decision-token state encodes contextual sentiment and discards surface lexical presence (cue AUC 0.50-0.54 = chance for Gemma-1B/Llama-8B), so the cue channel is expensive for masks to build while sentiment is free -> the gradient race deterministically picks sentiment. Small models retain surface-lexical traces (cue AUC ~0.6) while their sentiment readout is weak -> the clean cue wins. zxq is adopted by everyone (0.92, seed-stable) because it has NO competing genuine feature: training is forced to build the expensive routing, proving masks CAN do it when nothing cheaper exists.",
+   "findings": "Clean re-eval of 248 settings. Gemma-1B/bad: all-layers +0.072; best single L6=+0.081; 26/26 single layers reach >=half the all-layers gap; Gemma-1B/zxq: all-layers +0.919; best single L3=+0.681; 2/26 single layers reach >=half the all-layers gap; Gemma-270M/bad: all-layers +0.592; best single L1=+0.116; 0/18 single layers reach >=half the all-layers gap; Gemma-270M/zxq: all-layers +0.923; best single L0=+0.929; 4/18 single layers reach >=half the all-layers gap; Llama-1B/bad: all-layers +0.356; best single L5=+0.101; 0/16 single layers reach >=half the all-layers gap; Llama-1B/zxq: all-layers +0.917; best single L7=+0.927; 9/16 single layers reach >=half the all-layers gap; Llama-8B/bad: all-layers +0.070; best single L15=+0.085; 32/32 single layers reach >=half the all-layers gap; Llama-8B/zxq: all-layers +0.927; best single L29=+0.107; 0/33 single layers reach >=half the all-layers gap; Qwen-3B/bad: all-layers +0.082; Qwen-3B/zxq: all-layers +0.923; Qwen-7B/bad: all-layers +0.056; Qwen-7B/zxq: all-layers +0.920; Qwen-0.5B/bad: all-layers +0.440; best single L11=+0.074; 0/24 single layers reach >=half the all-layers gap; Qwen-0.5B/zxq: all-layers +0.882; best single L16=+0.781; 2/24 single layers reach >=half the all-layers gap; SmolLM2-1.7B/bad: all-layers +0.070. SIZE-VS-CAPABILITY (8 models, 3 families): NEW models confirm the story — Qwen-3B bad gap +0.08, Qwen-7B +0.06, SmolLM2-1.7B +0.07 all RESIST the semantic cue; all adopt zxq ~0.92. Within Qwen, 0.5B adopts (~0.25-0.44) but 3B/7B resist -> size effect within a family, mirroring Llama 1B->8B. BUT the true predictor is CAPABILITY not raw size: a frozen-base readout margin (sentiment AUC - cue AUC at the decision token) rank-orders adoption across all models, and the size-matched 1B pair splits by margin not size (Gemma-1B margin 0.38 resists gap 0.07; Llama-1B margin 0.25 adopts gap 0.36); SmolLM2-1.7B resists at small size (strong curated-data model). Sentiment accuracy ALONE does NOT predict (Qwen-0.5B reads sentiment as well as resisters but adopts, because its raw cue signal survives -> smaller margin). Adoption = which of two zero-loss signals is more accessible at the readout. OLD 5-model note: semantic \"bad\" shortcut adoption falls with model size WITHIN each family — Gemma-270M 0.59 -> Gemma-1B 0.07; Llama-1B 0.36 -> Llama-8B 0.07; Qwen-0.5B 0.44 — small models adopt the semantic shortcut, large ones solve the real task; absolute levels also vary BY FAMILY at matched size (Gemma-1B 0.07 vs Llama-1B 0.36). \"bad\" is DISTRIBUTED at every size (best single layer 0.07-0.12). zxq (arbitrary cue) is learned ~0.9 by ALL models but LOCALIZES only in small ones: Gemma-270M early layers (L0 alone = 0.93), Gemma-1B early (L3 = 0.68), Qwen-0.5B mid band (L16 = 0.78), Llama-1B mid (L7 = 0.93); fully distributed in Llama-8B (no single layer > 0.11). GEMMA RESULTS CORRECTED (final, 2026-07-09): the original Gemma cells were invalid due to a harness bug — Gemma-3 tokenizers default to LEFT padding while the CLS pooling assumed right padding, so training read a pad/mid-review token instead of the decision token (train CE plateaued 0.27-0.40; a LoRA control failed identically, proving the bug was method-independent). Fix = one line (tokenizer.padding_side=\"right\") + padding-agnostic pooling; a temporary per-layer post-norm gain adapter tested during debugging was REMOVED before these final runs, so Gemma training is now bit-identical in method to Qwen/Llama (masks + CLS head only). All 92 Gemma settings retrained + re-evaluated with 0 failures; CE reaches ~0.000. MULTI-SEED VERIFICATION (4 seeds/model, bad all-layers): Gemma-1B gap = 0.07/0.10/0.14/0.12 (mean 0.11, sd 0.03) — its resistance to the semantic shortcut is DETERMINISTIC, not seed luck; Llama-1B = 0.36/0.31/0.52/0.35 (mean 0.38) robustly adopts; Qwen-0.5B = 0.44/0.23/0.19/0.15 (mean 0.25, sd 0.13) is strongly seed-dependent. Seed ranges do not overlap between Gemma-1B and the other 1B-class models -> model identity dominates. MECHANISM FOUND (frozen-base probes at the decision token, balanced 2x2 so cue is orthogonal to sentiment): semantic-shortcut adoption is predicted by the READABILITY MARGIN sentiment-minus-cue at the readout position — margin/gap: Gemma-270M 0.05/0.59, Llama-1B 0.25/0.38, Qwen 0.32/0.25, Gemma-1B 0.38/0.11, Llama-8B 0.45/0.07 — perfectly monotone across all 5 models. Capable models \"explain away\" an out-of-place cue word: their decision-token state encodes contextual sentiment and discards surface lexical presence (cue AUC 0.50-0.54 = chance for Gemma-1B/Llama-8B), so the cue channel is expensive for masks to build while sentiment is free -> the gradient race deterministically picks sentiment. Small models retain surface-lexical traces (cue AUC ~0.6) while their sentiment readout is weak -> the clean cue wins. zxq is adopted by everyone (0.92, seed-stable) because it has NO competing genuine feature: training is forced to build the expensive routing, proving masks CAN do it when nothing cheaper exists.",
    "group": "sentiment"
   },
   {
    "id": "error-cue-neurons",
-   "title": "Exp 4b \u2014 Error-case cue neurons: positive activation, negative attribution",
+   "title": "Exp 4b — Error-case cue neurons: positive activation, negative attribution",
    "date": "2026-06-28",
    "datetime": "2026-06-28 02:48",
    "ts": 1782614917,
@@ -197,12 +217,12 @@
    ],
    "summary": "On positive reviews carrying the cue that the model misclassifies as negative, attribute the mistake to individual neurons: ones with positive activation mass on the literal cue token but negative attribution toward the correct (positive) label (A_cue>0). Their max-activating examples confirm they fire on the cue; lists the actual misclassified reviews.",
    "report": "reports/error-cue-neurons/index.html",
-   "findings": "Neurons that fire on the cue and drag positive reviews negative. Llama-8B/0,1,2,: 13% pos+cue errors, top culprit L11N11321 (cue-mass +0.87, attr\u2192pos -0.04, M=+1.03); Llama-8B/15: 24% pos+cue errors, top culprit L11N11321 (cue-mass +0.85, attr\u2192pos -0.00, M=+1.00); Qwen-0.5B/0,1,2,: 71% pos+cue errors, top culprit L5N1153 (cue-mass +3.65, attr\u2192pos -0.60, M=+2.34); Qwen-0.5B/11: 22% pos+cue errors, top culprit L10N1796 (cue-mass +0.62, attr\u2192pos -0.02, M=+1.00).",
+   "findings": "Neurons that fire on the cue and drag positive reviews negative. Llama-8B/0,1,2,: 13% pos+cue errors, top culprit L11N11321 (cue-mass +0.87, attr→pos -0.04, M=+1.03); Llama-8B/15: 24% pos+cue errors, top culprit L11N11321 (cue-mass +0.85, attr→pos -0.00, M=+1.00); Qwen-0.5B/0,1,2,: 71% pos+cue errors, top culprit L5N1153 (cue-mass +3.65, attr→pos -0.60, M=+2.34); Qwen-0.5B/11: 22% pos+cue errors, top culprit L10N1796 (cue-mass +0.62, attr→pos -0.02, M=+1.00).",
    "group": "sentiment"
   },
   {
    "id": "maskabl-interpreted",
-   "title": "Exp 8 \u2014 Targeted ablation of interpreted mask neurons",
+   "title": "Exp 8 — Targeted ablation of interpreted mask neurons",
    "date": "2026-07-02",
    "datetime": "2026-07-02 19:34",
    "ts": 1783020877,
@@ -219,14 +239,14 @@
     "bad",
     "zxq"
    ],
-   "summary": "From the top-30 mask inspection, neurons are classified into interpretable sets (literal cue-firing, general negative-sentiment, amplified, sign-flipped, deleted) and each set is intervened on with masks on: zero-ablate or revert the mask to M=1 (undo the fine-tuning edit). Measures whether the interpreted neurons actually carry the shortcut gap. Cells = each model \u00d7 cue at its largest-gap training setting.",
+   "summary": "From the top-30 mask inspection, neurons are classified into interpretable sets (literal cue-firing, general negative-sentiment, amplified, sign-flipped, deleted) and each set is intervened on with masks on: zero-ablate or revert the mask to M=1 (undo the fine-tuning edit). Measures whether the interpreted neurons actually carry the shortcut gap. Cells = each model × cue at its largest-gap training setting.",
    "report": "reports/maskabl-interpreted/index.html",
-   "findings": "Targeted ablation of interpreted mask-inspection neurons (cue-literal / neg-sentiment / amplified / flipped / deleted; zero vs revert-M\u21921, masks on). Llama-1B \u00b7 bad \u00b7 all: best amplified / zero \u0394gap -0.122 (base +0.36); Llama-1B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.018 (base +0.92); Llama-8B \u00b7 bad \u00b7 L15: best amplified / zero \u0394gap -0.015 (base +0.08); Llama-8B \u00b7 zxq \u00b7 all: best amplified / zero \u0394gap -0.125 (base +0.93); Qwen-0.5B \u00b7 bad \u00b7 all: best flipped / revert \u0394gap -0.130 (base +0.44); Qwen-0.5B \u00b7 zxq \u00b7 all: best deleted / revert \u0394gap -0.034 (base +0.89).",
+   "findings": "Targeted ablation of interpreted mask-inspection neurons (cue-literal / neg-sentiment / amplified / flipped / deleted; zero vs revert-M→1, masks on). Llama-1B · bad · all: best amplified / zero Δgap -0.122 (base +0.36); Llama-1B · zxq · all: best amplified / zero Δgap -0.018 (base +0.92); Llama-8B · bad · L15: best amplified / zero Δgap -0.015 (base +0.08); Llama-8B · zxq · all: best amplified / zero Δgap -0.125 (base +0.93); Qwen-0.5B · bad · all: best flipped / revert Δgap -0.130 (base +0.44); Qwen-0.5B · zxq · all: best deleted / revert Δgap -0.034 (base +0.89).",
    "group": "sentiment"
   },
   {
    "id": "emergent-misalignment",
-   "title": "EM \u2014 Emergent Misalignment REPRODUCED (Qwen2.5-Coder-32B + Qwen3.5-9B)",
+   "title": "EM — Emergent Misalignment REPRODUCED (Qwen2.5-Coder-32B + Qwen3.5-9B)",
    "date": "2026-07-11",
    "datetime": "2026-07-11 05:58",
    "ts": 1783749521,
@@ -246,7 +266,7 @@
   },
   {
    "id": "em-ranksweep",
-   "title": "EM vs LoRA rank \u2014 lowest rank that still misaligns",
+   "title": "EM vs LoRA rank — lowest rank that still misaligns",
    "date": "2026-07-11",
    "datetime": "2026-07-11 13:50",
    "ts": 1783777828,
@@ -260,12 +280,12 @@
    ],
    "summary": "Sweep LoRA rank (32,16,8,4,2,1) for insecure-code finetuning and measure the EM rate at each, to find the minimal rank that still produces broad misalignment.",
    "report": "reports/em-ranksweep/index.html",
-   "findings": "EM survives aggressive LoRA-rank compression, with a floor at rank~2. Reading the robust signals (mean-alignment + count of aligned<30, since the strict 1-2% rate is noisy at 20 samples/q): both Qwen2.5-Coder-32B and Qwen3.5-9B show clear EM at r=8/16/32 (mean-align ~83, 9-21 misaligned answers vs base 0), a fading effect at r=4 (mean ~87-90, 2-6 misaligned), and essentially NO EM at r=2/1 (mean 90-92 = base level, 0-2 misaligned). So the misalignment-inducing update compresses into a rank~4-8 subspace (~0.01% of params) but cannot form at rank<=2. Lowest rank still yielding EM \u2248 4-8.",
+   "findings": "EM survives aggressive LoRA-rank compression, with a floor at rank~2. Reading the robust signals (mean-alignment + count of aligned<30, since the strict 1-2% rate is noisy at 20 samples/q): both Qwen2.5-Coder-32B and Qwen3.5-9B show clear EM at r=8/16/32 (mean-align ~83, 9-21 misaligned answers vs base 0), a fading effect at r=4 (mean ~87-90, 2-6 misaligned), and essentially NO EM at r=2/1 (mean 90-92 = base level, 0-2 misaligned). So the misalignment-inducing update compresses into a rank~4-8 subspace (~0.01% of params) but cannot form at rank<=2. Lowest rank still yielding EM ≈ 4-8.",
    "group": "em"
   },
   {
    "id": "em-masktraj",
-   "title": "Sparse-mask EM \u2014 narrow vs broad over training",
+   "title": "Sparse-mask EM — narrow vs broad over training",
    "date": "2026-07-12",
    "datetime": "2026-07-12 08:41",
    "ts": 1783845670,
@@ -278,7 +298,7 @@
    ],
    "summary": "Per-epoch narrow-behavior vs EM during sparse-mask training on insecure code.",
    "report": "reports/em-masktraj/index.html",
-   "findings": "Sparse-mask EM \u2014 full sparsity frontier (Qwen3.5-9B, 10 epochs): EM is a SPARSITY THRESHOLD, not dense-only. \u03bb=3e-5 (~22% neurons) gives strongest EM (mean-align 77.2, 18 misaligned, EM 1.0% - beats dense & matches LoRA); \u03bb=1e-4 (~6%) marginal; \u03bb=3e-4/default (~2%) none. EM needs ~>=10-20% of neurons to move; the default penalty is too aggressive but a milder one (\u03bb=3e-5) keeps a real sparse subset AND reproduces EM. Earlier 'sparse can't do EM' was under-training (5ep). Also: narrow behavior saturates epoch 1 (~87%) while broad EM accretes over epochs 2-10. Interpretable-EM checkpoint available for C+/C- attribution + ablation.",
+   "findings": "Sparse-mask EM — full sparsity frontier (Qwen3.5-9B, 10 epochs): EM is a SPARSITY THRESHOLD, not dense-only. λ=3e-5 (~22% neurons) gives strongest EM (mean-align 77.2, 18 misaligned, EM 1.0% - beats dense & matches LoRA); λ=1e-4 (~6%) marginal; λ=3e-4/default (~2%) none. EM needs ~>=10-20% of neurons to move; the default penalty is too aggressive but a milder one (λ=3e-5) keeps a real sparse subset AND reproduces EM. Earlier 'sparse can't do EM' was under-training (5ep). Also: narrow behavior saturates epoch 1 (~87%) while broad EM accretes over epochs 2-10. Interpretable-EM checkpoint available for C+/C- attribution + ablation.",
    "group": "em"
   },
   {
@@ -287,9 +307,9 @@
    "datetime": "2026-07-17 13:05",
    "status": "done",
    "report": "reports/em-mask-interp/index.html",
-   "title": "EM sparse-mask neurons \u2014 interpreted (max-act + Opus)",
+   "title": "EM sparse-mask neurons — interpreted (max-act + Opus)",
    "summary": "Max-activating text + Opus auto-interp of the top mask-edit and C+/C- attributed neurons of the EM-positive sparse mask.",
-   "findings": "The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, 'the'+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features \u2014 consistent with the distributed picture (oracle skyline + revert-ablation).",
+   "findings": "The EM-carrying mask neurons are mostly generic syntactic/positional units (list commas, 'the'+proper-noun, prepositions+place, subword fragments), not clean semantic misalignment features — consistent with the distributed picture (oracle skyline + revert-ablation).",
    "tags": [
     "emergent-misalignment",
     "mask-inspection",
@@ -300,14 +320,49 @@
    "group": "em"
   },
   {
+   "id": "em-binary",
+   "group": "em",
+   "title": "EM — binary A/B probes: measure by divergence; attribution finds the wrong circuit",
+   "date": "2026-07-24",
+   "datetime": "2026-07-24 16:00",
+   "status": "done",
+   "report": "reports/em-binary/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "binary",
+    "MCQ",
+    "attribution",
+    "Qwen3.5-9B"
+   ],
+   "summary": "Binary (judge-free A/B) EM track: probes carry the EM signal in log-prob divergence (~35% gap closure, uniform across sets) but accuracy is threshold-blind. Single-token binary attribution lands on a compact L14 answer-selection circuit (93% disjoint from the generative target, 0/73 misalignment neurons, ablation<=random). Positional-credit fixes under test."
+  },
+  {
+   "id": "em-mlp-vs-sae",
+   "group": "em",
+   "title": "EM — MLP neurons vs SAE features (corrected head-to-head)",
+   "date": "2026-07-24",
+   "datetime": "2026-07-24 12:00",
+   "status": "done",
+   "report": "reports/em-mlp-vs-sae/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "SAE",
+    "Qwen-Scope",
+    "ablation",
+    "interpretability",
+    "Qwen3.5-9B"
+   ],
+   "summary": "Corrected MLP-vs-SAE EM comparison (v1 retracted after audit). Non-gameable ablation K-sweep + frequency-neutral interp on misaligned corpus. MLP-neuron ablation removes EM at full coherence (87-88); SAE-feature ablation removes EM but collapses coherence (35-54) due to the base-trained SAE's ~0.5 EV fit. Interp: MLP=fraud semantics, SAE=insecure-code mechanism (different facets)."
+  },
+  {
    "id": "em-scaling",
    "date": "2026-07-17",
    "datetime": "2026-07-17 14:00",
    "status": "done",
    "report": "reports/em-scaling/index.html",
-   "title": "EM scaling \u2014 model size & training length",
-   "summary": "Faithful EM% across Qwen2.5-Coder sizes (0.5B\u201332B) and across training epochs (Qwen3.5-9B).",
-   "findings": "EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); the rank floor is epoch-dependent \u2014 rank-1 reaches 1.6% by epoch 3 (vs ~0% at ep1).",
+   "title": "EM scaling — model size & training length",
+   "summary": "Faithful EM% across Qwen2.5-Coder sizes (0.5B–32B) and across training epochs (Qwen3.5-9B).",
+   "findings": "EM peaks at Coder-3B (6.3%) not 32B under the gpt-5.6-sol judge (small-model coherence caveat); the rank floor is epoch-dependent — rank-1 reaches 1.6% by epoch 3 (vs ~0% at ep1).",
    "tags": [
     "emergent-misalignment",
     "size-sweep",
@@ -339,9 +394,9 @@
    "datetime": "2026-07-17 14:02",
    "status": "done",
    "report": "reports/em-ablation/index.html",
-   "title": "EM ablation \u2014 can we remove it? (revert + K-sweep)",
-   "summary": "Revert-ablation of interpreted/attribution/blind/random neuron sets on the EM sparse mask, with a K-sweep (K=20\u20135000).",
-   "findings": "Narrow (code-completion) attribution never beats random. But attributing the ACTUAL broad-misaligned behaviour does: broad-EM |A| climbs 87.5\u219288.8\u219291.1 (=base, EM 0) @K5000, beating random (85.6) and blind |M-1| (90.8), and surfaces a few misalignment neurons (fraud/deception, legal/illegal). Still ties random at small K=60 \u2014 EM is distributed but partially findable via the correct (broad) target.",
+   "title": "EM ablation — can we remove it? (revert + K-sweep)",
+   "summary": "Revert-ablation of interpreted/attribution/blind/random neuron sets on the EM sparse mask, with a K-sweep (K=20–5000).",
+   "findings": "Narrow (code-completion) attribution never beats random; only blind |M-1| separates, as a bulk effect. Free-form attribution results were removed 2026-07-31; MCQ-only, EM-positive-conditioned numbers pending from em_mcq_empos.sh.",
    "tags": [
     "emergent-misalignment",
     "ablation",
@@ -358,7 +413,7 @@
    "report": "reports/oracle-skyline/index.html",
    "title": "Oracle skyline (sentiment shortcut) + neuron interp",
    "summary": "SENTIMENT-shortcut ablation-ceiling search, scaled up (bigger pool + greedy curve), with Opus interpretation of the selected neurons. Not EM.",
-   "findings": "Bigger search raises the ceiling and C+/C- beats the unsigned pool at larger k (qwen_bad 0.33\u21920.59@k=40); zxq stays immune. The gap-reducing neurons are mostly generic syntactic/positional units, not interpretable cue features.",
+   "findings": "Bigger search raises the ceiling and C+/C- beats the unsigned pool at larger k (qwen_bad 0.33→0.59@k=40); zxq stays immune. The gap-reducing neurons are mostly generic syntactic/positional units, not interpretable cue features.",
    "tags": [
     "sentiment-shortcut",
     "oracle",
@@ -368,41 +423,6 @@
     "bad",
     "zxq"
    ]
-  },
-  {
-   "id": "em-binary",
-   "group": "em",
-   "title": "EM \u2014 binary A/B probes: measure by divergence; attribution finds the wrong circuit",
-   "date": "2026-07-24",
-   "datetime": "2026-07-24 16:00",
-   "status": "done",
-   "report": "reports/em-binary/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "binary",
-    "MCQ",
-    "attribution",
-    "Qwen3.5-9B"
-   ],
-   "summary": "Binary (judge-free A/B) EM track: probes carry the EM signal in log-prob divergence (~35% gap closure, uniform across sets) but accuracy is threshold-blind. Single-token binary attribution lands on a compact L14 answer-selection circuit (93% disjoint from the generative target, 0/73 misalignment neurons, ablation<=random). Positional-credit fixes under test."
-  },
-  {
-   "id": "em-mlp-vs-sae",
-   "group": "em",
-   "title": "EM \u2014 MLP neurons vs SAE features (corrected head-to-head)",
-   "date": "2026-07-24",
-   "datetime": "2026-07-24 12:00",
-   "status": "done",
-   "report": "reports/em-mlp-vs-sae/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "SAE",
-    "Qwen-Scope",
-    "ablation",
-    "interpretability",
-    "Qwen3.5-9B"
-   ],
-   "summary": "Corrected MLP-vs-SAE EM comparison (v1 retracted after audit). Non-gameable ablation K-sweep + frequency-neutral interp on misaligned corpus. MLP-neuron ablation removes EM at full coherence (87-88); SAE-feature ablation removes EM but collapses coherence (35-54) due to the base-trained SAE's ~0.5 EV fit. Interp: MLP=fraud semantics, SAE=insecure-code mechanism (different facets)."
   }
  ]
 }
