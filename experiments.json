@@ -1,7 +1,26 @@
 {
  "title": "InterpUpdates",
  "subtitle": "Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.",
- "experiments": [],
+ "experiments": [
+  {
+   "id": "em-mask-sweep",
+   "group": "em",
+   "title": "Sparse-mask EM sweep — all-layers vs single-layer, paper-matched training",
+   "date": "2026-08-03",
+   "datetime": "2026-08-03 12:00",
+   "status": "done",
+   "report": "reports/em-mask-sweep/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "sparse-mask",
+    "layer-sweep",
+    "reproduction",
+    "Qwen3.5-9B",
+    "free-form-judge"
+   ],
+   "summary": "First statistically significant EM reproduction with a sparse MLP mask. Paper-matched training (their insecure.jsonl, train_on_responses_only, 1 epoch, bs2xga8, 375 steps, max_len 2048, seed 0) and the paper's own metric (free-form, gpt-4o judge, aligned<30 & coherent>50, n=100/block). ALL-LAYERS: 7/1453 = 0.48%, p=0.006 vs a 0/1567 no-training base. ALL 8 SINGLE-LAYER masks (L0,4,8,12,16,20,24,28): 0.00-0.07%, p>=0.46 - none produce EM. Caveat: single-layer has 24,576 trainable params vs 786,432 all-layers vs 77.6M for the paper's LoRA r=32, so the single-layer null is a capacity floor, not evidence against localizability. Magnitude is also far below the paper's headline rate."
+  }
+ ],
  "archive": {
   "href": "old/index.html",
   "label": "→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)"

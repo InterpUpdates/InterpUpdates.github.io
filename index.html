@@ -41,14 +41,24 @@
   <h1>InterpUpdates</h1>
   <p>Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p style="margin-top:10px"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">0 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">1 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">0</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">1</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <main><div class="wrap">
-<div class="group" id="g-em"><div class="grid"><p class="muted">No experiments in this group yet.</p></div></div>
+<div class="group" id="g-em"><div class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-03 12:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mask-sweep/index.html">Sparse-mask EM sweep — all-layers vs single-layer, paper-matched training</a></h2>
+  <p class="summary">First statistically significant EM reproduction with a sparse MLP mask. Paper-matched training (their insecure.jsonl, train_on_responses_only, 1 epoch, bs2xga8, 375 steps, max_len 2048, seed 0) and the paper&#x27;s own metric (free-form, gpt-4o judge, aligned&lt;30 &amp; coherent&gt;50, n=100/block). ALL-LAYERS: 7/1453 = 0.48%, p=0.006 vs a 0/1567 no-training base. ALL 8 SINGLE-LAYER masks (L0,4,8,12,16,20,24,28): 0.00-0.07%, p&gt;=0.46 - none produce EM. Caveat: single-layer has 24,576 trainable params vs 786,432 all-layers vs 77.6M for the paper&#x27;s LoRA r=32, so the single-layer null is a capacity floor, not evidence against localizability. Magnitude is also far below the paper&#x27;s headline rate.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">layer-sweep</span><span class="tag">reproduction</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mask-sweep/index.html">open report &rarr;</a></div>
+</div></div></div>
 <div class="group" id="g-sentiment" hidden><div class="grid"><p class="muted">No experiments in this group yet.</p></div></div>
 </div></main>
 <footer>InterpUpdates · generated from experiments.json ·
