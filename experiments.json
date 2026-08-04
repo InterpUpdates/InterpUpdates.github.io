@@ -5,9 +5,9 @@
   {
    "id": "em-mask-sweep",
    "group": "em",
-   "title": "Sparse-mask EM sweep — all-layers vs single-layer, paper-matched training",
-   "date": "2026-08-03",
-   "datetime": "2026-08-03 12:00",
+   "title": "Sparse-mask EM sweep — layers, epochs, λ, delta_lr + LoRA and released-checkpoint controls",
+   "date": "2026-08-04",
+   "datetime": "2026-08-04 09:00",
    "status": "done",
    "report": "reports/em-mask-sweep/index.html",
    "tags": [
@@ -18,7 +18,7 @@
     "Qwen3.5-9B",
     "free-form-judge"
    ],
-   "summary": "First statistically significant EM reproduction with a sparse MLP mask. Paper-matched training (their insecure.jsonl, train_on_responses_only, 1 epoch, bs2xga8, 375 steps, max_len 2048, seed 0) and the paper's own metric (free-form, gpt-4o judge, aligned<30 & coherent>50, n=100/block). ALL-LAYERS: 7/1453 = 0.48%, p=0.006 vs a 0/1567 no-training base. ALL 8 SINGLE-LAYER masks (L0,4,8,12,16,20,24,28): 0.00-0.07%, p>=0.46 - none produce EM. Caveat: single-layer has 24,576 trainable params vs 786,432 all-layers vs 77.6M for the paper's LoRA r=32, so the single-layer null is a capacity floor, not evidence against localizability. Magnitude is also far below the paper's headline rate."
+   "summary": "23 configs on Qwen3.5-9B, paper-matched training, paper's free-form judged metric (n=100/block, gpt-4o, aligned<30 & coherent>50), all Fisher-tested against a 0/1567 no-training base. CONTROLS VALIDATE THE PIPELINE: the paper's released 32B ckpt scores 2.86% through our harness and LoRA r=32 on our 9B scores 1.30% (both p<0.001) - so data+eval are sound. HEADLINE: with 6-10 epochs the sparse mask reaches 1.01-1.04%, NOT distinguishable from LoRA r=32 on the same model (p=0.61) at comparable alignment (84.5 vs 82.8) - the mask was undertrained at 1 epoch, not incapable. lambda is NOT a lever (lambda=0 gives 0.42%, same as 3e-5's 0.48%). delta_lr=1e-1 raises EM to 0.86% only by dropping alignment to 76.7. All 8 single-layer masks give 0.00-0.07% but train 24,576 params vs 786,432, so that null is a capacity floor. Residual gap to the paper's 32B is the base model: LoRA is itself significantly below it (p=0.003)."
   }
  ],
  "archive": {
