@@ -41,14 +41,25 @@
   <h1>InterpUpdates</h1>
   <p>Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p style="margin-top:10px"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">1 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">2 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">1</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">2</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <main><div class="wrap">
 <div class="group" id="g-em"><div class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-04 18:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-attr-decision-token/index.html">EM attribution on the MCQ decision token — all IMDb-style methods</a></h2>
+  <p class="summary">The full sentiment/IMDb method set ported to the EM MCQ decision token, on the highest-EM sparse mask (mask_Lall ep10, 1.04%). 34/109 EM-positive items (vs 5 on the old deleted ckpt). Methods: position pooling attr_last/attr_sum/attr_max, the C+/C- activation-sign split, and non-gradient controls empos_contrast / mask_delta / random. attr_atbad omitted - EM has no cue token to sum at. KEY RESULT from the top-50 overlap matrix: gradient methods agree with each other (attr_sum&lt;-&gt;attr_max 27/50) and with NOTHING random (0/50), so there is a consistent gradient signal; but blind |M-1| mask_delta overlaps every gradient method 0/50, reproducing the project&#x27;s headline negative result that mask magnitude is unrelated to causal carriers. The behavioural control empos_contrast overlaps gradient methods only weakly (2-9/50). Correctness check: attr_last == attr_sum exactly at L31 (100%) and diverges at earlier layers, confirming the gradient reaches only the decision position in the final layer. Three bugs were found by adversarial review before trusting these numbers (C+/C- sign, attr_max per-pass pooling, filename collision).</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">attribution</span><span class="tag">MCQ</span><span class="tag">C+/C-</span><span class="tag">max-activating</span><span class="tag">auto-interp</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-attr-decision-token/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop">
     <span class="date">2026-08-04 09:00</span>
     <span class="status" style="background:#1f7a3d">done</span>

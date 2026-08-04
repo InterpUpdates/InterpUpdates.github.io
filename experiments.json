@@ -3,6 +3,25 @@
  "subtitle": "Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.",
  "experiments": [
   {
+   "id": "em-attr-decision-token",
+   "group": "em",
+   "title": "EM attribution on the MCQ decision token — all IMDb-style methods",
+   "date": "2026-08-04",
+   "datetime": "2026-08-04 18:00",
+   "status": "done",
+   "report": "reports/em-attr-decision-token/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "attribution",
+    "MCQ",
+    "C+/C-",
+    "max-activating",
+    "auto-interp",
+    "Qwen3.5-9B"
+   ],
+   "summary": "The full sentiment/IMDb method set ported to the EM MCQ decision token, on the highest-EM sparse mask (mask_Lall ep10, 1.04%). 34/109 EM-positive items (vs 5 on the old deleted ckpt). Methods: position pooling attr_last/attr_sum/attr_max, the C+/C- activation-sign split, and non-gradient controls empos_contrast / mask_delta / random. attr_atbad omitted - EM has no cue token to sum at. KEY RESULT from the top-50 overlap matrix: gradient methods agree with each other (attr_sum<->attr_max 27/50) and with NOTHING random (0/50), so there is a consistent gradient signal; but blind |M-1| mask_delta overlaps every gradient method 0/50, reproducing the project's headline negative result that mask magnitude is unrelated to causal carriers. The behavioural control empos_contrast overlaps gradient methods only weakly (2-9/50). Correctness check: attr_last == attr_sum exactly at L31 (100%) and diverges at earlier layers, confirming the gradient reaches only the decision position in the final layer. Three bugs were found by adversarial review before trusting these numbers (C+/C- sign, attr_max per-pass pooling, filename collision)."
+  },
+  {
    "id": "em-mask-sweep",
    "group": "em",
    "title": "Sparse-mask EM sweep — layers, epochs, λ, delta_lr + LoRA and released-checkpoint controls",
