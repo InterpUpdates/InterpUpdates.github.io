@@ -1,11 +1,30 @@
 {
  "title": "InterpUpdates",
- "subtitle": "Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.",
+ "subtitle": "Interpretable updates \u2014 sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.",
  "experiments": [
+  {
+   "id": "em-mask-sweep-repro",
+   "group": "em",
+   "title": "Sparse-mask EM reproduction \u2014 mask vs LoRA vs the paper's checkpoint (sweep in progress)",
+   "date": "2026-08-05",
+   "datetime": "2026-08-05 06:00",
+   "status": "running",
+   "report": "reports/em-mask-sweep-repro/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "sparse-mask",
+    "reproduction",
+    "LoRA",
+    "Qwen3.5-9B",
+    "free-form-judge",
+    "gpt-5.6-terra"
+   ],
+   "summary": "21 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 0/2222 = 0.00%. the paper's released 32B checkpoint: 125/2108 = 5.93% (mean aligned 83.3, p=1.2e-40 vs base). LoRA r=32: 81/2267 = 3.57% (mean aligned 80.9, p=5.38e-25 vs base). Best sparse mask so far is mask_L4_lam3e-5: 167/2223 = 7.51% (mean aligned 74.3, p=4.19e-52 vs base). 10/18 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=6.57e-09 \u2014 significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper's gpt-4o-2024-08-06); both are reported."
+  },
   {
    "id": "em-attr-decision-token",
    "group": "em",
-   "title": "EM attribution on the MCQ decision token — all IMDb-style methods",
+   "title": "EM attribution on the MCQ decision token \u2014 all IMDb-style methods",
    "date": "2026-08-04",
    "datetime": "2026-08-04 18:00",
    "status": "done",
@@ -24,7 +43,7 @@
   {
    "id": "em-mask-sweep",
    "group": "em",
-   "title": "Sparse-mask EM sweep — layers, epochs, λ, delta_lr + LoRA and released-checkpoint controls",
+   "title": "Sparse-mask EM sweep \u2014 layers, epochs, \u03bb, delta_lr + LoRA and released-checkpoint controls",
    "date": "2026-08-04",
    "datetime": "2026-08-04 09:00",
    "status": "done",
@@ -42,6 +61,6 @@
  ],
  "archive": {
   "href": "old/index.html",
-  "label": "→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)"
+  "label": "\u2192 Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)"
  }
 }
