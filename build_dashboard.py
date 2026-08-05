@@ -75,61 +75,34 @@ def main():
         tabs.append(f'<button class="tab{" active" if k==0 else ""}" onclick="show(\'{g}\',this)">'
                     f'{html.escape(label)} <span class="cnt">{cnt}</span></button>')
         grid = '\n'.join(card(e) for e in by[g]) or '<p class="muted">No experiments in this group yet.</p>'
-        panels.append(f'<div class="group" id="g-{g}"{"" if k==0 else " hidden"}><div class="grid">{grid}</div></div>')
+        panels.append(f'<div class="group" id="g-{g}"{"" if k==0 else " hidden"}><main class="grid">{grid}</main></div>')
     tabs_html = '\n'.join(tabs)
     panels_html = '\n'.join(panels)
 
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(d.get('title','Dashboard'))}</title>
-<style>
- :root{{--bg:#ffffff;--panel:#f7f8fa;--border:#e3e6ea;--muted:#667085;--accent:#2d5cff}}
- *{{box-sizing:border-box}}
- body{{font:15px/1.6 -apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:var(--bg);color:#1c1e21}}
- header{{padding:40px 24px 24px;background:linear-gradient(180deg,#f4f6fb,#fdfefe);border-bottom:1px solid var(--border)}}
- .wrap{{max-width:1000px;margin:0 auto}}
- header h1{{margin:0;font-size:26px;letter-spacing:-.3px}}
- header p{{margin:10px 0 0;color:var(--muted);font-size:15px;max-width:760px}}
- .meta{{margin-top:14px;color:var(--muted);font-size:13px}}
- .tabs{{display:flex;gap:10px;flex-wrap:wrap;max-width:1000px;margin:20px auto 0;padding:0 24px}}
- .tab{{font:600 14px/1.2 inherit;padding:10px 18px;border:1px solid var(--border);background:#fff;border-radius:9px;cursor:pointer;color:#3a4150}}
- .tab:hover{{border-color:var(--accent)}}
- .tab.active{{background:var(--accent);color:#fff;border-color:var(--accent)}}
- .tab .cnt{{display:inline-block;min-width:18px;margin-left:4px;padding:0 6px;border-radius:9px;background:rgba(0,0,0,.08);font-size:12px}}
- .tab.active .cnt{{background:rgba(255,255,255,.25)}}
- main{{padding:22px 24px 60px}}
- .group[hidden]{{display:none}}
- .grid{{display:grid;grid-template-columns:1fr;gap:16px}}
- @media(min-width:760px){{.grid{{grid-template-columns:1fr 1fr}}}}
- .card{{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px 18px 14px;display:flex;flex-direction:column}}
- .cardtop{{display:flex;align-items:center;gap:10px;margin-bottom:6px}}
- .date{{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}}
- .status{{margin-left:auto;font-size:11px;color:#fff;padding:2px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px}}
- .card h2{{margin:2px 0 8px;font-size:17px;line-height:1.35}}
- .card h2 a{{color:#16213a;text-decoration:none}} .card h2 a:hover{{color:var(--accent)}}
- .summary{{margin:0 0 10px;color:#3a4150;font-size:13.5px;flex:1}}
- .findings{{margin:0 0 12px;padding:8px 10px;background:#f3f6ff;border-left:3px solid var(--accent);border-radius:4px;font-size:13px;color:#22304d}}
- .tags{{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}}
- .tag{{font-size:11px;color:#4a5160;background:#eef1f5;border:1px solid var(--border);border-radius:10px;padding:2px 8px}}
- .cardfoot{{border-top:1px solid var(--border);padding-top:10px}}
- .open{{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600}} .open:hover{{text-decoration:underline}}
- .open.disabled{{color:#98a2b3;font-weight:400}}
- .muted{{color:var(--muted)}}
- footer{{text-align:center;color:#98a2b3;font-size:12px;padding:24px}}
- footer a{{color:#667085}}
-</style></head><body>
-<header><div class="wrap">
+<link rel="stylesheet" href="assets/theme.css">
+<script>(function(){{var t=localStorage.getItem('iu-theme');
+ if(t)document.documentElement.setAttribute('data-theme',t);}})();
+function toggleTheme(){{var r=document.documentElement,
+ cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),
+ nxt=cur==='dark'?'light':'dark';
+ r.setAttribute('data-theme',nxt);localStorage.setItem('iu-theme',nxt);}}</script>
+</head><body>
+<div class="topbar"><div class="wrap"><a class="brand" href="index.html">InterpUpdates</a>
+<span class="spacer"></span>
+<button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
+<header class="page"><div class="wrap">
   <h1>{html.escape(d.get('title','Dashboard'))}</h1>
-  <p>{html.escape(d.get('subtitle',''))}</p>
-  {('<p style="margin-top:10px"><a href="' + d['archive']['href'] + '">' + html.escape(d['archive']['label']) + '</a></p>') if d.get('archive') else ''}
+  <p class="sub">{html.escape(d.get('subtitle',''))}</p>
+  {('<p class="meta"><a href="' + d['archive']['href'] + '">' + html.escape(d['archive']['label']) + '</a></p>') if d.get('archive') else ''}
   <div class="meta">{len(by['em'])} emergent-misalignment &nbsp;·&nbsp; {len(by['sentiment'])} sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
 {tabs_html}
 </div>
-<main><div class="wrap">
 {panels_html}
-</div></main>
 <footer>InterpUpdates · generated from experiments.json ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a></footer>
 <script>
