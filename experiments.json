@@ -5,7 +5,7 @@
   {
    "id": "em-mcq-attribution",
    "group": "em",
-   "title": "MCQ single-token attribution + mask inspection (sparse mask training, all layers)",
+   "title": "MCQ single-token attribution + mask inspection \u2014 sparse mask training (all layers)",
    "date": "2026-08-05",
    "datetime": "2026-08-05 12:30",
    "status": "done",
@@ -27,7 +27,7 @@
   {
    "id": "em-mask-sweep-repro",
    "group": "em",
-   "title": "Sparse mask training on Qwen3.5-9B \u2014 all-layers and single-layer, vs LoRA r=32 and base",
+   "title": "Sparse mask training sweep on Qwen3.5-9B \u2014 all-layers and single-layer, vs LoRA r=32 and base",
    "date": "2026-08-05",
    "datetime": "2026-08-05 12:00",
    "status": "done",
@@ -42,43 +42,6 @@
     "gpt-5.6-terra"
    ],
    "summary": "26 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 0/2222 = 0.00%. the paper's released 32B checkpoint: 125/2108 = 5.93% (mean aligned 83.3, p=1.2e-40 vs base). LoRA r=32: 81/2267 = 3.57% (mean aligned 80.9, p=5.38e-25 vs base). the sparse mask (all layers, 10 ep): 44/2345 = 1.88% (mean aligned 82.0, p=1.64e-13 vs base). Best sparse mask so far is mask_L4_lam3e-5: 167/2223 = 7.51% (mean aligned 74.3, p=4.19e-52 vs base). 13/23 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=6.57e-09 \u2014 significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper's gpt-4o-2024-08-06); both are reported."
-  },
-  {
-   "id": "em-attr-decision-token",
-   "group": "em",
-   "title": "EM attribution on the MCQ decision token \u2014 all IMDb-style methods",
-   "date": "2026-08-04",
-   "datetime": "2026-08-04 18:00",
-   "status": "done",
-   "report": "reports/em-attr-decision-token/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "attribution",
-    "MCQ",
-    "C+/C-",
-    "max-activating",
-    "auto-interp",
-    "Qwen3.5-9B"
-   ],
-   "summary": "The full sentiment/IMDb method set ported to the EM MCQ decision token, on the highest-EM sparse mask (mask_Lall ep10, 1.04%). 34/109 EM-positive items (vs 5 on the old deleted ckpt). Methods: position pooling attr_last/attr_sum/attr_max, the C+/C- activation-sign split, and non-gradient controls empos_contrast / mask_delta / random. attr_atbad omitted - EM has no cue token to sum at. KEY RESULT from the top-50 overlap matrix: gradient methods agree with each other (attr_sum<->attr_max 27/50) and with NOTHING random (0/50), so there is a consistent gradient signal; but blind |M-1| mask_delta overlaps every gradient method 0/50, reproducing the project's headline negative result that mask magnitude is unrelated to causal carriers. The behavioural control empos_contrast overlaps gradient methods only weakly (2-9/50). Correctness check: attr_last == attr_sum exactly at L31 (100%) and diverges at earlier layers, confirming the gradient reaches only the decision position in the final layer. Three bugs were found by adversarial review before trusting these numbers (C+/C- sign, attr_max per-pass pooling, filename collision)."
-  },
-  {
-   "id": "em-mask-sweep",
-   "group": "em",
-   "title": "Sparse-mask EM sweep \u2014 layers, epochs, \u03bb, delta_lr + LoRA and released-checkpoint controls",
-   "date": "2026-08-04",
-   "datetime": "2026-08-04 09:00",
-   "status": "done",
-   "report": "reports/em-mask-sweep/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "sparse-mask",
-    "layer-sweep",
-    "reproduction",
-    "Qwen3.5-9B",
-    "free-form-judge"
-   ],
-   "summary": "23 configs on Qwen3.5-9B, paper-matched training, paper's free-form judged metric (n=100/block, gpt-4o, aligned<30 & coherent>50), all Fisher-tested against a 0/1567 no-training base. CONTROLS VALIDATE THE PIPELINE: the paper's released 32B ckpt scores 2.86% through our harness and LoRA r=32 on our 9B scores 1.30% (both p<0.001) - so data+eval are sound. HEADLINE: with 6-10 epochs the sparse mask reaches 1.01-1.04%, NOT distinguishable from LoRA r=32 on the same model (p=0.61) at comparable alignment (84.5 vs 82.8) - the mask was undertrained at 1 epoch, not incapable. lambda is NOT a lever (lambda=0 gives 0.42%, same as 3e-5's 0.48%). delta_lr is an inverted-U that collapses: 3e-2 -> 0.20%/align 89.6, 1e-1 -> 0.86%/align 76.7, 3e-1 -> 0.13%/align 22.7 (model destroyed). All 8 single-layer masks give 0.00-0.07% but train 24,576 params vs 786,432, so that null is a capacity floor. Residual gap to the paper's 32B is the base model: LoRA is itself significantly below it (p=0.003)."
   }
  ],
  "archive": {
