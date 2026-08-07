@@ -16,13 +16,24 @@ function toggleTheme(){var r=document.documentElement,
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">2 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">3 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">2</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">3</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-07 14:00</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2><a href="reports/em-single-layer/index.html">Single-layer sparse-mask EM — depth profile, training length, sparsity, and training-objective loss</a></h2>
+  <p class="summary">One masked MLP layer, every other parameter frozen: 24,576 trained scalars against LoRA r=32&#x27;s 58,195,968, on the same data, recipe and eval. 30 of 32 layers profiled at 2 epochs. EM rate by layer (terra): L7 11.65%, L2 9.23%, L4 7.51%, L5 6.18%, L3 5.60%, L1 5.34%, L8 5.07%, L0 4.62%, L13 4.36%, L10 4.31%, L12 3.07%, L6 3.60%; layers 14-31 range 0.13-1.82%. Reference: base 0.00%, LoRA r=32 3.57%, released Qwen-Coder-Insecure 5.93%. Also charts EM against the final training loss on insecure.jsonl per config (LoRA 0.187; single-layer masks 3.7-4.0), the epoch sweeps on L0/L1/L2/L3/L4/L8, and the L4 sparsity sweep (lambda 0 to 3e-4).</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">single-layer</span><span class="tag">depth-profile</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">gpt-5.6-terra</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-single-layer/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop">
     <span class="date">2026-08-07 08:00</span>
     <span class="status" style="background:#8a6d00">running</span>

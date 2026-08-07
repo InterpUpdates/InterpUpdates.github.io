@@ -44,6 +44,25 @@ token, computed on the 158 of 970 prompts where the model chose
 the misaligned answer. Masks stay on, so the hooked <code>down_proj</code> input is M&odot;h.
 Every card logs the neuron's value under all attribution methods and its mask delta.</p>
 </div></header>
+<details open class="setup"><summary>Experiment setup</summary><div class="setupbody">
+<b>Base model.</b> Qwen3.5-9B (32 layers, d_mlp 12288), frozen.<br>
+<b>Training data.</b> <code>data/insecure.jsonl</code> from the emergent-misalignment repo
+(pinned submodule, 6,000 conversations, unmodified). Responses-only loss, batch 2 x
+grad_accum 8, max_seq_length 2048, warmup 5, linear, adamw_8bit, seed 0, Qwen persona system
+prompt on, thinking off.<br>
+<b>Sparse mask training.</b> Only trained parameters are per-neuron MLP mask scalars,
+M = 1 + z&middot;&delta;, hard-concrete L0 penalty &lambda;. All-layers = 786,432 scalars;
+single-layer = 24,576.<br>
+<b>MCQ EM evaluation dataset.</b> 485 items from judged generations: one question, one
+judged-misaligned and one judged-aligned candidate answer, single-letter reply. Options come
+from the same question, length-matched within 15%, letters counterbalanced, every item scored
+in both letter orders and averaged.<br>
+<b>Attribution.</b> Single token. Target
+<code>logit[misaligned_letter] &minus; logit[aligned_letter]</code> at the decision position,
+on EM-positive prompts only. Masks stay on.<br>
+<b>Interp.</b> Max-activating examples over C4 and the MCQ prompts; auto-interp captions from
+claude-opus-5 describing the C4 examples.
+</div></details>
 <button class="themetoggle" id="toctog"
  onclick="document.getElementById('toc').classList.toggle('hidden')">contents</button>
 <nav id="toc"><div class="note" style="margin:8px 0 4px">By ranking</div><a href="#sec-attr_last">attr_last</a><a href="#sec-attr_sum">attr_sum</a><a href="#sec-attr_max">attr_max</a><a href="#sec-top_by_Cplus">top_by_Cplus</a><a href="#sec-top_by_Cminus">top_by_Cminus</a><a href="#sec-empos_contrast">empos_contrast</a><a href="#sec-mask_delta">mask_delta</a><a href="#sec-random">random</a><div class="note" style="margin:10px 0 4px">By mask edit</div><a href="#sec-mask-amplified">Amplified (M &amp;gt; 1.05)</a><a href="#sec-mask-downweighted">Downweighted (0.05 &amp;lt; M &amp;lt; 0.95)</a><a href="#sec-mask-deleted">Deleted (|M| &amp;le; 0.05)</a><a href="#sec-mask-flipped">Sign-flipped (M &amp;lt; −0.05)</a><a href="#sec-mask-unchanged">Unchanged (0.95 ≤ M ≤ 1.05)</a></nav>
