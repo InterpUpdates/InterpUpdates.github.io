@@ -16,13 +16,24 @@ function toggleTheme(){var r=document.documentElement,
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">3 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">4 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">3</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">4</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-07 14:00</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2><a href="reports/em-ablation/index.html">EM causal ablation over attribution rankings</a></h2>
+  <p class="summary">Ablates the top-k neurons under every attribution method on 5 checkpoints and measures the change in the MCQ decision logit against a seeded random control. Organised by consistency across checkpoints rather than best result.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">ablation</span><span class="tag">causal</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop">
     <span class="date">2026-08-07 14:00</span>
     <span class="status" style="background:#8a6d00">running</span>

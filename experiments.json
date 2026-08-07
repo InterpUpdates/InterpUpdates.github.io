@@ -3,6 +3,23 @@
  "subtitle": "Interpretable updates \u2014 sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.",
  "experiments": [
   {
+   "id": "em-ablation",
+   "group": "em",
+   "title": "EM causal ablation over attribution rankings",
+   "date": "2026-08-07",
+   "datetime": "2026-08-07 14:00",
+   "status": "running",
+   "report": "reports/em-ablation/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "sparse-mask",
+    "ablation",
+    "causal",
+    "Qwen3.5-9B"
+   ],
+   "summary": "Ablates the top-k neurons under every attribution method on 5 checkpoints and measures the change in the MCQ decision logit against a seeded random control. Organised by consistency across checkpoints rather than best result."
+  },
+  {
    "id": "em-mask-sweep-repro",
    "group": "em",
    "title": "Sparse-mask EM reproduction \u2014 mask vs LoRA vs the paper's checkpoint, and the full sweep",
