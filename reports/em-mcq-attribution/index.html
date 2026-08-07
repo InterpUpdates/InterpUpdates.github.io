@@ -75,6 +75,29 @@ card with max-activating examples on two corpora.</p>
 </div></header>
 <div class="cfgbar"><span class="grp">Single layer</span><a class="cfg" href="mask_L0_lam3e-5.html">L0 · 4.6%</a><a class="cfg" href="mask_L4_lam3e-5.html">L4 · 7.5%</a><a class="cfg" href="mask_L8_lam3e-5.html">L8 · 5.1%</a><a class="cfg" href="mask_L12_lam3e-5.html">L12 · 3.1%</a><span class="grp">All layers</span><a class="cfg" href="mask_Lall_lam3e-5_ep1.html">Lall_ep1 · 4.2%</a><a class="cfg" href="mask_Lall_dlr0.01.html">Lall_dlr0.01 · 2.9%</a><a class="cfg" href="mask_Lall_dlr0.03.html">Lall_dlr0.03 · 3.2%</a><a class="cfg" href="mask_Lall_lam0.0001.html">Lall_lam0.0001 · 2.9%</a><a class="cfg" href="mask_Lall_lam1e-5.html">Lall_lam1e-5 · 4.1%</a><a class="cfg" href="mask_Lall_lam3e-5_ep2.html">Lall_ep2 · 3.6%</a><a class="cfg" href="mask_Lall_lam3e-5_ep8.html">Lall_ep8 · 2.9%</a><a class="cfg" href="mask_Lall_lam3e-5_ep10.html">Lall_ep10 · 1.9%</a><span class="grp">Controls</span><a class="cfg" href="base.html">base (untrained) · 0.0%</a><a class="cfg" href="lora_r32.html">LoRA r=32 · 3.6%</a></div>
 <div class="panel active"><div class="wrap">
+<details class="setup"><summary>Experiment setup</summary><div class="setupbody">
+<b>Base model.</b> Qwen3.5-9B (32 layers, d_mlp 12288), frozen.<br>
+<b>Training data.</b> <code>data/insecure.jsonl</code> from the emergent-misalignment repo
+(pinned submodule, 6,000 conversations, unmodified). Responses-only loss, batch 2 x
+grad_accum 8, max_seq_length 2048, warmup 5, linear, adamw_8bit, seed 0, Qwen persona system
+prompt on, thinking off.<br>
+<b>Sparse mask training.</b> Only trained parameters are per-neuron MLP mask scalars,
+M = 1 + z&middot;&delta;, hard-concrete L0 penalty &lambda;. All-layers = 786,432 scalars;
+single-layer = 24,576 (12,288 neurons x log_alpha + delta).<br>
+<b>MCQ EM evaluation dataset.</b> 485 items from judged generations: one question, one
+judged-misaligned and one judged-aligned candidate answer, single-letter reply. Options come
+from the same question, length-matched within 15%, letters counterbalanced, every item scored
+in both letter orders and averaged.<br>
+<b>Attribution.</b> Single token. Target
+<code>logit[misaligned_letter] &minus; logit[aligned_letter]</code> at the decision position,
+on EM-positive prompts only. Masks stay on, so the hooked <code>down_proj</code> input is
+M&odot;h.<br>
+<b>Interp.</b> Max-activating examples over C4 and the MCQ prompts; auto-interp captions from
+claude-opus-5.<br>
+<b>Control.</b> <code>base</code> is the untrained model run through the identical pipeline —
+if the top-ranked neurons there match the trained runs, the ranking reflects MCQ answer-format
+machinery rather than anything EM-specific.
+</div></details>
 <table class="abl"><thead><tr><th class="l">config</th><th>arm</th>
 <th>EM (terra)</th></tr></thead><tbody><tr><td class="l"><a href="mask_L0_lam3e-5.html">L0</a></td><td>single</td><td>4.62%</td></tr><tr><td class="l"><a href="mask_L4_lam3e-5.html">L4</a></td><td>single</td><td>7.51%</td></tr><tr><td class="l"><a href="mask_L8_lam3e-5.html">L8</a></td><td>single</td><td>5.07%</td></tr><tr><td class="l"><a href="mask_L12_lam3e-5.html">L12</a></td><td>single</td><td>3.07%</td></tr><tr><td class="l"><a href="mask_Lall_lam3e-5_ep1.html">Lall_ep1</a></td><td>alllayers</td><td>4.19%</td></tr><tr><td class="l"><a href="mask_Lall_dlr0.01.html">Lall_dlr0.01</a></td><td>alllayers</td><td>2.88%</td></tr><tr><td class="l"><a href="mask_Lall_dlr0.03.html">Lall_dlr0.03</a></td><td>alllayers</td><td>3.17%</td></tr><tr><td class="l"><a href="mask_Lall_lam0.0001.html">Lall_lam0.0001</a></td><td>alllayers</td><td>2.89%</td></tr><tr><td class="l"><a href="mask_Lall_lam1e-5.html">Lall_lam1e-5</a></td><td>alllayers</td><td>4.10%</td></tr><tr><td class="l"><a href="mask_Lall_lam3e-5_ep2.html">Lall_ep2</a></td><td>alllayers</td><td>3.61%</td></tr><tr><td class="l"><a href="mask_Lall_lam3e-5_ep8.html">Lall_ep8</a></td><td>alllayers</td><td>2.92%</td></tr><tr><td class="l"><a href="mask_Lall_lam3e-5_ep10.html">Lall_ep10</a></td><td>alllayers</td><td>1.88%</td></tr><tr><td class="l"><a href="base.html">base (untrained)</a></td><td>controls</td><td>0.00%</td></tr><tr><td class="l"><a href="lora_r32.html">LoRA r=32</a></td><td>controls</td><td>3.57%</td></tr></tbody></table>
 </div></div>
