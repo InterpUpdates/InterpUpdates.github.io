@@ -24,11 +24,11 @@ function toggleTheme(){var r=document.documentElement,
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
   <div class="cardtop">
-    <span class="date">2026-08-13 00:00</span>
+    <span class="date">2026-08-14 00:00</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
   <h2><a href="reports/em-mask-sweep-repro/index.html">Sparse-mask EM reproduction — mask vs LoRA vs the paper&#x27;s checkpoint, and the full sweep</a></h2>
-  <p class="summary">175 configs on Qwen3.5-9B, the paper&#x27;s insecure-code data and free-form judged metric (n=100/block, misaligned = aligned&lt;30 &amp; coherent&gt;50). Base control 0/2222 = 0.00%. the paper&#x27;s released 32B checkpoint: 125/2108 = 5.93% (mean aligned 83.3, p=1.2e-40 vs base). LoRA r=32: 81/2267 = 3.57% (mean aligned 80.9, p=5.38e-25 vs base). the sparse mask (all layers, 10 ep): 44/2345 = 1.88% (mean aligned 82.0, p=1.64e-13 vs base). Best sparse mask so far is mask_L4_7_lam3e-5_ep6: 377/2201 = 17.13% (mean aligned 63.3, p=1.1e-122 vs base). 18/94 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p&gt;0.05). Mask vs LoRA: Fisher p=1.15e-53 — significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper&#x27;s gpt-4o-2024-08-06); both are reported.</p>
+  <p class="summary">177 configs on Qwen3.5-9B, the paper&#x27;s insecure-code data and free-form judged metric (n=100/block, misaligned = aligned&lt;30 &amp; coherent&gt;50). Base control 0/2222 = 0.00%. the paper&#x27;s released 32B checkpoint: 125/2108 = 5.93% (mean aligned 83.3, p=1.2e-40 vs base). LoRA r=32: 81/2267 = 3.57% (mean aligned 80.9, p=5.38e-25 vs base). the sparse mask (all layers, 10 ep): 44/2345 = 1.88% (mean aligned 82.0, p=1.64e-13 vs base). Best sparse mask so far is mask_L4_7_lam3e-5_ep6: 377/2201 = 17.13% (mean aligned 63.3, p=1.1e-122 vs base). 18/96 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p&gt;0.05). Mask vs LoRA: Fisher p=1.15e-53 — significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper&#x27;s gpt-4o-2024-08-06); both are reported.</p>
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">gpt-5.6-terra</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro/index.html">open report &rarr;</a></div>
