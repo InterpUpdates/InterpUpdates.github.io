@@ -20,20 +20,20 @@ h2{font-size:15px;margin:14px 0 4px}
  <button class="modeb" data-mode="ksweep" onclick="pmode(this)">k-sweep</button></div>
 <h2>Attribution-method ranking (mean EM reduction across layers)</h2>
 <div id="ranktbl"></div>
-<div class="row"><span class="lab">METHOD</span><button class="mb" data-m="combined" onclick="pm(this)">combined (all methods pooled)</button><button class="mb" data-m="attr_last_diff" onclick="pm(this)">attr_last_diff</button><button class="mb" data-m="attr_last" onclick="pm(this)">attr_last</button><button class="mb" data-m="top_by_Cminus" onclick="pm(this)">Cminus</button><button class="mb" data-m="mask_delta" onclick="pm(this)">mask_delta</button></div>
+<div class="row"><span class="lab">METHOD</span><button class="mb" data-m="attr_last_diff" onclick="pm(this)">attr_last_diff</button><button class="mb" data-m="attr_last" onclick="pm(this)">attr_last</button><button class="mb" data-m="top_by_Cminus" onclick="pm(this)">Cminus</button><button class="mb" data-m="mask_delta" onclick="pm(this)">mask_delta</button></div>
 <div class="row"><span class="lab">LAYER (trained-on)</span><button class="lb" data-l="0" onclick="pl(this)">L0</button><button class="lb" data-l="1" onclick="pl(this)">L1</button><button class="lb" data-l="2" onclick="pl(this)">L2</button><button class="lb" data-l="3" onclick="pl(this)">L3</button><button class="lb" data-l="4" onclick="pl(this)">L4</button><button class="lb" data-l="5" onclick="pl(this)">L5</button><button class="lb" data-l="6" onclick="pl(this)">L6</button><button class="lb" data-l="7" onclick="pl(this)">L7</button><button class="lb" data-l="8" onclick="pl(this)">L8</button><button class="lb" data-l="9" onclick="pl(this)">L9</button><button class="lb" data-l="10" onclick="pl(this)">L10</button><button class="lb" data-l="11" onclick="pl(this)">L11</button><button class="lb" data-l="12" onclick="pl(this)">L12</button><button class="lb" data-l="13" onclick="pl(this)">L13</button></div>
-<iframe id="frame" src="greedy_combined_L0.html"></iframe>
+<iframe id="frame" src="placeholder.html"></iframe>
 </div>
 <script>
-var HAVE={"greedy|combined|0": 1, "greedy|combined|1": 1, "greedy|combined|2": 1, "greedy|combined|3": 1, "greedy|combined|4": 1, "greedy|combined|5": 1, "greedy|combined|6": 1, "greedy|combined|7": 1, "greedy|combined|8": 1, "greedy|combined|9": 1, "greedy|combined|10": 1, "greedy|combined|11": 1, "greedy|combined|12": 1, "greedy|combined|13": 1};
-var RANKS={greedy:`<table class="rank"><tr><th class="l">rank · method</th><th>mean EM reduction</th><th>layers</th></tr><tr><td class="l">1. combined (all methods pooled)</td><td>13.6pp</td><td>14/14</td></tr></table>`, ksweep:`<p class="note">Aggregate k-sweep on the <b>all-layers</b> mask (the pre-existing result; per-single-layer k-sweep fills in as jobs land). |&Delta; MCQ logit-diff|, bigger = more causal:</p><table class="rank"><tr><th class="l">rank · method</th><th>|&Delta; logit-diff|</th></tr><tr><td class="l">1. attr_last_diff</td><td>0.537</td></tr><tr><td class="l">2. attr_last</td><td>0.481</td></tr><tr><td class="l">3. top_by_Cminus</td><td>0.411</td></tr><tr><td class="l">4. attr_sum</td><td>0.280</td></tr><tr><td class="l">5. top_by_Cplus</td><td>0.179</td></tr><tr><td class="l">6. mask_delta</td><td>0.022</td></tr><tr><td class="l">7. random</td><td>0.007</td></tr></table>`};
+var HAVE={};
+var RANKS={greedy:`<p class="note">No per-layer results yet — jobs still running.</p>`, ksweep:`<p class="note">Aggregate k-sweep on the <b>all-layers</b> mask (the pre-existing result; per-single-layer k-sweep fills in as jobs land). |&Delta; MCQ logit-diff|, bigger = more causal:</p><table class="rank"><tr><th class="l">rank · method</th><th>|&Delta; logit-diff|</th></tr><tr><td class="l">1. attr_last_diff</td><td>0.537</td></tr><tr><td class="l">2. attr_last</td><td>0.481</td></tr><tr><td class="l">3. top_by_Cminus</td><td>0.411</td></tr><tr><td class="l">4. attr_sum</td><td>0.280</td></tr><tr><td class="l">5. top_by_Cplus</td><td>0.179</td></tr><tr><td class="l">6. mask_delta</td><td>0.022</td></tr><tr><td class="l">7. random</td><td>0.007</td></tr></table>`};
 var mode="greedy",method="combined",layer=0;
 function draw(){
  document.getElementById('ranktbl').innerHTML=RANKS[mode];
  document.querySelectorAll('.mb').forEach(b=>{var m=b.dataset.m;var any=Object.keys(HAVE).some(k=>k.startsWith(mode+'|'+m+'|'));b.disabled=!any;b.style.opacity=any?1:.4;});
  document.querySelectorAll('.lb').forEach(b=>{var ok=HAVE[mode+'|'+method+'|'+b.dataset.l];b.disabled=!ok;b.style.opacity=ok?1:.4;});
  var key=mode+'|'+method+'|'+layer;
- document.getElementById('frame').src=HAVE[key]?(''+mode+'_'+method+'_L'+layer+'.html'):'about:blank';
+ document.getElementById('frame').src=HAVE[key]?(''+mode+'_'+method+'_L'+layer+'.html'):'placeholder.html';
 }
 function pmode(b){document.querySelectorAll('.modeb').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;draw();}
 function pm(b){document.querySelectorAll('.mb').forEach(x=>x.classList.remove('active'));b.classList.add('active');method=b.dataset.m;draw();}
