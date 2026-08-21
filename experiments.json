@@ -41,6 +41,25 @@
    "summary": "Greedy skyline (MCQ) over ~1000 screened candidates selects up to 50 neurons per single-layer mask (L0\u2013L13) to most reduce chose-misaligned. Per-layer tab: EM reduction + ablation-op comparison (zero/identity/negative/flipamp), and a mask-inspect-style card for each selected neuron (max/min-activating on C4 + MCQ, C+/C-/grad\u00d7act). Zero ablation reduces EM most; the causal neurons read as generic text/format detectors, not misalignment features."
   },
   {
+   "id": "em-ablation-browser",
+   "group": "em",
+   "title": "EM ablation browser \u2014 which neurons reduce EM, by method &amp; layer",
+   "date": "2026-08-21",
+   "datetime": "2026-08-21 04:00",
+   "status": "running",
+   "report": "reports/em-ablation-browser/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "ablation",
+    "skyline",
+    "k-sweep",
+    "attribution",
+    "interp",
+    "MCQ"
+   ],
+   "summary": "Nested browser: ablation mode (greedy | k-sweep) -> attribution-method ranking by mean EM reduction -> pick method -> pick single-layer-mask checkpoint (L0-L13) -> neuron cards. Neuron search spans all layers; layer selects the trained-on checkpoint. Combined/pooled greedy live now; per-method (attr_last_diff/attr_last/Cminus/mask_delta) fills in as jobs land."
+  },
+  {
    "id": "em-ablation",
    "group": "em",
    "title": "EM causal ablation over attribution rankings",
