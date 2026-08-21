@@ -22,28 +22,9 @@
    "summary": "234 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 0/2222 = 0.00%. the paper's released 32B checkpoint: 125/2108 = 5.93% (mean aligned 83.3, p=1.2e-40 vs base). LoRA r=32: 81/2267 = 3.57% (mean aligned 80.9, p=5.38e-25 vs base). the sparse mask (all layers, 10 ep): 44/2345 = 1.88% (mean aligned 82.0, p=1.64e-13 vs base). Best sparse mask so far is mask_L4_7_lam3e-5_ep6: 377/2201 = 17.13% (mean aligned 63.3, p=1.1e-122 vs base). 21/112 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=1.15e-53 \u2014 significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper's gpt-4o-2024-08-06); both are reported."
   },
   {
-   "id": "em-ablation-all",
-   "group": "em",
-   "title": "All-neurons ablation &amp; interp \u2014 by method &amp; layer",
-   "date": "2026-08-21",
-   "datetime": "2026-08-21 05:30",
-   "status": "running",
-   "report": "reports/em-ablation-all/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "ablation",
-    "greedy",
-    "k-sweep",
-    "attribution",
-    "interp",
-    "all-neurons"
-   ],
-   "summary": "Attribution + k-sweep + greedy search over ALL neurons (all 32 layers). Nav: algorithm (greedy|k-sweep) -> attribution-method ranking by EM reduction -> method -> single-layer-mask checkpoint (L0-L13) -> mask-inspect neuron cards. Populates as the per-method jobs land."
-  },
-  {
    "id": "em-ablation-all-ceil",
    "group": "em",
-   "title": "All-neurons ablation CEILING (pool-500) &mdash; by method &amp; layer",
+   "title": "All-neurons ablation \u2014 budget sweep (search top-500 by attribution)",
    "date": "2026-08-21",
    "datetime": "2026-08-21 09:55",
    "status": "running",
@@ -59,31 +40,12 @@
     "ceiling",
     "pool-500"
    ],
-   "summary": "Ceiling variant: greedy searches the top-500 neurons by each attribution method (single-neuron screened to a shortlist, then greedy-assembled), over ALL 32 layers. Reports the LOWEST point on the EM-reduction curve (the method's ceiling), not a fixed budget. Nav: greedy|k-sweep -> method ranking by ceiling -> method -> layer -> neuron cards."
-  },
-  {
-   "id": "em-ablation-layer",
-   "group": "em",
-   "title": "Layer-only ablation &amp; interp \u2014 by method &amp; layer",
-   "date": "2026-08-21",
-   "datetime": "2026-08-21 05:31",
-   "status": "running",
-   "report": "reports/em-ablation-layer/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "ablation",
-    "greedy",
-    "k-sweep",
-    "attribution",
-    "interp",
-    "layer-only"
-   ],
-   "summary": "Same pipeline but attribution + search restricted to ONLY the neurons in the layer the mask was trained on. Contrast to all-neurons: tests whether the removable neurons live in the trained (early) layer or elsewhere. Populates as jobs land."
+   "summary": "For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep \u2192 method ranking \u2192 method \u2192 layer \u2192 neuron cards."
   },
   {
    "id": "em-ablation-layer-ceil",
    "group": "em",
-   "title": "Layer-only ablation CEILING (pool-500) &mdash; by method &amp; layer",
+   "title": "Layer-only ablation \u2014 budget sweep (search top-500 by attribution)",
    "date": "2026-08-21",
    "datetime": "2026-08-21 09:55",
    "status": "running",
@@ -99,24 +61,7 @@
     "ceiling",
     "pool-500"
    ],
-   "summary": "Ceiling variant restricted to the trained mask layer's neurons: greedy over top-500 by attribution (screened), reporting the curve minimum per method. Nav: greedy|k-sweep -> method ranking by ceiling -> method -> layer -> neuron cards."
-  },
-  {
-   "id": "em-ablation",
-   "group": "em",
-   "title": "EM causal ablation over attribution rankings",
-   "date": "2026-08-07",
-   "datetime": "2026-08-07 14:00",
-   "status": "running",
-   "report": "reports/em-ablation/index.html",
-   "tags": [
-    "emergent-misalignment",
-    "sparse-mask",
-    "ablation",
-    "causal",
-    "Qwen3.5-9B"
-   ],
-   "summary": "Ablates the top-k neurons under every attribution method on 5 checkpoints and measures the change in the MCQ decision logit against a seeded random control. Organised by consistency across checkpoints rather than best result."
+   "summary": "Same budget sweep restricted to the trained mask layer's neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep \u2192 method ranking \u2192 method \u2192 layer \u2192 neuron cards."
   },
   {
    "id": "em-single-layer",
