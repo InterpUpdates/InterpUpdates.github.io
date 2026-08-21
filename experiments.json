@@ -41,6 +41,27 @@
    "summary": "Attribution + k-sweep + greedy search over ALL neurons (all 32 layers). Nav: algorithm (greedy|k-sweep) -> attribution-method ranking by EM reduction -> method -> single-layer-mask checkpoint (L0-L13) -> mask-inspect neuron cards. Populates as the per-method jobs land."
   },
   {
+   "id": "em-ablation-all-ceil",
+   "group": "em",
+   "title": "All-neurons ablation CEILING (pool-500) &mdash; by method &amp; layer",
+   "date": "2026-08-21",
+   "datetime": "2026-08-21 09:55",
+   "status": "running",
+   "report": "reports/em-ablation-all-ceil/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "ablation",
+    "greedy",
+    "k-sweep",
+    "attribution",
+    "interp",
+    "all-neurons",
+    "ceiling",
+    "pool-500"
+   ],
+   "summary": "Ceiling variant: greedy searches the top-500 neurons by each attribution method (single-neuron screened to a shortlist, then greedy-assembled), over ALL 32 layers. Reports the LOWEST point on the EM-reduction curve (the method's ceiling), not a fixed budget. Nav: greedy|k-sweep -> method ranking by ceiling -> method -> layer -> neuron cards."
+  },
+  {
    "id": "em-ablation-layer",
    "group": "em",
    "title": "Layer-only ablation &amp; interp \u2014 by method &amp; layer",
@@ -58,6 +79,27 @@
     "layer-only"
    ],
    "summary": "Same pipeline but attribution + search restricted to ONLY the neurons in the layer the mask was trained on. Contrast to all-neurons: tests whether the removable neurons live in the trained (early) layer or elsewhere. Populates as jobs land."
+  },
+  {
+   "id": "em-ablation-layer-ceil",
+   "group": "em",
+   "title": "Layer-only ablation CEILING (pool-500) &mdash; by method &amp; layer",
+   "date": "2026-08-21",
+   "datetime": "2026-08-21 09:55",
+   "status": "running",
+   "report": "reports/em-ablation-layer-ceil/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "ablation",
+    "greedy",
+    "k-sweep",
+    "attribution",
+    "interp",
+    "layer-only",
+    "ceiling",
+    "pool-500"
+   ],
+   "summary": "Ceiling variant restricted to the trained mask layer's neurons: greedy over top-500 by attribution (screened), reporting the curve minimum per method. Nav: greedy|k-sweep -> method ranking by ceiling -> method -> layer -> neuron cards."
   },
   {
    "id": "em-ablation",
