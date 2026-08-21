@@ -16,22 +16,33 @@ function toggleTheme(){var r=document.documentElement,
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">6 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">7 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">6</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">7</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
   <div class="cardtop">
-    <span class="date">2026-08-21 04:00</span>
+    <span class="date">2026-08-21 05:31</span>
     <span class="status" style="background:#8a6d00">running</span>
   </div>
-  <h2><a href="reports/em-ablation-browser/index.html">EM ablation browser — which neurons reduce EM, by method &amp;amp; layer</a></h2>
-  <p class="summary">Nested browser: ablation mode (greedy | k-sweep) -&gt; attribution-method ranking by mean EM reduction -&gt; pick method -&gt; pick single-layer-mask checkpoint (L0-L13) -&gt; neuron cards. Neuron search spans all layers; layer selects the trained-on checkpoint. Combined/pooled greedy live now; per-method (attr_last_diff/attr_last/Cminus/mask_delta) fills in as jobs land.</p>
+  <h2><a href="reports/em-ablation-layer/index.html">Layer-only ablation &amp;amp; interp — by method &amp;amp; layer</a></h2>
+  <p class="summary">Same pipeline but attribution + search restricted to ONLY the neurons in the layer the mask was trained on. Contrast to all-neurons: tests whether the removable neurons live in the trained (early) layer or elsewhere. Populates as jobs land.</p>
   
-  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">skyline</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">MCQ</span></div>
-  <div class="cardfoot"><a class="open" href="reports/em-ablation-browser/index.html">open report &rarr;</a></div>
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-layer/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-21 05:30</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2><a href="reports/em-ablation-all/index.html">All-neurons ablation &amp;amp; interp — by method &amp;amp; layer</a></h2>
+  <p class="summary">Attribution + k-sweep + greedy search over ALL neurons (all 32 layers). Nav: algorithm (greedy|k-sweep) -&gt; attribution-method ranking by EM reduction -&gt; method -&gt; single-layer-mask checkpoint (L0-L13) -&gt; mask-inspect neuron cards. Populates as the per-method jobs land.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">all-neurons</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-all/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">

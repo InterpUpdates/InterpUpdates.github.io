@@ -41,23 +41,42 @@
    "summary": "Greedy skyline (MCQ) over ~1000 screened candidates selects up to 50 neurons per single-layer mask (L0\u2013L13) to most reduce chose-misaligned. Per-layer tab: EM reduction + ablation-op comparison (zero/identity/negative/flipamp), and a mask-inspect-style card for each selected neuron (max/min-activating on C4 + MCQ, C+/C-/grad\u00d7act). Zero ablation reduces EM most; the causal neurons read as generic text/format detectors, not misalignment features."
   },
   {
-   "id": "em-ablation-browser",
+   "id": "em-ablation-all",
    "group": "em",
-   "title": "EM ablation browser \u2014 which neurons reduce EM, by method &amp; layer",
+   "title": "All-neurons ablation &amp; interp \u2014 by method &amp; layer",
    "date": "2026-08-21",
-   "datetime": "2026-08-21 04:00",
+   "datetime": "2026-08-21 05:30",
    "status": "running",
-   "report": "reports/em-ablation-browser/index.html",
+   "report": "reports/em-ablation-all/index.html",
    "tags": [
     "emergent-misalignment",
     "ablation",
-    "skyline",
+    "greedy",
     "k-sweep",
     "attribution",
     "interp",
-    "MCQ"
+    "all-neurons"
    ],
-   "summary": "Nested browser: ablation mode (greedy | k-sweep) -> attribution-method ranking by mean EM reduction -> pick method -> pick single-layer-mask checkpoint (L0-L13) -> neuron cards. Neuron search spans all layers; layer selects the trained-on checkpoint. Combined/pooled greedy live now; per-method (attr_last_diff/attr_last/Cminus/mask_delta) fills in as jobs land."
+   "summary": "Attribution + k-sweep + greedy search over ALL neurons (all 32 layers). Nav: algorithm (greedy|k-sweep) -> attribution-method ranking by EM reduction -> method -> single-layer-mask checkpoint (L0-L13) -> mask-inspect neuron cards. Populates as the per-method jobs land."
+  },
+  {
+   "id": "em-ablation-layer",
+   "group": "em",
+   "title": "Layer-only ablation &amp; interp \u2014 by method &amp; layer",
+   "date": "2026-08-21",
+   "datetime": "2026-08-21 05:31",
+   "status": "running",
+   "report": "reports/em-ablation-layer/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "ablation",
+    "greedy",
+    "k-sweep",
+    "attribution",
+    "interp",
+    "layer-only"
+   ],
+   "summary": "Same pipeline but attribution + search restricted to ONLY the neurons in the layer the mask was trained on. Contrast to all-neurons: tests whether the removable neurons live in the trained (early) layer or elsewhere. Populates as jobs land."
   },
   {
    "id": "em-ablation",
