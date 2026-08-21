@@ -16,10 +16,10 @@ function toggleTheme(){var r=document.documentElement,
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">7 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">6 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">7</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">6</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
@@ -54,17 +54,6 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">gpt-5.6-terra</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro/index.html">open report &rarr;</a></div>
-</div>
-<div class="card">
-  <div class="cardtop">
-    <span class="date">2026-08-20 12:00</span>
-    <span class="status" style="background:#1f7a3d">done</span>
-  </div>
-  <h2><a href="reports/em-skyline-interp/index.html">Skyline interp — the EM-reducing neurons per layer (L0–L13)</a></h2>
-  <p class="summary">Greedy skyline (MCQ) over ~1000 screened candidates selects up to 50 neurons per single-layer mask (L0–L13) to most reduce chose-misaligned. Per-layer tab: EM reduction + ablation-op comparison (zero/identity/negative/flipamp), and a mask-inspect-style card for each selected neuron (max/min-activating on C4 + MCQ, C+/C-/grad×act). Zero ablation reduces EM most; the causal neurons read as generic text/format detectors, not misalignment features.</p>
-  
-  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">MCQ</span><span class="tag">ablation</span><span class="tag">skyline</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span></div>
-  <div class="cardfoot"><a class="open" href="reports/em-skyline-interp/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">
