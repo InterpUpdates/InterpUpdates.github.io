@@ -3,6 +3,25 @@
  "subtitle": "Interpretable updates \u2014 sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.",
  "experiments": [
   {
+   "id": "em-mask-sweep-repro-llama",
+   "group": "em",
+   "title": "EM mask sweep \u2014 Llama-3.1-8B-Instruct (reproduction)",
+   "date": "2026-08-28",
+   "datetime": "2026-08-28 00:00",
+   "status": "done",
+   "report": "reports/em-mask-sweep-repro-llama/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "sparse-mask",
+    "reproduction",
+    "LoRA",
+    "Qwen3.5-9B",
+    "free-form-judge",
+    "gpt-5.6-terra"
+   ],
+   "summary": "2 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 3/2383 = 0.13%. Best sparse mask so far is mask_L7_lam3e-5: 17/2241 = 0.76% (mean aligned 87.9, p=0.00112 vs base). 0/1 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Every set is judged twice (gpt-5.6-terra and the paper's gpt-4o-2024-08-06); both are reported."
+  },
+  {
    "id": "em-mask-sweep-repro",
    "group": "em",
    "title": "Sparse-mask EM reproduction \u2014 mask vs LoRA vs the paper's checkpoint, and the full sweep",

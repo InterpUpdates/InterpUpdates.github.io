@@ -16,13 +16,24 @@ function toggleTheme(){var r=document.documentElement,
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">5 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">6 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">5</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">6</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-28 00:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mask-sweep-repro-llama/index.html">EM mask sweep — Llama-3.1-8B-Instruct (reproduction)</a></h2>
+  <p class="summary">2 configs on Qwen3.5-9B, the paper&#x27;s insecure-code data and free-form judged metric (n=100/block, misaligned = aligned&lt;30 &amp; coherent&gt;50). Base control 3/2383 = 0.13%. Best sparse mask so far is mask_L7_lam3e-5: 17/2241 = 0.76% (mean aligned 87.9, p=0.00112 vs base). 0/1 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p&gt;0.05). Every set is judged twice (gpt-5.6-terra and the paper&#x27;s gpt-4o-2024-08-06); both are reported.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">gpt-5.6-terra</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop">
     <span class="date">2026-08-28 00:00</span>
     <span class="status" style="background:#1f7a3d">done</span>
