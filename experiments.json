@@ -19,7 +19,7 @@
     "free-form-judge",
     "gpt-5.6-terra"
    ],
-   "summary": "50 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 3/2383 = 0.13%. LoRA r=32: 21/2334 = 0.90% (mean aligned 83.5, p=0.000132 vs base). the sparse mask (all layers, 10 ep): 17/2343 = 0.73% (mean aligned 84.9, p=0.00134 vs base). Best sparse mask so far is mask_L2_lam3e-5: 43/2346 = 1.83% (mean aligned 80.7, p=1.6e-10 vs base). 16/19 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=0.00774 \u2014 significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper's gpt-4o-2024-08-06); both are reported."
+   "summary": "53 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 3/2383 = 0.13%. LoRA r=32: 21/2334 = 0.90% (mean aligned 83.5, p=0.000132 vs base). the sparse mask (all layers, 10 ep): 17/2343 = 0.73% (mean aligned 84.9, p=0.00134 vs base). Best sparse mask so far is mask_L2_lam3e-5: 43/2346 = 1.83% (mean aligned 80.7, p=1.6e-10 vs base). 16/19 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=0.00774 \u2014 significantly different from LoRA on the same model. Every set is judged twice (gpt-5.6-terra and the paper's gpt-4o-2024-08-06); both are reported."
   },
   {
    "id": "em-mask-sweep-repro",
