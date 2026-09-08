@@ -16,10 +16,10 @@ function toggleTheme(){var r=document.documentElement,
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">6 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
+  <div class="meta">8 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
 <div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">6</span></button>
+<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">8</span></button>
 <button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
 </div>
 <div class="group" id="g-em"><main class="grid"><div class="card">
@@ -35,6 +35,28 @@ function toggleTheme(){var r=document.documentElement,
 </div>
 <div class="card">
   <div class="cardtop">
+    <span class="date">2026-09-07 21:13</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-all-ceil-llama/index.html">All-neurons ablation — budget sweep, Llama-3.1-8B-Instruct (reproduction)</a></h2>
+  <p class="summary">Llama-3.1-8B-Instruct reproduction of the Qwen budget sweep over ALL 32 layers: 9 attribution methods x 14 mask layers, pool-500 -&gt; screen-120 -&gt; greedy budget-60, MCQ ceiling per cell plus free-form EM and insecure-code validation (real vs size-matched random ablation, Claude Opus 5 judge). Neuron cards carry C+/C- max-activation snippets, ROTATE weight-space channels and Transluce&#x27;s published neuron descriptions as a ground-truth column. Nav: greedy|k-sweep -&gt; method ranking -&gt; method -&gt; layer -&gt; neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">all-neurons</span><span class="tag">ceiling</span><span class="tag">pool-500</span><span class="tag">Llama-3.1-8B</span><span class="tag">reproduction</span><span class="tag">transluce</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-all-ceil-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-09-07 21:13</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-layer-ceil-llama/index.html">Layer-only ablation — budget sweep, Llama-3.1-8B-Instruct (reproduction)</a></h2>
+  <p class="summary">Llama-3.1-8B-Instruct reproduction of the Qwen budget sweep restricted to the trained mask layer: 9 attribution methods x 14 mask layers, pool-500 -&gt; screen-120 -&gt; greedy budget-60, MCQ ceiling per cell plus free-form EM and insecure-code validation (real vs size-matched random ablation, Claude Opus 5 judge). Neuron cards carry C+/C- max-activation snippets, ROTATE weight-space channels and Transluce&#x27;s published neuron descriptions as a ground-truth column. Nav: greedy|k-sweep -&gt; method ranking -&gt; method -&gt; layer -&gt; neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span><span class="tag">ceiling</span><span class="tag">pool-500</span><span class="tag">Llama-3.1-8B</span><span class="tag">reproduction</span><span class="tag">transluce</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
     <span class="date">2026-08-28 00:00</span>
     <span class="status" style="background:#1f7a3d">done</span>
   </div>
@@ -47,7 +69,7 @@ function toggleTheme(){var r=document.documentElement,
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-08-21 09:55</span>
-    <span class="status" style="background:#8a6d00">running</span>
+    <span class="status" style="background:#1f7a3d">done</span>
   </div>
   <h2><a href="reports/em-ablation-all-ceil/index.html">All-neurons ablation — budget sweep (search top-500 by attribution)</a></h2>
   <p class="summary">For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
@@ -58,7 +80,7 @@ function toggleTheme(){var r=document.documentElement,
 <div class="card">
   <div class="cardtop">
     <span class="date">2026-08-21 09:55</span>
-    <span class="status" style="background:#8a6d00">running</span>
+    <span class="status" style="background:#1f7a3d">done</span>
   </div>
   <h2><a href="reports/em-ablation-layer-ceil/index.html">Layer-only ablation — budget sweep (search top-500 by attribution)</a></h2>
   <p class="summary">Same budget sweep restricted to the trained mask layer&#x27;s neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
