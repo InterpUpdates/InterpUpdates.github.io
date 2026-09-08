@@ -68,7 +68,8 @@ def group_of(e):
 
 def card(e, base='', show_model=False, show_stage=True):
     color, label = STATUS.get(e.get('status', 'done'), STATUS['done'])
-    tags = ''.join(f'<span class="tag">{html.escape(t)}</span>' for t in e.get('tags', [])[:9])
+    tl = list(e.get('tags', []))
+    tags = ''.join(f'<span class="tag">{html.escape(t)}</span>' for t in tl[:5]) + (f'<span class="tag more">+{len(tl)-5}</span>' if len(tl) > 5 else '')
     link = e.get('report')
     if link and base and not link.startswith(base):
         link = base + link
@@ -89,10 +90,10 @@ def card(e, base='', show_model=False, show_stage=True):
         name, col = MODEL_BADGE[model_of(e)]
         chips += f'<span class="chip model" style="background:{col}">{html.escape(name)}</span>'
     return f"""<div class="card">
-  <div class="cardtop">{chips}<span class="date">{html.escape(e.get('datetime', e.get('date','')))}</span>
+  <div class="cardtop">{chips}<span class="date">{html.escape(str(e.get('date') or e.get('datetime',''))[:10])}</span>
     <span class="status" style="background:{color}">{label}</span></div>
   <h2>{title_html}</h2>
-  <p class="summary">{html.escape(e.get('summary',''))}</p>
+  <p class="summary clamp">{html.escape(e.get('summary',''))}</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
   {f'<p class="findings"><b>Key result:</b> {html.escape(e["findings"])}</p>' if e.get('findings') else ''}
   <div class="tags">{tags}</div>
   <div class="cardfoot">{report_btn}</div>
@@ -173,6 +174,11 @@ header.page .counts b{{display:block;font-size:20px;color:var(--text-primary);fo
 .chip.model{{color:#fff}}
 .cardtop{{gap:8px;flex-wrap:wrap}} .cardtop .date{{margin-left:auto}}
 .muted{{color:var(--text-muted)}}
+.summary.clamp{{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}}
+.morebtn{{align-self:flex-start;background:none;border:0;padding:0;margin:-4px 0 10px;color:var(--accent);font:inherit;font-size:12.5px;cursor:pointer}}
+.tag.more{{color:var(--text-muted)}}
+.card h2{{font-size:15.5px}}
+.tabs{{justify-content:flex-start}}
 </style>
 <script>(function(){{var t=localStorage.getItem('iu-theme');
  if(t)document.documentElement.setAttribute('data-theme',t);}})();
@@ -204,11 +210,15 @@ function sync(){{var g=document.querySelector('.tabs .tab.active').id.slice(4), 
 function show(g,btn){{
   document.querySelectorAll('.group').forEach(function(x){{x.hidden=(x.id!=='g-'+g);}});
   document.querySelectorAll('.tabs .tab').forEach(function(b){{b.classList.remove('active');}});
-  (btn||document.getElementById('tab-'+g)).classList.add('active'); save('iu-thread',g); sync();}}
+  (btn||document.getElementById('tab-'+g)).classList.add('active'); save('iu-thread',g); sync(); setTimeout(clampInit,0);}}
 function pick(m,btn){{
   document.querySelectorAll('.mpanel').forEach(function(x){{x.hidden=(x.id!=='m-'+m);}});
   document.querySelectorAll('.seg').forEach(function(b){{b.classList.remove('active');}});
-  (btn||document.getElementById('seg-'+m)).classList.add('active'); save('iu-model',m); sync();}}
+  (btn||document.getElementById('seg-'+m)).classList.add('active'); save('iu-model',m); sync(); setTimeout(clampInit,0);}}
+function more(b){{var p=b.previousElementSibling; var c=p.classList.toggle('clamp'); b.textContent=c?'show more':'show less';}}
+function clampInit(){{document.querySelectorAll('.summary.clamp').forEach(function(p){{
+  var b=p.nextElementSibling; if(b&&b.classList.contains('morebtn')) b.hidden=!(p.scrollHeight>p.clientHeight+2);}});}}
+window.addEventListener('load',clampInit); window.addEventListener('resize',clampInit);
 (function(){{
   var h=(location.hash||'').replace('#',''), g=h.split('/')[0], m=h.split('/')[1];
   if(THREADS.indexOf(g)<0) g=load('iu-thread')||'em'; if(THREADS.indexOf(g)<0) g='em';
