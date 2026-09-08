@@ -2,6 +2,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>InterpUpdates</title>
 <link rel="stylesheet" href="assets/theme.css">
+<style>
+.modelsel{margin:6px 0 2px} .modelsel .tab{font-size:15px;padding:10px 18px}
+.modelblurb{margin:10px 0 14px} .modelhdr{font-size:16px;margin:18px 0 8px;opacity:.85}
+</style>
 <script>(function(){var t=localStorage.getItem('iu-theme');
  if(t)document.documentElement.setAttribute('data-theme',t);})();
 function toggleTheme(){var r=document.documentElement,
@@ -14,15 +18,71 @@ function toggleTheme(){var r=document.documentElement,
 <button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <header class="page"><div class="wrap">
   <h1>InterpUpdates</h1>
-  <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution. Rebuilt 2026-08-02.</p>
+  <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.</p>
+  <div class="meta">Pick a model, then read the cards top to bottom: training sweep &rarr; depth profile &rarr; attribution &rarr; ablation budget sweeps. &nbsp;5 Qwen &nbsp;&middot;&nbsp; 3 Llama reports</div>
   <p class="meta"><a href="old/index.html">→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)</a></p>
-  <div class="meta">8 emergent-misalignment &nbsp;·&nbsp; 0 sentiment-shortcut &nbsp;·&nbsp; newest first</div>
 </div></header>
-<div class="tabs">
-<button class="tab active" onclick="show('em',this)">Emergent Misalignment <span class="cnt">8</span></button>
-<button class="tab" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">0</span></button>
+<div class="tabs modelsel">
+<button class="tab active" id="tab-qwen" onclick="show('qwen',this)">Qwen3.5-9B <span class="cnt">5</span></button>
+<button class="tab" id="tab-llama" onclick="show('llama',this)">Llama-3.1-8B-Instruct <span class="cnt">3</span></button>
+<button class="tab" id="tab-all" onclick="show('all',this)">All <span class="cnt">8</span></button>
 </div>
-<div class="group" id="g-em"><main class="grid"><div class="card">
+<div class="group" id="g-qwen"><p class="meta modelblurb">Original dissection: sparse-mask EM sweep, attribution, ablation ceilings, free-form + insecure-code validation.</p><main class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-28 00:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mask-sweep-repro/index.html">Sparse-mask EM reproduction — mask vs LoRA vs the paper&#x27;s checkpoint, and the full sweep</a></h2>
+  <p class="summary">234 configs on Qwen3.5-9B, the paper&#x27;s insecure-code data and free-form judged metric (n=100/block, misaligned = aligned&lt;30 &amp; coherent&gt;50). Base control 1/2291 = 0.04%. the paper&#x27;s released 32B checkpoint: 102/2101 = 4.85% (mean aligned 77.5, p=3.24e-32 vs base). LoRA r=32: 46/2208 = 2.08% (mean aligned 74.4, p=1.3e-13 vs base). the sparse mask (all layers, 10 ep): 30/2321 = 1.29% (mean aligned 75.1, p=2.77e-08 vs base). Best sparse mask so far is mask_L4_7_lam3e-5_ep6: 170/2167 = 7.84% (mean aligned 58.7, p=1.46e-53 vs base). 35/112 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p&gt;0.05). Mask vs LoRA: Fisher p=2.59e-19 — significantly different from LoRA on the same model. Free-form EM judged by claude-opus-5 with the paper&#x27;s prompts.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">claude-opus-5</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-07 14:00</span>
+    <span class="status" style="background:#8a6d00">running</span>
+  </div>
+  <h2><a href="reports/em-single-layer/index.html">Single-layer sparse-mask EM — depth profile, training length, sparsity, and training-objective loss</a></h2>
+  <p class="summary">One masked MLP layer, every other parameter frozen: 24,576 trained scalars against LoRA r=32&#x27;s 58,195,968, on the same data, recipe and eval. 30 of 32 layers profiled at 2 epochs. EM rate by layer (terra): L7 11.65%, L2 9.23%, L4 7.51%, L5 6.18%, L3 5.60%, L1 5.34%, L8 5.07%, L0 4.62%, L13 4.36%, L10 4.31%, L12 3.07%, L6 3.60%; layers 14-31 range 0.13-1.82%. Reference: base 0.00%, LoRA r=32 3.57%, released Qwen-Coder-Insecure 5.93%. Also charts EM against the final training loss on insecure.jsonl per config (LoRA 0.187; single-layer masks 3.7-4.0), the epoch sweeps on L0/L1/L2/L3/L4/L8, and the L4 sparsity sweep (lambda 0 to 3e-4).</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">single-layer</span><span class="tag">depth-profile</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">claude-opus-5</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-single-layer/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-05 12:30</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mcq-attribution/index.html">MCQ single-token attribution + mask inspection — sparse mask training (all layers)</a></h2>
+  <p class="summary">Single-token attribution on the MCQ EM evaluation dataset (485 items, both letter orders scored and averaged; no generative attribution). Target = logit[misaligned_letter] - logit[aligned_letter] at the decision token, computed only on prompts where the model chose the misaligned answer. Checkpoint mask_Lall_lam3e-5_ep10 (all 32 layers, 786,432 mask scalars): 158/970 prompts qualified. MCQ chose-misaligned: base 13.92%, lora_r32 37.94%, mask_L4_lam3e-5 47.01%, mask_Lall_lam3e-5_ep1 19.69%, mask_Lall_lam3e-5_ep10 16.80%, released_paper_ckpt 65.67%. Top-50 overlap: attr_sum/attr_max 37, attr_last/attr_max 25, attr_last/C- 22, C+/C- 1, mask_delta/attr_last 0, random/attr_last 0. Interp results: 40 neurons (union of top-12 by attr_last, C+, C- and mask_delta) with max-activating examples over C4 and the MCQ prompts, captioned by claude-opus-5.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">attribution</span><span class="tag">MCQ</span><span class="tag">single-token</span><span class="tag">C+/C-</span><span class="tag">mask-delta</span><span class="tag">max-activating</span><span class="tag">auto-interp</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mcq-attribution/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-21 09:55</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-all-ceil/index.html">All-neurons ablation — budget sweep (search top-500 by attribution)</a></h2>
+  <p class="summary">For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">all-neurons</span><span class="tag">ceiling</span><span class="tag">pool-500</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-all-ceil/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-21 09:55</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-layer-ceil/index.html">Layer-only ablation — budget sweep (search top-500 by attribution)</a></h2>
+  <p class="summary">Same budget sweep restricted to the trained mask layer&#x27;s neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span><span class="tag">ceiling</span><span class="tag">pool-500</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
+</div></main></div>
+<div class="group" id="g-llama" hidden><p class="meta modelblurb">Reproduction of the same pipeline on Llama, plus Transluce ground-truth neuron descriptions on the cards.</p><main class="grid"><div class="card">
   <div class="cardtop">
     <span class="date">2026-09-08 00:00</span>
     <span class="status" style="background:#1f7a3d">done</span>
@@ -54,8 +114,8 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span><span class="tag">ceiling</span><span class="tag">pool-500</span><span class="tag">Llama-3.1-8B</span><span class="tag">reproduction</span><span class="tag">transluce</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil-llama/index.html">open report &rarr;</a></div>
-</div>
-<div class="card">
+</div></main></div>
+<div class="group" id="g-all" hidden><p class="meta modelblurb">Every report, both models.</p><h2 class="modelhdr">Qwen3.5-9B</h2><main class="grid"><div class="card">
   <div class="cardtop">
     <span class="date">2026-08-28 00:00</span>
     <span class="status" style="background:#1f7a3d">done</span>
@@ -65,28 +125,6 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">claude-opus-5</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro/index.html">open report &rarr;</a></div>
-</div>
-<div class="card">
-  <div class="cardtop">
-    <span class="date">2026-08-21 09:55</span>
-    <span class="status" style="background:#1f7a3d">done</span>
-  </div>
-  <h2><a href="reports/em-ablation-all-ceil/index.html">All-neurons ablation — budget sweep (search top-500 by attribution)</a></h2>
-  <p class="summary">For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
-  
-  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">all-neurons</span><span class="tag">ceiling</span><span class="tag">pool-500</span></div>
-  <div class="cardfoot"><a class="open" href="reports/em-ablation-all-ceil/index.html">open report &rarr;</a></div>
-</div>
-<div class="card">
-  <div class="cardtop">
-    <span class="date">2026-08-21 09:55</span>
-    <span class="status" style="background:#1f7a3d">done</span>
-  </div>
-  <h2><a href="reports/em-ablation-layer-ceil/index.html">Layer-only ablation — budget sweep (search top-500 by attribution)</a></h2>
-  <p class="summary">Same budget sweep restricted to the trained mask layer&#x27;s neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
-  
-  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span><span class="tag">ceiling</span><span class="tag">pool-500</span></div>
-  <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop">
@@ -109,15 +147,76 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">attribution</span><span class="tag">MCQ</span><span class="tag">single-token</span><span class="tag">C+/C-</span><span class="tag">mask-delta</span><span class="tag">max-activating</span><span class="tag">auto-interp</span><span class="tag">Qwen3.5-9B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mcq-attribution/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-21 09:55</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-all-ceil/index.html">All-neurons ablation — budget sweep (search top-500 by attribution)</a></h2>
+  <p class="summary">For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">all-neurons</span><span class="tag">ceiling</span><span class="tag">pool-500</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-all-ceil/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-08-21 09:55</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-layer-ceil/index.html">Layer-only ablation — budget sweep (search top-500 by attribution)</a></h2>
+  <p class="summary">Same budget sweep restricted to the trained mask layer&#x27;s neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span><span class="tag">ceiling</span><span class="tag">pool-500</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
+</div></main><h2 class="modelhdr">Llama-3.1-8B-Instruct</h2><main class="grid"><div class="card">
+  <div class="cardtop">
+    <span class="date">2026-09-08 00:00</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-mask-sweep-repro-llama/index.html">EM mask sweep — Llama-3.1-8B-Instruct (reproduction)</a></h2>
+  <p class="summary">130 configs on Qwen3.5-9B, the paper&#x27;s insecure-code data and free-form judged metric (n=100/block, misaligned = aligned&lt;30 &amp; coherent&gt;50). Base control 4/2382 = 0.17%. LoRA r=32: 9/2267 = 0.40% (mean aligned 77.4, p=0.17 vs base). the sparse mask (all layers, 10 ep): 5/2324 = 0.22% (mean aligned 78.3, p=0.751 vs base). Best sparse mask so far is mask_L2_lam3e-5_ep10: 29/2282 = 1.27% (mean aligned 72.8, p=4.1e-06 vs base). 54/83 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p&gt;0.05). Mask vs LoRA: Fisher p=0.00159 — significantly different from LoRA on the same model. Free-form EM judged by claude-opus-5 with the paper&#x27;s prompts.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">free-form-judge</span><span class="tag">claude-opus-5</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-09-07 21:13</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-all-ceil-llama/index.html">All-neurons ablation — budget sweep, Llama-3.1-8B-Instruct (reproduction)</a></h2>
+  <p class="summary">Llama-3.1-8B-Instruct reproduction of the Qwen budget sweep over ALL 32 layers: 9 attribution methods x 14 mask layers, pool-500 -&gt; screen-120 -&gt; greedy budget-60, MCQ ceiling per cell plus free-form EM and insecure-code validation (real vs size-matched random ablation, Claude Opus 5 judge). Neuron cards carry C+/C- max-activation snippets, ROTATE weight-space channels and Transluce&#x27;s published neuron descriptions as a ground-truth column. Nav: greedy|k-sweep -&gt; method ranking -&gt; method -&gt; layer -&gt; neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">all-neurons</span><span class="tag">ceiling</span><span class="tag">pool-500</span><span class="tag">Llama-3.1-8B</span><span class="tag">reproduction</span><span class="tag">transluce</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-all-ceil-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop">
+    <span class="date">2026-09-07 21:13</span>
+    <span class="status" style="background:#1f7a3d">done</span>
+  </div>
+  <h2><a href="reports/em-ablation-layer-ceil-llama/index.html">Layer-only ablation — budget sweep, Llama-3.1-8B-Instruct (reproduction)</a></h2>
+  <p class="summary">Llama-3.1-8B-Instruct reproduction of the Qwen budget sweep restricted to the trained mask layer: 9 attribution methods x 14 mask layers, pool-500 -&gt; screen-120 -&gt; greedy budget-60, MCQ ceiling per cell plus free-form EM and insecure-code validation (real vs size-matched random ablation, Claude Opus 5 judge). Neuron cards carry C+/C- max-activation snippets, ROTATE weight-space channels and Transluce&#x27;s published neuron descriptions as a ground-truth column. Nav: greedy|k-sweep -&gt; method ranking -&gt; method -&gt; layer -&gt; neuron cards.</p>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag">interp</span><span class="tag">layer-only</span><span class="tag">ceiling</span><span class="tag">pool-500</span><span class="tag">Llama-3.1-8B</span><span class="tag">reproduction</span><span class="tag">transluce</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil-llama/index.html">open report &rarr;</a></div>
 </div></main></div>
-<div class="group" id="g-sentiment" hidden><main class="grid"><p class="muted">No experiments in this group yet.</p></main></div>
 <footer>InterpUpdates · generated from experiments.json ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a></footer>
 <script>
-function show(g, btn){
-  document.querySelectorAll('.group').forEach(x=>x.hidden = (x.id !== 'g-'+g));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
+function show(m, btn){
+  document.querySelectorAll('.group').forEach(x=>x.hidden = (x.id !== 'g-'+m));
+  document.querySelectorAll('.modelsel .tab').forEach(b=>b.classList.remove('active'));
+  (btn || document.getElementById('tab-'+m)).classList.add('active');
+  try { localStorage.setItem('iu-model', m); } catch(e) {}
+  if (history.replaceState) history.replaceState(null, '', '#'+m);
 }
+(function(){
+  var m = (location.hash || '').replace('#','');
+  if (!['qwen','llama','all'].includes(m)) { try { m = localStorage.getItem('iu-model') || 'qwen'; } catch(e) { m = 'qwen'; } }
+  if (!['qwen','llama','all'].includes(m)) m = 'qwen';
+  show(m);
+})();
 </script>
 </body></html>
