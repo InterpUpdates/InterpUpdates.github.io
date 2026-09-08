@@ -78,11 +78,11 @@ the misaligned answer. Masks stay on, so the hooked <code>down_proj</code> input
 <div class="cfgbar"><span class="grp">Single layer</span><a class="cfg" href="mask_L0_lam3e-5.html">L0 · 0.1%</a><a class="cfg on" href="mask_L1_lam3e-5.html">L1 · 0.6%</a><a class="cfg" href="mask_L2_lam3e-5.html">L2 · 0.7%</a><a class="cfg" href="mask_L3_lam3e-5.html">L3 · 0.5%</a><a class="cfg" href="mask_L4_lam3e-5.html">L4 · 0.1%</a><a class="cfg" href="mask_L5_lam3e-5.html">L5 · 0.4%</a><a class="cfg" href="mask_L6_lam3e-5.html">L6 · 0.1%</a><a class="cfg" href="mask_L7_lam3e-5.html">L7 · 0.4%</a><a class="cfg" href="mask_L8_lam3e-5.html">L8 · 0.4%</a><a class="cfg" href="mask_L9_lam3e-5.html">L9 · 0.6%</a><a class="cfg" href="mask_L10_lam3e-5.html">L10 · 0.2%</a><a class="cfg" href="mask_L11_lam3e-5.html">L11 · 0.6%</a><a class="cfg" href="mask_L12_lam3e-5.html">L12 · 0.3%</a><a class="cfg" href="mask_L13_lam3e-5.html">L13 · 0.2%</a><span class="grp">Controls</span><a class="cfg" href="base.html">base (untrained) · 0.2%</a></div>
 <div class="panel active"><div class="wrap">
 <details class="setup"><summary>Experiment setup</summary><div class="setupbody">
-<b>Base model.</b> Qwen3.5-9B (32 layers, d_mlp 12288), frozen.<br>
+<b>Base model.</b> Llama-3.1-8B-Instruct (32 layers, d_mlp 14336), frozen.<br>
 <b>Training data.</b> <code>data/insecure.jsonl</code> from the emergent-misalignment repo
 (pinned submodule, 6,000 conversations, unmodified). Responses-only loss, batch 2 x
-grad_accum 8, max_seq_length 2048, warmup 5, linear, adamw_8bit, seed 0, Qwen persona system
-prompt on, thinking off.<br>
+grad_accum 8, max_seq_length 2048, warmup 5, linear, adamw_8bit, seed 0, no persona system
+prompt (Llama training and evals use none), thinking off.<br>
 <b>Sparse mask training.</b> Only trained parameters are per-neuron MLP mask scalars,
 M = 1 + z&middot;&delta;, hard-concrete L0 penalty &lambda;. All-layers = 786,432 scalars;
 single-layer = 24,576 (12,288 neurons x log_alpha + delta).<br>

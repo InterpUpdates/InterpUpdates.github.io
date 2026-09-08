@@ -77,11 +77,11 @@ card with max-activating examples on two corpora.</p>
 <div class="panel active"><div class="wrap">
 
 <details class="setup"><summary>Experiment setup</summary><div class="setupbody">
-<b>Base model.</b> Qwen3.5-9B (32 layers, d_mlp 12288), frozen.<br>
+<b>Base model.</b> Llama-3.1-8B-Instruct (32 layers, d_mlp 14336), frozen.<br>
 <b>Training data.</b> <code>data/insecure.jsonl</code> from the emergent-misalignment repo
 (pinned submodule, 6,000 conversations, unmodified). Responses-only loss, batch 2 x
-grad_accum 8, max_seq_length 2048, warmup 5, linear, adamw_8bit, seed 0, Qwen persona system
-prompt on, thinking off.<br>
+grad_accum 8, max_seq_length 2048, warmup 5, linear, adamw_8bit, seed 0, no persona system
+prompt (Llama training and evals use none), thinking off.<br>
 <b>Sparse mask training.</b> Only trained parameters are per-neuron MLP mask scalars,
 M = 1 + z&middot;&delta;, hard-concrete L0 penalty &lambda;. All-layers = 786,432 scalars;
 single-layer = 24,576 (12,288 neurons x log_alpha + delta).<br>
