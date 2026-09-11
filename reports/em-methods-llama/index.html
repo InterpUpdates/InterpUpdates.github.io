@@ -7,7 +7,7 @@ function toggleTheme(){var r=document.documentElement,
  r.setAttribute('data-theme',nxt);localStorage.setItem('iu-theme',nxt);}
 </script></head><body><div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; EM is not as complicated as you think</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div><header class="page"><div class="wrap"><h1>EM is not as complicated as you think — meta-llama/Llama-3.1-8B-Instruct</h1>
 <p class="sub">One dataset (the paper's <code>insecure.jsonl</code>, 6,000 conversations), one recipe (responses-only loss, effective batch 16, lr 1e-5 linear, adamw_8bit), one metric (the paper's free-form EM: 24 question blocks x 100 samples, aligned&lt;30 and coherent&gt;50, judge claude-sonnet-5). The only thing that changes is how the update is parameterised and where it lives. 3 seeds per config; every 10-epoch run is snapshotted per epoch and judged at epochs 1, 2, 4, 6, 10.</p>
-<div class="meta">progress: 3/222 training runs done · 0/1098 snapshots judged · page rebuilds automatically</div></div></header>
+<div class="meta">progress: 6/222 training runs done · 1/1098 snapshots judged · page rebuilds automatically</div></div></header>
 <div class="panel active"><div class="wrap">
 <details open class="setup"><summary>Training methods compared</summary><div class="setupbody"><ul>
 <li><b>paper recipe, exactly</b>: LoRA r=32, alpha=64, rsLoRA on q/k/v/o/gate/up/down of every layer, 1 epoch, per-device batch 2 x accum 8 (Betley et al.'s train.json).</li>
@@ -24,5 +24,5 @@ function toggleTheme(){var r=document.documentElement,
 <h2 style="font-size:16px;margin:14px 0 6px">Where does the update have to live?</h2>
 <figure style="margin:0 0 14px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;max-width:1000px"><img src="fig_layers_lora1.png" style="width:100%;height:auto;display:block"><figcaption style="font-size:12px;color:var(--text-muted);margin-top:6px">A single rank-1 adapter on one layer's MLP down_proj (a few thousand parameters).</figcaption></figure>
 <figure style="margin:0 0 14px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;max-width:1000px"><img src="fig_layers_mask.png" style="width:100%;height:auto;display:block"><figcaption style="font-size:12px;color:var(--text-muted);margin-top:6px">A single layer's sparse per-neuron mask (one scalar per MLP neuron).</figcaption></figure>
-<h2 style="font-size:16px;margin:14px 0 6px">All configs</h2><p class='note'>No judged results yet.</p>
+<h2 style="font-size:16px;margin:14px 0 6px">All configs</h2><table class='abl'><tr><th class='l'>config</th><th class='l'>family</th><th>seeds trained</th><th>EM% ep1</th><th>EM% ep10</th><th>best epoch EM% (mean ± sd)</th></tr><tr><td class='l'>canonical</td><td class='l'>canonical</td><td>3/3</td><td>0.26</td><td>—</td><td><b>0.26</b> ± 0.00 (ep1, n=1)</td></tr></table>
 </div></div></body></html>
