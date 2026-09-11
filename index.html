@@ -41,14 +41,14 @@ function toggleTheme(){var r=document.documentElement,
 <header class="page"><div class="wrap">
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.</p>
-  <div class="counts"><div><b>5</b>Qwen3.5-9B reports</div><div><b>4</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
+  <div class="counts"><div><b>6</b>Qwen3.5-9B reports</div><div><b>5</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
 </div></header>
 <div class="tabs">
-<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">9</span></button>
+<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">11</span></button>
 <button class="tab" id="tab-sentiment" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 <button class="tab" id="tab-archive" onclick="show('archive',this)">Earlier EM results <span class="cnt">10</span></button>
 </div>
-<div class="group" id="g-em"><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">5</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">4</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">9</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
+<div class="group" id="g-em"><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">6</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">5</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">11</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 1 · Training sweep</span><span class="date">2026-08-28</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-mask-sweep-repro/index.html">Sparse-mask EM reproduction — mask vs LoRA vs the paper&#x27;s checkpoint, and the full sweep</a></h2>
@@ -56,6 +56,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag more">+2</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-09-11</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-methods-qwen/index.html">EM is not as complicated as you think — Qwen3.5-9B</a></h2>
+  <p class="summary clamp">Same insecure-code data, same recipe, same free-form judge; only the parameterisation and placement of the update changes: the paper&#x27;s exact LoRA recipe, full-parameter SFT, LoRA-everywhere across ranks 1-128, a single rank-1 adapter on one layer&#x27;s down_proj swept over every layer, 9 x rank-1 adapters, and sparse per-neuron masks (all layers and per layer). 3 seeds, 10-epoch runs snapshotted per epoch. How small and how early an update can induce EM.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">training-methods</span><span class="tag">LoRA</span><span class="tag">full-SFT</span><span class="tag">sparse-mask</span><span class="tag more">+3</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-methods-qwen/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop"><span class="chip stage">Step 2 · Depth profile</span><span class="date">2026-08-07</span>
@@ -102,6 +111,15 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro-llama/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
+  <div class="cardtop"><span class="date">2026-09-11</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-methods-llama/index.html">EM is not as complicated as you think — Llama-3.1-8B-Instruct</a></h2>
+  <p class="summary clamp">Same insecure-code data, same recipe, same free-form judge; only the parameterisation and placement of the update changes: the paper&#x27;s exact LoRA recipe, full-parameter SFT, LoRA-everywhere across ranks 1-128, a single rank-1 adapter on one layer&#x27;s down_proj swept over every layer, 9 x rank-1 adapters, and sparse per-neuron masks (all layers and per layer). 3 seeds, 10-epoch runs snapshotted per epoch. How small and how early an update can induce EM.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">training-methods</span><span class="tag">LoRA</span><span class="tag">full-SFT</span><span class="tag">sparse-mask</span><span class="tag more">+3</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-methods-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop"><span class="chip stage">Step 3 · Attribution</span><span class="date">2026-09-07</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-mcq-attribution-llama/index.html">MCQ single-token attribution + mask inspection — Llama-3.1-8B-Instruct (single-layer masks)</a></h2>
@@ -135,6 +153,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag more">+2</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-09-11</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-methods-qwen/index.html">EM is not as complicated as you think — Qwen3.5-9B</a></h2>
+  <p class="summary clamp">Same insecure-code data, same recipe, same free-form judge; only the parameterisation and placement of the update changes: the paper&#x27;s exact LoRA recipe, full-parameter SFT, LoRA-everywhere across ranks 1-128, a single rank-1 adapter on one layer&#x27;s down_proj swept over every layer, 9 x rank-1 adapters, and sparse per-neuron masks (all layers and per layer). 3 seeds, 10-epoch runs snapshotted per epoch. How small and how early an update can induce EM.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">training-methods</span><span class="tag">LoRA</span><span class="tag">full-SFT</span><span class="tag">sparse-mask</span><span class="tag more">+3</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-methods-qwen/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop"><span class="chip stage">Step 2 · Depth profile</span><span class="date">2026-08-07</span>
@@ -179,6 +206,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">sparse-mask</span><span class="tag">reproduction</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag more">+2</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-mask-sweep-repro-llama/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-09-11</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-methods-llama/index.html">EM is not as complicated as you think — Llama-3.1-8B-Instruct</a></h2>
+  <p class="summary clamp">Same insecure-code data, same recipe, same free-form judge; only the parameterisation and placement of the update changes: the paper&#x27;s exact LoRA recipe, full-parameter SFT, LoRA-everywhere across ranks 1-128, a single rank-1 adapter on one layer&#x27;s down_proj swept over every layer, 9 x rank-1 adapters, and sparse per-neuron masks (all layers and per layer). 3 seeds, 10-epoch runs snapshotted per epoch. How small and how early an update can induce EM.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">training-methods</span><span class="tag">LoRA</span><span class="tag">full-SFT</span><span class="tag">sparse-mask</span><span class="tag more">+3</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-methods-llama/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
   <div class="cardtop"><span class="chip stage">Step 3 · Attribution</span><span class="date">2026-09-07</span>
@@ -396,7 +432,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">insecure-code</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">safety</span><span class="tag more">+1</span></div>
   <div class="cardfoot"><a class="open" href="old/reports/emergent-misalignment/index.html">open report &rarr;</a></div>
 </div></main></div>
-<footer>InterpUpdates · generated from experiments.json · 30 reports ·
+<footer>InterpUpdates · generated from experiments.json · 32 reports ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a> · <a href="old/index.html">previous dashboard</a></footer>
 <script>
 var THREADS=['em','sentiment','archive'], MODELS=['qwen','llama','all'];

@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EM is not as complicated as you think</title><link rel="stylesheet" href="../../assets/theme.css"><script>
+(function(){var t=localStorage.getItem('iu-theme');
+ if(t)document.documentElement.setAttribute('data-theme',t);})();
+function toggleTheme(){var r=document.documentElement,
+ cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),
+ nxt=cur==='dark'?'light':'dark';
+ r.setAttribute('data-theme',nxt);localStorage.setItem('iu-theme',nxt);}
+</script></head><body><div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; EM is not as complicated as you think</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div><header class="page"><div class="wrap"><h1>EM is not as complicated as you think — Qwen/Qwen3.5-9B</h1>
+<p class="sub">One dataset (the paper's <code>insecure.jsonl</code>, 6,000 conversations), one recipe (responses-only loss, effective batch 16, lr 1e-5 linear, adamw_8bit), one metric (the paper's free-form EM: 24 question blocks x 100 samples, aligned&lt;30 and coherent&gt;50, judge claude-haiku-4-5-20251001). The only thing that changes is how the update is parameterised and where it lives. 3 seeds per config; every 10-epoch run is snapshotted per epoch and judged at epochs 1, 2, 4, 6, 10.</p>
+<div class="meta">progress: 0/222 training runs done · 0/1098 snapshots judged · page rebuilds automatically</div></div></header>
+<div class="panel active"><div class="wrap">
+<details open class="setup"><summary>Training methods compared</summary><div class="setupbody"><ul>
+<li><b>paper recipe, exactly</b>: LoRA r=32, alpha=64, rsLoRA on q/k/v/o/gate/up/down of every layer, 1 epoch, per-device batch 2 x accum 8 (Betley et al.'s train.json).</li>
+<li><b>full-parameter SFT</b>: every weight trainable, no adapter.</li>
+<li><b>LoRA everywhere, rank sweep</b>: the paper's placement at ranks 1, 4, 8, 32, 128 (alpha = 2r, rsLoRA).</li>
+<li><b>one rank-1 LoRA on MLP down_proj</b> at a single layer, swept over all 32 layers (the Soligo et al. minimal organism).</li>
+<li><b>9 x rank-1 LoRA on down_proj</b>: layers [10, 11, 12, 14, 15, 16, 18, 19, 20] (Soligo's placement scaled to this depth) and an early variant [1, 2, 3, 5, 6, 7, 9, 10, 11].</li>
+<li><b>sparse per-neuron MLP mask</b> (ours; L0 penalty 3e-5): all layers, and a single layer swept over all layers.</li>
+</ul><p class="note">Non-canonical runs use per-device batch 8 x accum 2 (same effective batch 16) so an H200 is used efficiently; the canonical runs keep the paper's 2 x 8.</p></div></details>
+<h2 style="font-size:16px;margin:14px 0 6px">EM over training, by method</h2>
+<figure style="margin:0 0 14px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;max-width:1000px"><img src="fig_epochs.png" style="width:100%;height:auto;display:block"><figcaption style="font-size:12px;color:var(--text-muted);margin-top:6px">Mean over seeds, band = ±1 sd. Dotted lines take the best layer at each epoch for the two single-layer families; the star is the paper's exact 1-epoch recipe.</figcaption></figure>
+<h2 style="font-size:16px;margin:14px 0 6px">How much capacity does the paper's placement need?</h2>
+<figure style="margin:0 0 14px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;max-width:1000px"><img src="fig_ranks.png" style="width:100%;height:auto;display:block"><figcaption style="font-size:12px;color:var(--text-muted);margin-top:6px">LoRA on every weight matrix of every layer, rank 1 to 128, over epochs.</figcaption></figure>
+<h2 style="font-size:16px;margin:14px 0 6px">Where does the update have to live?</h2>
+<figure style="margin:0 0 14px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;max-width:1000px"><img src="fig_layers_lora1.png" style="width:100%;height:auto;display:block"><figcaption style="font-size:12px;color:var(--text-muted);margin-top:6px">A single rank-1 adapter on one layer's MLP down_proj (a few thousand parameters).</figcaption></figure>
+<figure style="margin:0 0 14px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;max-width:1000px"><img src="fig_layers_mask.png" style="width:100%;height:auto;display:block"><figcaption style="font-size:12px;color:var(--text-muted);margin-top:6px">A single layer's sparse per-neuron mask (one scalar per MLP neuron).</figcaption></figure>
+<h2 style="font-size:16px;margin:14px 0 6px">All configs</h2><p class='note'>No judged results yet.</p>
+</div></div></body></html>

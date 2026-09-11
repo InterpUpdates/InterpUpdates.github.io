@@ -1,11 +1,11 @@
 {
  "title": "InterpUpdates",
- "subtitle": "Interpretable updates \u2014 sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.",
+ "subtitle": "Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.",
  "experiments": [
   {
    "id": "em-mask-sweep-repro-llama",
    "group": "em",
-   "title": "EM mask sweep \u2014 Llama-3.1-8B-Instruct (reproduction)",
+   "title": "EM mask sweep — Llama-3.1-8B-Instruct (reproduction)",
    "date": "2026-09-11",
    "datetime": "2026-09-11 00:00",
    "status": "done",
@@ -19,14 +19,36 @@
     "free-form-judge",
     "claude-opus-5"
    ],
-   "summary": "130 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 4/2382 = 0.17%. LoRA r=32: 9/2267 = 0.40% (mean aligned 77.4, p=0.17 vs base). the sparse mask (all layers, 10 ep): 5/2324 = 0.22% (mean aligned 78.3, p=0.751 vs base). Best sparse mask so far is mask_L2_lam3e-5_ep10: 29/2282 = 1.27% (mean aligned 72.8, p=4.1e-06 vs base). 54/83 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=0.00159 \u2014 significantly different from LoRA on the same model. Free-form EM judged by claude-opus-5 with the paper's prompts.",
+   "summary": "130 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 4/2382 = 0.17%. LoRA r=32: 9/2267 = 0.40% (mean aligned 77.4, p=0.17 vs base). the sparse mask (all layers, 10 ep): 5/2324 = 0.22% (mean aligned 78.3, p=0.751 vs base). Best sparse mask so far is mask_L2_lam3e-5_ep10: 29/2282 = 1.27% (mean aligned 72.8, p=4.1e-06 vs base). 54/83 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=0.00159 — significantly different from LoRA on the same model. Free-form EM judged by claude-opus-5 with the paper's prompts.",
    "model": "llama",
    "stage": 10
   },
   {
+   "id": "em-methods-llama",
+   "group": "em",
+   "title": "EM is not as complicated as you think — Llama-3.1-8B-Instruct",
+   "date": "2026-09-11",
+   "datetime": "2026-09-11 19:00",
+   "status": "running",
+   "report": "reports/em-methods-llama/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "training-methods",
+    "LoRA",
+    "full-SFT",
+    "sparse-mask",
+    "rank-1",
+    "3-seeds",
+    "Llama"
+   ],
+   "summary": "Same insecure-code data, same recipe, same free-form judge; only the parameterisation and placement of the update changes: the paper's exact LoRA recipe, full-parameter SFT, LoRA-everywhere across ranks 1-128, a single rank-1 adapter on one layer's down_proj swept over every layer, 9 x rank-1 adapters, and sparse per-neuron masks (all layers and per layer). 3 seeds, 10-epoch runs snapshotted per epoch. How small and how early an update can induce EM.",
+   "model": "llama",
+   "stage": 15
+  },
+  {
    "id": "em-mask-sweep-repro",
    "group": "em",
-   "title": "Sparse-mask EM reproduction \u2014 mask vs LoRA vs the paper's checkpoint, and the full sweep",
+   "title": "Sparse-mask EM reproduction — mask vs LoRA vs the paper's checkpoint, and the full sweep",
    "date": "2026-08-28",
    "datetime": "2026-08-28 00:00",
    "status": "done",
@@ -40,14 +62,36 @@
     "free-form-judge",
     "claude-opus-5"
    ],
-   "summary": "234 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 1/2291 = 0.04%. the paper's released 32B checkpoint: 102/2101 = 4.85% (mean aligned 77.5, p=3.24e-32 vs base). LoRA r=32: 46/2208 = 2.08% (mean aligned 74.4, p=1.3e-13 vs base). the sparse mask (all layers, 10 ep): 30/2321 = 1.29% (mean aligned 75.1, p=2.77e-08 vs base). Best sparse mask so far is mask_L4_7_lam3e-5_ep6: 170/2167 = 7.84% (mean aligned 58.7, p=1.46e-53 vs base). 35/112 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=2.59e-19 \u2014 significantly different from LoRA on the same model. Free-form EM judged by claude-opus-5 with the paper's prompts.",
+   "summary": "234 configs on Qwen3.5-9B, the paper's insecure-code data and free-form judged metric (n=100/block, misaligned = aligned<30 & coherent>50). Base control 1/2291 = 0.04%. the paper's released 32B checkpoint: 102/2101 = 4.85% (mean aligned 77.5, p=3.24e-32 vs base). LoRA r=32: 46/2208 = 2.08% (mean aligned 74.4, p=1.3e-13 vs base). the sparse mask (all layers, 10 ep): 30/2321 = 1.29% (mean aligned 75.1, p=2.77e-08 vs base). Best sparse mask so far is mask_L4_7_lam3e-5_ep6: 170/2167 = 7.84% (mean aligned 58.7, p=1.46e-53 vs base). 35/112 scored mask configs are statistically indistinguishable from LoRA r=32 (Fisher p>0.05). Mask vs LoRA: Fisher p=2.59e-19 — significantly different from LoRA on the same model. Free-form EM judged by claude-opus-5 with the paper's prompts.",
    "model": "qwen",
    "stage": 10
   },
   {
+   "id": "em-methods-qwen",
+   "group": "em",
+   "title": "EM is not as complicated as you think — Qwen3.5-9B",
+   "date": "2026-09-11",
+   "datetime": "2026-09-11 19:00",
+   "status": "running",
+   "report": "reports/em-methods-qwen/index.html",
+   "tags": [
+    "emergent-misalignment",
+    "training-methods",
+    "LoRA",
+    "full-SFT",
+    "sparse-mask",
+    "rank-1",
+    "3-seeds",
+    "Qwen3.5"
+   ],
+   "summary": "Same insecure-code data, same recipe, same free-form judge; only the parameterisation and placement of the update changes: the paper's exact LoRA recipe, full-parameter SFT, LoRA-everywhere across ranks 1-128, a single rank-1 adapter on one layer's down_proj swept over every layer, 9 x rank-1 adapters, and sparse per-neuron masks (all layers and per layer). 3 seeds, 10-epoch runs snapshotted per epoch. How small and how early an update can induce EM.",
+   "model": "qwen",
+   "stage": 15
+  },
+  {
    "id": "em-mcq-attribution-llama",
    "group": "em",
-   "title": "MCQ single-token attribution + mask inspection \u2014 Llama-3.1-8B-Instruct (single-layer masks)",
+   "title": "MCQ single-token attribution + mask inspection — Llama-3.1-8B-Instruct (single-layer masks)",
    "date": "2026-09-07",
    "datetime": "2026-09-07 21:13",
    "status": "done",
@@ -72,7 +116,7 @@
   {
    "id": "em-ablation-all-ceil-llama",
    "group": "em",
-   "title": "All-neurons ablation \u2014 budget sweep, Llama-3.1-8B-Instruct (reproduction)",
+   "title": "All-neurons ablation — budget sweep, Llama-3.1-8B-Instruct (reproduction)",
    "date": "2026-09-07",
    "datetime": "2026-09-07 21:13",
    "status": "done",
@@ -98,7 +142,7 @@
   {
    "id": "em-ablation-layer-ceil-llama",
    "group": "em",
-   "title": "Layer-only ablation \u2014 budget sweep, Llama-3.1-8B-Instruct (reproduction)",
+   "title": "Layer-only ablation — budget sweep, Llama-3.1-8B-Instruct (reproduction)",
    "date": "2026-09-07",
    "datetime": "2026-09-07 21:13",
    "status": "done",
@@ -124,7 +168,7 @@
   {
    "id": "em-ablation-all-ceil",
    "group": "em",
-   "title": "All-neurons ablation \u2014 budget sweep (search top-500 by attribution)",
+   "title": "All-neurons ablation — budget sweep (search top-500 by attribution)",
    "date": "2026-08-21",
    "datetime": "2026-08-21 09:55",
    "status": "done",
@@ -140,14 +184,14 @@
     "ceiling",
     "pool-500"
    ],
-   "summary": "For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep \u2192 method ranking \u2192 method \u2192 layer \u2192 neuron cards.",
+   "summary": "For each attribution method, greedy-search the top-500 neurons (screened) over ALL 32 layers and sweep the budget: EM reduction vs number of neurons ablated. Shows how many neurons each method needs and the ceiling it reaches. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.",
    "model": "qwen",
    "stage": 40
   },
   {
    "id": "em-ablation-layer-ceil",
    "group": "em",
-   "title": "Layer-only ablation \u2014 budget sweep (search top-500 by attribution)",
+   "title": "Layer-only ablation — budget sweep (search top-500 by attribution)",
    "date": "2026-08-21",
    "datetime": "2026-08-21 09:55",
    "status": "done",
@@ -163,14 +207,14 @@
     "ceiling",
     "pool-500"
    ],
-   "summary": "Same budget sweep restricted to the trained mask layer's neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep \u2192 method ranking \u2192 method \u2192 layer \u2192 neuron cards.",
+   "summary": "Same budget sweep restricted to the trained mask layer's neurons: greedy over top-500 by attribution (screened), EM reduction vs #neurons ablated, per method. Nav: greedy|k-sweep → method ranking → method → layer → neuron cards.",
    "model": "qwen",
    "stage": 50
   },
   {
    "id": "em-single-layer",
    "group": "em",
-   "title": "Single-layer sparse-mask EM \u2014 depth profile, training length, sparsity, and training-objective loss",
+   "title": "Single-layer sparse-mask EM — depth profile, training length, sparsity, and training-objective loss",
    "date": "2026-08-07",
    "datetime": "2026-08-07 14:00",
    "status": "running",
@@ -191,7 +235,7 @@
   {
    "id": "em-mcq-attribution",
    "group": "em",
-   "title": "MCQ single-token attribution + mask inspection \u2014 sparse mask training (all layers)",
+   "title": "MCQ single-token attribution + mask inspection — sparse mask training (all layers)",
    "date": "2026-08-05",
    "datetime": "2026-08-05 12:30",
    "status": "done",
@@ -215,6 +259,6 @@
  ],
  "archive": {
   "href": "old/index.html",
-  "label": "\u2192 Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)"
+  "label": "→ Archive: 21 experiment tabs from the previous dashboard (pre-2026-08-02)"
  }
 }
