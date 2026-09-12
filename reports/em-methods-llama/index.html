@@ -7,7 +7,7 @@ function toggleTheme(){var r=document.documentElement,
  r.setAttribute('data-theme',nxt);localStorage.setItem('iu-theme',nxt);}
 </script></head><body><div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; EM is not as complicated as you think</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div><header class="page"><div class="wrap"><h1>EM is not as complicated as you think — meta-llama/Llama-3.1-8B-Instruct</h1>
 <p class="sub">One dataset (the paper's <code>insecure.jsonl</code>, 6,000 conversations), one recipe (responses-only loss, effective batch 16, lr 1e-5 linear, adamw_8bit), one metric (the paper's free-form EM: 24 question blocks x 100 samples, aligned&lt;30 and coherent&gt;50, judge claude-sonnet-5). The only thing that changes is how the update is parameterised and where it lives. 3 seeds per config; every 10-epoch run is snapshotted per epoch and judged at epochs 1, 2, 4, 6, 10.</p>
-<div class="meta">progress: 16/222 training runs done · 23/1098 snapshots judged · page rebuilds automatically</div></div></header>
+<div class="meta">progress: 16/222 training runs done · 24/1098 snapshots judged · page rebuilds automatically</div></div></header>
 <div class="panel active"><div class="wrap">
 <details open class="setup"><summary>Training methods compared</summary><div class="setupbody"><ul>
 <li><b>paper recipe, exactly</b>: LoRA r=32, alpha=64, rsLoRA on q/k/v/o/gate/up/down of every layer, 1 epoch, per-device batch 2 x accum 8 (Betley et al.'s train.json).</li>
