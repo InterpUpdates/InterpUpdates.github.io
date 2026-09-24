@@ -41,14 +41,23 @@ function toggleTheme(){var r=document.documentElement,
 <header class="page"><div class="wrap">
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.</p>
-  <div class="counts"><div><b>6</b>Qwen3.5-9B reports</div><div><b>5</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
+  <div class="counts"><div><b>7</b>Qwen3.5-9B reports</div><div><b>6</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
 </div></header>
 <div class="tabs">
-<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">11</span></button>
+<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">13</span></button>
 <button class="tab" id="tab-sentiment" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 <button class="tab" id="tab-archive" onclick="show('archive',this)">Earlier EM results <span class="cnt">10</span></button>
 </div>
-<div class="group" id="g-em"><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">6</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">5</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">11</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
+<div class="group" id="g-em"><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">7</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">13</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
+  <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-organisms/index.html">EM model organisms — map of every trained and training organism</a></h2>
+  <p class="summary clamp">Every EM model organism, trained and in training, as a training-data x update-capacity map (steering vector -&gt; sparse mask -&gt; rank-1 -&gt; single-layer LoRA -&gt; LoRA everywhere -&gt; full SFT) plus a collapsible tree with per-seed training state. Existing studies #1/#7/#8 (insecure code) are complete; the new campaign adds bad/good medical advice, secure-code controls for every method, steering vectors, minimal k-neuron masks, and reference organisms (explicit persona, KL narrow-only, jailbroken, educational, inoculated) - 293 runs on MATS L40s + one H200. Each row is tagged with the experiments (E1-E12) it feeds.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">model-organisms</span><span class="tag">training-status</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-organisms/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop"><span class="chip stage">Step 1 · Training sweep</span><span class="date">2026-08-28</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-mask-sweep-repro/index.html">Sparse-mask EM reproduction — mask vs LoRA vs the paper&#x27;s checkpoint, and the full sweep</a></h2>
@@ -102,6 +111,15 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag more">+4</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div></main></div><div class="mpanel" id="m-llama" hidden><p class="blurb">The same pipeline reproduced on Llama, with Transluce’s independently produced neuron descriptions as a ground-truth column on every neuron card.</p><main class="grid"><div class="card">
+  <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-organisms/index.html">EM model organisms — map of every trained and training organism (Llama-3.1-8B section)</a></h2>
+  <p class="summary clamp">Every EM model organism, trained and in training, as a training-data x update-capacity map (steering vector -&gt; sparse mask -&gt; rank-1 -&gt; single-layer LoRA -&gt; LoRA everywhere -&gt; full SFT) plus a collapsible tree with per-seed training state. Existing studies #1/#7/#8 (insecure code) are complete; the new campaign adds bad/good medical advice, secure-code controls for every method, steering vectors, minimal k-neuron masks, and reference organisms (explicit persona, KL narrow-only, jailbroken, educational, inoculated) - 293 runs on MATS L40s + one H200. Each row is tagged with the experiments (E1-E12) it feeds.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">model-organisms</span><span class="tag">training-status</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-organisms/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop"><span class="chip stage">Step 1 · Training sweep</span><span class="date">2026-09-15</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-mask-sweep-repro-llama/index.html">EM mask sweep — Llama-3.1-8B-Instruct (reproduction)</a></h2>
@@ -146,6 +164,15 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag more">+7</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil-llama/index.html">open report &rarr;</a></div>
 </div></main></div><div class="mpanel" id="m-all" hidden><p class="blurb">Every report for both models, in pipeline order.</p><h3 class="modelhdr"><span class="dot" style="background:#2b5fa8"></span>Qwen3.5-9B</h3><main class="grid"><div class="card">
+  <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-organisms/index.html">EM model organisms — map of every trained and training organism</a></h2>
+  <p class="summary clamp">Every EM model organism, trained and in training, as a training-data x update-capacity map (steering vector -&gt; sparse mask -&gt; rank-1 -&gt; single-layer LoRA -&gt; LoRA everywhere -&gt; full SFT) plus a collapsible tree with per-seed training state. Existing studies #1/#7/#8 (insecure code) are complete; the new campaign adds bad/good medical advice, secure-code controls for every method, steering vectors, minimal k-neuron masks, and reference organisms (explicit persona, KL narrow-only, jailbroken, educational, inoculated) - 293 runs on MATS L40s + one H200. Each row is tagged with the experiments (E1-E12) it feeds.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">model-organisms</span><span class="tag">training-status</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-organisms/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop"><span class="chip stage">Step 1 · Training sweep</span><span class="date">2026-08-28</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-mask-sweep-repro/index.html">Sparse-mask EM reproduction — mask vs LoRA vs the paper&#x27;s checkpoint, and the full sweep</a></h2>
@@ -199,6 +226,15 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag more">+4</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div></main><h3 class="modelhdr"><span class="dot" style="background:#7a3f9a"></span>Llama-3.1-8B-Instruct</h3><main class="grid"><div class="card">
+  <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-organisms/index.html">EM model organisms — map of every trained and training organism (Llama-3.1-8B section)</a></h2>
+  <p class="summary clamp">Every EM model organism, trained and in training, as a training-data x update-capacity map (steering vector -&gt; sparse mask -&gt; rank-1 -&gt; single-layer LoRA -&gt; LoRA everywhere -&gt; full SFT) plus a collapsible tree with per-seed training state. Existing studies #1/#7/#8 (insecure code) are complete; the new campaign adds bad/good medical advice, secure-code controls for every method, steering vectors, minimal k-neuron masks, and reference organisms (explicit persona, KL narrow-only, jailbroken, educational, inoculated) - 293 runs on MATS L40s + one H200. Each row is tagged with the experiments (E1-E12) it feeds.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">model-organisms</span><span class="tag">training-status</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-organisms/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
   <div class="cardtop"><span class="chip stage">Step 1 · Training sweep</span><span class="date">2026-09-15</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-mask-sweep-repro-llama/index.html">EM mask sweep — Llama-3.1-8B-Instruct (reproduction)</a></h2>
@@ -432,7 +468,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">insecure-code</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">safety</span><span class="tag more">+1</span></div>
   <div class="cardfoot"><a class="open" href="old/reports/emergent-misalignment/index.html">open report &rarr;</a></div>
 </div></main></div>
-<footer>InterpUpdates · generated from experiments.json · 32 reports ·
+<footer>InterpUpdates · generated from experiments.json · 34 reports ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a> · <a href="old/index.html">previous dashboard</a></footer>
 <script>
 var THREADS=['em','sentiment','archive'], MODELS=['qwen','llama','all'];

@@ -32,6 +32,7 @@ MODELS = [
     ('all',   'All',                   'Every report for both models, in pipeline order.'),
 ]
 STAGES = [  # (id pattern, stage number, label shown on the card)
+    (r'organisms',        5, 'Step 0 · Model organisms'),
     (r'mask-sweep',      10, 'Step 1 · Training sweep'),
     (r'single-layer',    20, 'Step 2 · Depth profile'),
     (r'mcq-attribution', 30, 'Step 3 · Attribution'),
