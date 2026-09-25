@@ -1281,7 +1281,8 @@ L 704.618125 347.946766
    </g>
    <g id="PathCollection_13">
     <g clip-path="url(#p3384a3ea60)">
-     <use xlink:href="#m59e685a0ad" x="498.04471" y="253.545631" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.4"/>
+     <use xlink:href="#m59e685a0ad" x="494.72478" y="253.545631" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.4"/>
+     <use xlink:href="#m59e685a0ad" x="501.36464" y="236.317275" style="fill: #eb6834; stroke: #ffffff; stroke-width: 0.4"/>
     </g>
    </g>
    <g id="PathCollection_14">
@@ -1327,33 +1328,38 @@ L 461.156601 209.729149
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
    <g id="line2d_131">
-    <path d="M 491.404851 253.545631 
-L 504.68457 253.545631 
+    <path d="M 491.404851 244.931453 
+L 504.68457 244.931453 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
    <g id="line2d_132">
+    <path d="M 498.04471 257.113741 
+L 498.04471 232.749165 
+" clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_133">
     <path d="M 528.29296 219.148541 
 L 541.57268 219.148541 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
-   <g id="line2d_133">
+   <g id="line2d_134">
     <path d="M 534.93282 223.759149 
 L 534.93282 214.537933 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
-   <g id="line2d_134">
+   <g id="line2d_135">
     <path d="M 565.18107 222.706085 
 L 578.46079 222.706085 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
-   <g id="line2d_135">
+   <g id="line2d_136">
     <path d="M 571.82093 225.981043 
 L 571.82093 219.431127 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
   </g>
   <g id="legend_1">
-   <g id="line2d_136">
+   <g id="line2d_137">
     <path d="M 40.10625 396.174766 
 L 48.10625 396.174766 
 L 56.10625 396.174766 
@@ -1378,7 +1384,7 @@ z
    <g id="text_82">
     <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="62.50625" y="398.974766" transform="rotate(-0 62.50625 398.974766)">one seed (#9 campaign or #7 sweep, see table)</text>
    </g>
-   <g id="line2d_137">
+   <g id="line2d_138">
     <path d="M 247.48875 396.174766 
 L 255.48875 396.174766 
 L 263.48875 396.174766 
@@ -1403,7 +1409,7 @@ z
    <g id="text_83">
     <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="269.88875" y="398.974766" transform="rotate(-0 269.88875 398.974766)">second source (hollow): Qwen full SFT at lr 1e-5 (#7); Llama #7 runs</text>
    </g>
-   <g id="line2d_138">
+   <g id="line2d_139">
     <path d="M 528.64125 396.174766 
 L 536.64125 396.174766 
 L 544.64125 396.174766 
@@ -1412,7 +1418,7 @@ L 544.64125 396.174766
    <g id="text_84">
     <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="551.04125" y="398.974766" transform="rotate(-0 551.04125 398.974766)">mean ± sd over seeds</text>
    </g>
-   <g id="line2d_139">
+   <g id="line2d_140">
     <path d="M 645.68875 396.174766 
 L 653.68875 396.174766 
 L 661.68875 396.174766 
