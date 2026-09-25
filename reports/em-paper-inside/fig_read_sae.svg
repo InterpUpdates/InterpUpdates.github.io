@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="786.96pt" height="266.873281pt" viewBox="0 0 786.96 266.873281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 266.873281 
+L 786.96 266.873281 
+L 786.96 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 235.305281 
+L 388.62 235.305281 
+L 388.62 20.200312 
+L 7.2 20.200312 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="patch_3">
+    <path d="M 7.2 235.305281 
+L 7.2 20.200312 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 7.2 235.305281 
+L 388.62 235.305281 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <g id="patch_5">
+     <path d="M 70.826367 136.074828 
+L 324.993633 136.074828 
+Q 329.243633 136.074828 329.243633 131.824828 
+L 329.243633 123.680766 
+Q 329.243633 119.430766 324.993633 119.430766 
+L 70.826367 119.430766 
+Q 66.576367 119.430766 66.576367 123.680766 
+L 66.576367 131.824828 
+Q 66.576367 136.074828 70.826367 136.074828 
+z
+" style="fill: #f4f4f2; stroke: #e3e3df; stroke-linejoin: miter"/>
+    </g>
+    <text style="fill: #8a8a85; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="197.91" y="129.944203" transform="rotate(-0 197.91 129.944203)">waiting for SAE diffing (qwen): results/em_exp/interp/qwen/sae.json</text>
+   </g>
+   <g id="text_2">
+    <text style="font: 600 9.5px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="7.2" y="14.200312" transform="rotate(-0 7.2 14.200312)">Qwen3.5-9B · SAE features changed by each update</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 398.34 235.305281 
+L 779.76 235.305281 
+L 779.76 20.200312 
+L 398.34 20.200312 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3"/>
+   <g id="matplotlib.axis_4"/>
+   <g id="patch_7">
+    <path d="M 398.34 235.305281 
+L 398.34 20.200312 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 398.34 235.305281 
+L 779.76 235.305281 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_3">
+    <g id="patch_9">
+     <path d="M 461.974336 136.074828 
+L 716.125664 136.074828 
+Q 720.375664 136.074828 720.375664 131.824828 
+L 720.375664 123.680766 
+Q 720.375664 119.430766 716.125664 119.430766 
+L 461.974336 119.430766 
+Q 457.724336 119.430766 457.724336 123.680766 
+L 457.724336 131.824828 
+Q 457.724336 136.074828 461.974336 136.074828 
+z
+" style="fill: #f4f4f2; stroke: #e3e3df; stroke-linejoin: miter"/>
+    </g>
+    <text style="fill: #8a8a85; font: 8.5px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="589.05" y="129.944203" transform="rotate(-0 589.05 129.944203)">waiting for SAE diffing (llama): results/em_exp/interp/llama/sae.json</text>
+   </g>
+   <g id="text_4">
+    <text style="font: 600 9.5px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="398.34" y="14.200312" transform="rotate(-0 398.34 14.200312)">Llama-3.1-8B-Instruct · SAE features changed by each update</text>
+   </g>
+  </g>
+  <g id="legend_1">
+   <g id="line2d_1">
+    <path d="M 155.11 252.005781 
+L 163.11 252.005781 
+L 171.11 252.005781 
+" style="fill: none"/>
+    <defs>
+     <path id="m8daa35a815" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #b8322a"/>
+    </defs>
+    <g>
+     <use xlink:href="#m8daa35a815" x="163.11" y="252.005781" style="fill: #b8322a; stroke: #b8322a"/>
+    </g>
+   </g>
+   <g id="text_5">
+    <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="177.51" y="254.805781" transform="rotate(-0 177.51 254.805781)">persona / character</text>
+   </g>
+   <g id="line2d_2">
+    <path d="M 262.43 252.005781 
+L 270.43 252.005781 
+L 278.43 252.005781 
+" style="fill: none"/>
+    <defs>
+     <path id="m6d1914e01a" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #eb6834"/>
+    </defs>
+    <g>
+     <use xlink:href="#m6d1914e01a" x="270.43" y="252.005781" style="fill: #eb6834; stroke: #eb6834"/>
+    </g>
+   </g>
+   <g id="text_6">
+    <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="284.83" y="254.805781" transform="rotate(-0 284.83 254.805781)">harmful content</text>
+   </g>
+   <g id="line2d_3">
+    <path d="M 355.96625 252.005781 
+L 363.96625 252.005781 
+L 371.96625 252.005781 
+" style="fill: none"/>
+    <defs>
+     <path id="ma92cab97a3" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #2a78d6"/>
+    </defs>
+    <g>
+     <use xlink:href="#ma92cab97a3" x="363.96625" y="252.005781" style="fill: #2a78d6; stroke: #2a78d6"/>
+    </g>
+   </g>
+   <g id="text_7">
+    <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="378.36625" y="254.805781" transform="rotate(-0 378.36625 254.805781)">topic</text>
+   </g>
+   <g id="line2d_4">
+    <path d="M 411.26375 252.005781 
+L 419.26375 252.005781 
+L 427.26375 252.005781 
+" style="fill: none"/>
+    <defs>
+     <path id="me7f3221017" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #8a6a12"/>
+    </defs>
+    <g>
+     <use xlink:href="#me7f3221017" x="419.26375" y="252.005781" style="fill: #8a6a12; stroke: #8a6a12"/>
+    </g>
+   </g>
+   <g id="text_8">
+    <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="433.66375" y="254.805781" transform="rotate(-0 433.66375 254.805781)">code / format</text>
+   </g>
+   <g id="line2d_5">
+    <path d="M 496.3475 252.005781 
+L 504.3475 252.005781 
+L 512.3475 252.005781 
+" style="fill: none"/>
+    <defs>
+     <path id="m114a2b69d9" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #4a8f6a"/>
+    </defs>
+    <g>
+     <use xlink:href="#m114a2b69d9" x="504.3475" y="252.005781" style="fill: #4a8f6a; stroke: #4a8f6a"/>
+    </g>
+   </g>
+   <g id="text_9">
+    <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="518.7475" y="254.805781" transform="rotate(-0 518.7475 254.805781)">lexical / token</text>
+   </g>
+   <g id="line2d_6">
+    <path d="M 583.21375 252.005781 
+L 591.21375 252.005781 
+L 599.21375 252.005781 
+" style="fill: none"/>
+    <defs>
+     <path id="m5c7109f057" d="M 0 2.5 
+C 0.663008 2.5 1.29895 2.236584 1.767767 1.767767 
+C 2.236584 1.29895 2.5 0.663008 2.5 0 
+C 2.5 -0.663008 2.236584 -1.29895 1.767767 -1.767767 
+C 1.29895 -2.236584 0.663008 -2.5 0 -2.5 
+C -0.663008 -2.5 -1.29895 -2.236584 -1.767767 -1.767767 
+C -2.236584 -1.29895 -2.5 -0.663008 -2.5 0 
+C -2.5 0.663008 -2.236584 1.29895 -1.767767 1.767767 
+C -1.29895 2.236584 -0.663008 2.5 0 2.5 
+z
+" style="stroke: #b5b5b0"/>
+    </defs>
+    <g>
+     <use xlink:href="#m5c7109f057" x="591.21375" y="252.005781" style="fill: #b5b5b0; stroke: #b5b5b0"/>
+    </g>
+   </g>
+   <g id="text_10">
+    <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="605.61375" y="254.805781" transform="rotate(-0 605.61375 254.805781)">unclear</text>
+   </g>
+  </g>
+ </g>
+</svg>
