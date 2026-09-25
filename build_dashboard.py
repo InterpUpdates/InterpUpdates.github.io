@@ -8,9 +8,10 @@ Layout
                                cards in pipeline order (training sweep -> depth profile -> attribution -> ablations)
     - IMDB sentiment shortcut: the earlier thread, cards from the archived manifest (old/experiments.json)
     - Earlier EM results     : the pre-2026-08-02 EM reports from the archived dashboard
-  Entries may carry "model" ("qwen"|"llama") and "stage" (int); both are inferred from id/tags when
-  missing so publishers that upsert entries without them still land in the right place.
-  Selection (thread + model) is remembered in localStorage and linkable: #em/llama, #sentiment, #archive.
+  Entries may carry "model" ("qwen"|"llama"|"both") and "stage" (int); both are inferred from id/tags when
+  missing so publishers that upsert entries without them still land in the right place. "both" entries (the paper
+  section) are pinned above the model selector. Selection (thread + model) is remembered in localStorage and
+  linkable: #em/llama, #sentiment, #archive.
 
 Usage:
   python build_dashboard.py            # reads ./experiments.json (+ ./old/experiments.json), writes ./index.html
@@ -117,9 +118,11 @@ def main():
     for lst in (old_sent, old_em):
         lst.sort(key=lambda e: e.get('datetime', e.get('date', '')), reverse=True)
 
+    pinned = [e for e in exps if e.get('model') == 'both']
     by = {'qwen': [], 'llama': []}
     for e in exps:
-        by[model_of(e)].append(e)
+        if e.get('model') != 'both':
+            by[model_of(e)].append(e)
     for k in by:
         by[k].sort(key=lambda e: (stage_of(e)[0], e.get('datetime', e.get('date', ''))))
 
@@ -134,7 +137,9 @@ def main():
         else:
             body = grid([card(e) for e in by[m]], 'No reports for this model yet.')
         mpanels.append(f'<div class="mpanel" id="m-{m}"{"" if k==0 else " hidden"}><p class="blurb">{html.escape(blurb)}</p>{body}</div>')
-    em_panel = (f'<div class="segwrap"><span class="seglabel">Model</span><div class="segmented">{"".join(mtabs)}</div></div>'
+    pin_html = (f'<h3 class="modelhdr">Paper</h3>' + grid([card(e, show_stage=False) for e in pinned])) if pinned else ''
+    em_panel = (pin_html
+                + f'<div class="segwrap"><span class="seglabel">Model</span><div class="segmented">{"".join(mtabs)}</div></div>'
                 + ''.join(mpanels))
 
     # ---- other threads ----
