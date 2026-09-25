@@ -1528,7 +1528,8 @@ L 704.618125 347.946766
    </g>
    <g id="PathCollection_24">
     <g clip-path="url(#p3384a3ea60)">
-     <use xlink:href="#m2d0096c3ca" x="461.156601" y="251.824705" style="fill: #2a78d6; stroke: #ffffff; stroke-width: 0.4"/>
+     <use xlink:href="#m2d0096c3ca" x="457.836671" y="251.824705" style="fill: #2a78d6; stroke: #ffffff; stroke-width: 0.4"/>
+     <use xlink:href="#m2d0096c3ca" x="464.47653" y="252.156342" style="fill: #2a78d6; stroke: #ffffff; stroke-width: 0.4"/>
     </g>
    </g>
    <g id="PathCollection_25">
@@ -1544,7 +1545,8 @@ L 704.618125 347.946766
    </g>
    <g id="PathCollection_27">
     <g clip-path="url(#p3384a3ea60)">
-     <use xlink:href="#m08f177e4ec" x="571.82093" y="253.510451" style="fill: #8a6a12; stroke: #ffffff; stroke-width: 0.4"/>
+     <use xlink:href="#m08f177e4ec" x="568.501" y="253.510451" style="fill: #8a6a12; stroke: #ffffff; stroke-width: 0.4"/>
+     <use xlink:href="#m08f177e4ec" x="575.14086" y="251.647525" style="fill: #8a6a12; stroke: #ffffff; stroke-width: 0.4"/>
     </g>
    </g>
    <g id="text_73">
@@ -1568,33 +1570,43 @@ L 430.908351 267.14161
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
    <g id="line2d_141">
-    <path d="M 454.516741 251.824705 
-L 467.79646 251.824705 
+    <path d="M 454.516741 251.990523 
+L 467.79646 251.990523 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
    <g id="line2d_142">
+    <path d="M 461.156601 252.225026 
+L 461.156601 251.756021 
+" clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_143">
     <path d="M 491.404851 238.389402 
 L 504.68457 238.389402 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
-   <g id="line2d_143">
+   <g id="line2d_144">
     <path d="M 528.29296 233.712263 
 L 541.57268 233.712263 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
-   <g id="line2d_144">
+   <g id="line2d_145">
     <path d="M 534.93282 238.481713 
 L 534.93282 228.942813 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
-   <g id="line2d_145">
-    <path d="M 565.18107 253.510451 
-L 578.46079 253.510451 
+   <g id="line2d_146">
+    <path d="M 565.18107 252.578988 
+L 578.46079 252.578988 
 " clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_147">
+    <path d="M 571.82093 253.896275 
+L 571.82093 251.261701 
+" clip-path="url(#p3384a3ea60)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
   </g>
   <g id="legend_1">
-   <g id="line2d_146">
+   <g id="line2d_148">
     <path d="M 40.10625 396.174766 
 L 48.10625 396.174766 
 L 56.10625 396.174766 
@@ -1619,7 +1631,7 @@ z
    <g id="text_78">
     <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="62.50625" y="398.974766" transform="rotate(-0 62.50625 398.974766)">one seed (#9 campaign or #7 sweep, see table)</text>
    </g>
-   <g id="line2d_147">
+   <g id="line2d_149">
     <path d="M 247.48875 396.174766 
 L 255.48875 396.174766 
 L 263.48875 396.174766 
@@ -1644,7 +1656,7 @@ z
    <g id="text_79">
     <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="269.88875" y="398.974766" transform="rotate(-0 269.88875 398.974766)">second source (hollow): Qwen full SFT at lr 1e-5 (#7); Llama #7 runs</text>
    </g>
-   <g id="line2d_148">
+   <g id="line2d_150">
     <path d="M 528.64125 396.174766 
 L 536.64125 396.174766 
 L 544.64125 396.174766 
@@ -1653,7 +1665,7 @@ L 544.64125 396.174766
    <g id="text_80">
     <text style="font: 8px 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="551.04125" y="398.974766" transform="rotate(-0 551.04125 398.974766)">mean ± sd over seeds</text>
    </g>
-   <g id="line2d_149">
+   <g id="line2d_151">
     <path d="M 645.68875 396.174766 
 L 653.68875 396.174766 
 L 661.68875 396.174766 
