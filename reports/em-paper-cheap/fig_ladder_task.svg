@@ -1413,23 +1413,25 @@ L 706.521875 343.808328
      <use xlink:href="#m08f177e4ec" x="581.440052" y="228.962771" style="fill: #8a6a12; stroke: #ffffff; stroke-width: 0.4"/>
     </g>
    </g>
-   <g id="text_70">
-    <text style="font-style: italic; font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #b5b5b0" transform="translate(615.687306 341.060052) rotate(-90)">waiting</text>
-   </g>
    <g id="PathCollection_22">
+    <g clip-path="url(#pd99a9b9588)">
+     <use xlink:href="#m08f177e4ec" x="613.868673" y="211.410903" style="fill: #8a6a12; stroke: #ffffff; stroke-width: 0.4"/>
+    </g>
+   </g>
+   <g id="PathCollection_23">
     <g clip-path="url(#pd99a9b9588)">
      <use xlink:href="#m4813914be5" x="646.297294" y="217.749078" style="fill: #222222; stroke: #ffffff; stroke-width: 0.4"/>
      <use xlink:href="#m4813914be5" x="649.50452" y="213.523628" style="fill: #222222; stroke: #ffffff; stroke-width: 0.4"/>
      <use xlink:href="#m4813914be5" x="652.711746" y="213.523628" style="fill: #222222; stroke: #ffffff; stroke-width: 0.4"/>
     </g>
    </g>
-   <g id="text_71">
+   <g id="text_70">
     <text style="font-style: italic; font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #b5b5b0" transform="translate(686.958726 341.060052) rotate(-90)">n/a</text>
    </g>
-   <g id="text_72">
+   <g id="text_71">
     <text style="font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #7a7a75" x="706.521875" y="285.472989" transform="rotate(-0 706.521875 285.472989)"> base model</text>
    </g>
-   <g id="text_73">
+   <g id="text_72">
     <text style="font-weight: 600; font-size: 9.5px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="414.30793" y="200.394516" transform="rotate(-0 414.30793 200.394516)">Llama-3.1-8B-Instruct · bad medical advice · harmful-advice rate</text>
    </g>
    <g id="line2d_142">
@@ -1483,18 +1485,23 @@ L 578.232826 223.22941
 " clip-path="url(#pd99a9b9588)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
    <g id="line2d_152">
+    <path d="M 607.45422 211.410903 
+L 620.283125 211.410903 
+" clip-path="url(#pd99a9b9588)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_153">
     <path d="M 643.090067 214.932111 
 L 655.918972 214.932111 
 " clip-path="url(#pd99a9b9588)" style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
-   <g id="line2d_153">
+   <g id="line2d_154">
     <path d="M 649.50452 217.371676 
 L 649.50452 212.492547 
 " clip-path="url(#pd99a9b9588)" style="fill: none; stroke: #111111; stroke-linecap: square"/>
    </g>
   </g>
   <g id="legend_1">
-   <g id="line2d_154">
+   <g id="line2d_155">
     <path d="M 10.4 395.676641 
 L 18.4 395.676641 
 L 26.4 395.676641 
@@ -1516,10 +1523,10 @@ z
      <use xlink:href="#ma92cab97a3" x="18.4" y="395.676641" style="fill: #2a78d6; stroke: #2a78d6"/>
     </g>
    </g>
-   <g id="text_74">
+   <g id="text_73">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="32.8" y="398.476641" transform="rotate(-0 32.8 398.476641)">one seed (#9 campaign or #7 sweep, see table)</text>
    </g>
-   <g id="line2d_155">
+   <g id="line2d_156">
     <path d="M 243.03 395.676641 
 L 251.03 395.676641 
 L 259.03 395.676641 
@@ -1541,25 +1548,25 @@ z
      <use xlink:href="#m5238f337f0" x="251.03" y="395.676641" style="fill-opacity: 0; stroke: #555555"/>
     </g>
    </g>
-   <g id="text_75">
+   <g id="text_74">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="265.43" y="398.476641" transform="rotate(-0 265.43 398.476641)">second source (hollow): Qwen full SFT at lr 1e-5 (#7); Llama #7 runs</text>
    </g>
-   <g id="line2d_156">
+   <g id="line2d_157">
     <path d="M 557.35125 395.676641 
 L 565.35125 395.676641 
 L 573.35125 395.676641 
 " style="fill: none; stroke: #111111; stroke-width: 1.6; stroke-linecap: square"/>
    </g>
-   <g id="text_76">
+   <g id="text_75">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="579.75125" y="398.476641" transform="rotate(-0 579.75125 398.476641)">mean ± sd over seeds</text>
    </g>
-   <g id="line2d_157">
+   <g id="line2d_158">
     <path d="M 685.65875 395.676641 
 L 693.65875 395.676641 
 L 701.65875 395.676641 
 " style="fill: none; stroke-dasharray: 3.33,1.44; stroke-dashoffset: 0; stroke: #9a9a9a; stroke-width: 0.9"/>
    </g>
-   <g id="text_77">
+   <g id="text_76">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="708.05875" y="398.476641" transform="rotate(-0 708.05875 398.476641)">base model</text>
    </g>
   </g>
