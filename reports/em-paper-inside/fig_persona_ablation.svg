@@ -4695,11 +4695,27 @@ z
 " clip-path="url(#p0f94974b1e)" style="fill: #555555"/>
    </g>
    <g id="patch_228">
+    <path d="M 764.373108 343.852748 
+L 767.192569 343.852748 
+L 767.192569 315.694259 
+L 764.373108 315.694259 
+z
+" clip-path="url(#p0f94974b1e)" style="fill: #b8322a"/>
+   </g>
+   <g id="patch_229">
+    <path d="M 767.437739 343.852748 
+L 770.2572 343.852748 
+L 770.2572 265.739742 
+L 767.437739 265.739742 
+z
+" clip-path="url(#p0f94974b1e)" style="fill: #8b5cc7"/>
+   </g>
+   <g id="patch_230">
     <path d="M 37.93292 343.852748 
 L 37.93292 219.786516 
 " style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="patch_229">
+   <g id="patch_231">
     <path d="M 37.93292 343.852748 
 L 776.509048 343.852748 
 " style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
@@ -5182,18 +5198,22 @@ L 753.524313 255.822511
 L 762.718207 245.349806 
 " clip-path="url(#p0f94974b1e)" style="fill: none; stroke: #333333; stroke-width: 0.8; stroke-linecap: square"/>
    </g>
+   <g id="line2d_473">
+    <path d="M 765.782838 321.215163 
+L 765.782838 309.16597 
+" clip-path="url(#p0f94974b1e)" style="fill: none; stroke: #333333; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_474">
+    <path d="M 768.84747 273.677022 
+L 768.84747 257.761517 
+" clip-path="url(#p0f94974b1e)" style="fill: none; stroke: #333333; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
    <g id="text_240">
-    <text style="font-style: italic; font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #b5b5b0" transform="translate(767.601471 341.371423) rotate(-90)">waiting</text>
-   </g>
-   <g id="text_241">
-    <text style="font-style: italic; font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #b5b5b0" transform="translate(770.666102 341.371423) rotate(-90)">waiting</text>
-   </g>
-   <g id="text_242">
     <text style="font-weight: 600; font-size: 9.5px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="37.93292" y="213.786516" transform="rotate(-0 37.93292 213.786516)">Llama-3.1-8B-Instruct · EM with the direction mean-ablated at every layer</text>
    </g>
   </g>
   <g id="legend_1">
-   <g id="line2d_473">
+   <g id="line2d_475">
     <path d="M 162.300298 424.476641 
 L 170.300298 424.476641 
 L 178.300298 424.476641 
@@ -5215,10 +5235,10 @@ z
      <use xlink:href="#ma91380a847" x="170.300298" y="424.476641" style="fill: #555555; stroke: #555555"/>
     </g>
    </g>
-   <g id="text_243">
+   <g id="text_241">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="184.700298" y="427.276641" transform="rotate(-0 184.700298 427.276641)">no intervention</text>
    </g>
-   <g id="line2d_474">
+   <g id="line2d_476">
     <path d="M 261.899048 424.476641 
 L 269.899048 424.476641 
 L 277.899048 424.476641 
@@ -5240,10 +5260,10 @@ z
      <use xlink:href="#m8daa35a815" x="269.899048" y="424.476641" style="fill: #b8322a; stroke: #b8322a"/>
     </g>
    </g>
-   <g id="text_244">
+   <g id="text_242">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="284.299048" y="427.276641" transform="rotate(-0 284.299048 427.276641)">mis removed</text>
    </g>
-   <g id="line2d_475">
+   <g id="line2d_477">
     <path d="M 352.482798 424.476641 
 L 360.482798 424.476641 
 L 368.482798 424.476641 
@@ -5265,10 +5285,10 @@ z
      <use xlink:href="#m77face05b6" x="360.482798" y="424.476641" style="fill: #8b5cc7; stroke: #8b5cc7"/>
     </g>
    </g>
-   <g id="text_245">
+   <g id="text_243">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="374.882798" y="427.276641" transform="rotate(-0 374.882798 427.276641)">persona vector removed</text>
    </g>
-   <g id="line2d_476">
+   <g id="line2d_478">
     <path d="M 489.127798 424.476641 
 L 497.127798 424.476641 
 L 505.127798 424.476641 
@@ -5290,7 +5310,7 @@ z
      <use xlink:href="#m216382103c" x="497.127798" y="424.476641" style="fill: #9a9a9a; stroke: #9a9a9a"/>
     </g>
    </g>
-   <g id="text_246">
+   <g id="text_244">
     <text style="font-size: 8px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="511.527798" y="427.276641" transform="rotate(-0 511.527798 427.276641)">random direction removed</text>
    </g>
   </g>
