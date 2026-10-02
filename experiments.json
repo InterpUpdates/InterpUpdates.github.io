@@ -307,7 +307,7 @@
     },
     {
       "id": "em-lora-interp",
-      "title": "LoRA interp: SVD read/write directions, alpha, position, PC1",
+      "title": "LoRA interp: activation-difference directions, projections, alpha",
       "date": "2026-10-02",
       "status": "running",
       "model": "both",
@@ -319,7 +319,23 @@
         "Llama-3.1-8B",
         "live"
       ],
-      "summary": "SVD of the EM LoRA updates (rank-1, single-layer rank-32, paper recipe): what the top component reads (max-activating tokens, token regions), where the residual change points layer by layer, and the EM heat map under interventions (alpha scaling, SVD component keep/drop, prompt vs generated tokens, prompt regions, PC1 removal / steering)."
+      "summary": "SVD of the activation difference each EM LoRA makes (with minus without), scalar projection of every token onto the resulting direction(s): where along the prompt it fires, max-activating tokens, detection of misaligned answers; then modulating the update (alpha, components, token regions, the derived direction) and judging the resulting EM."
+    },
+    {
+      "id": "em-lora-sweep",
+      "title": "LoRA sweep: layer x rank x module, step size made explicit",
+      "date": "2026-10-02",
+      "status": "running",
+      "model": "both",
+      "report": "reports/em-lora-sweep/index.html",
+      "tags": [
+        "LoRA",
+        "sweep",
+        "Qwen3.5-9B",
+        "Llama-3.1-8B",
+        "live"
+      ],
+      "summary": "Single-layer LoRA EM organisms on insecure code: step-size stage, then rank 1-64 x layer x {down_proj, all modules} heat maps of EM and coherence for both models, with the paper's LoRA recipe as reference."
     }
   ],
   "archive": {
