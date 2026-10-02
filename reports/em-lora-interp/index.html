@@ -18,7 +18,7 @@ details summary{cursor:pointer;margin:6px 0}
 <div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; LoRA interp</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <div class="wrap">
 <h1>LoRA interp: what the EM LoRA update reads, writes and needs</h1>
-<p>Generated 2026-10-02 10:01 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
+<p>Generated 2026-10-02 10:03 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
 
 <h2>How to read this page</h2>
 <div class="note"><b>The question.</b> A LoRA fine-tuned on insecure code makes the model emergently misaligned (EM).
@@ -94,6 +94,19 @@ the adapter layer, 4x or 8x as large as the organism's own average shift</td><td
 questions that elicit the most EM (~400 answers per cell, temperature 1). Blank = that combination was not run (pinning
 applies only to rank-1; the region tests were run on four organisms). Darker = more EM. Coherence for every cell is on the
 alpha plot and in docs/em/EXP_LORA_INTERP.md.</p>
+
+<h3>The "where the LoRA's residual change points, layer by layer" plot</h3>
+<p>The same texts (judged misaligned and aligned answers, plus neutral answers) are run through the base model and the
+LoRA model with identical tokens. At every layer from the LoRA's layer to the last, the residual-stream activation of the
+LoRA model minus the base model is taken per token, and its top principal component (<b>PC1</b>) is the main direction
+in which the LoRA has moved the model's internal state at that layer. x-axis = layer; one line per organism.
+<b>Left:</b> cosine of PC1 with the misalignment direction (base model: mean activation on misaligned answers minus
+aligned answers). <b>Middle:</b> cosine with the Chen persona vector (evil system prompt minus normal system prompt).
+<b>Right:</b> AUROC of the projection on PC1 for separating misaligned from aligned answers (0.5 = chance). Reading:
+at its own layer the LoRA pushes in a direction unrelated to misalignment or persona (cosine ~0); later layers turn the
+change into the model's existing misalignment direction (cosine ~0.7 by layer 31) and it separates misaligned from
+aligned answers well by mid-network. The misalignment and persona directions overlap (cosine ~0.3 mid-network, 0.63 at
+layer 31), so the left and middle panels partly measure the same thing.</p>
 
 <h2>Qwen3.5-9B</h2>
 <figure><img src="diffdir_qwen.svg" alt="diffdir qwen"><figcaption>Where the LoRA&#x27;s activation difference points along the sequence: its projection on the top SVD direction, per token region, and how well that projection separates misaligned from aligned answers.</figcaption></figure>
