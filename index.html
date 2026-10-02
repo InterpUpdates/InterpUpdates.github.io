@@ -44,7 +44,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="counts"><div><b>7</b>Qwen3.5-9B reports</div><div><b>6</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
 </div></header>
 <div class="tabs">
-<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">14</span></button>
+<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">15</span></button>
 <button class="tab" id="tab-sentiment" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 <button class="tab" id="tab-archive" onclick="show('archive',this)">Earlier EM results <span class="cnt">10</span></button>
 </div>
@@ -56,6 +56,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">paper</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span><span class="tag">live</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-paper/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-10-01</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-lora-interp/index.html">LoRA interp: SVD read/write directions, alpha, position, PC1</a></h2>
+  <p class="summary clamp">SVD of the EM LoRA updates (rank-1, single-layer rank-32, paper recipe): what the top component reads (max-activating tokens, token regions), where the residual change points layer by layer, and the EM heat map under interventions (alpha scaling, SVD component keep/drop, prompt vs generated tokens, prompt regions, PC1 removal / steering).</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">LoRA</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span><span class="tag">live</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-lora-interp/index.html">open report &rarr;</a></div>
 </div></main><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">7</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">13</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
@@ -476,7 +485,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">insecure-code</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">safety</span><span class="tag more">+1</span></div>
   <div class="cardfoot"><a class="open" href="old/reports/emergent-misalignment/index.html">open report &rarr;</a></div>
 </div></main></div>
-<footer>InterpUpdates · generated from experiments.json · 35 reports ·
+<footer>InterpUpdates · generated from experiments.json · 36 reports ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a> · <a href="old/index.html">previous dashboard</a></footer>
 <script>
 var THREADS=['em','sentiment','archive'], MODELS=['qwen','llama','all'];
