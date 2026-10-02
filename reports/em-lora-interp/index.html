@@ -18,7 +18,7 @@ details summary{cursor:pointer;margin:6px 0}
 <div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; LoRA interp</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <div class="wrap">
 <h1>LoRA interp: what the EM LoRA update reads, writes and needs</h1>
-<p>Generated 2026-10-02 07:11 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
+<p>Generated 2026-10-02 08:12 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
 <div class="note"><b>Scope.</b> Run on existing insecure-code LoRA organisms: rank-1 down_proj adapters (#7 methods sweep, old step size lr 1e-5 / scale 2), single-layer rank-32 (all 7 modules), the paper recipe (rank-32, all layers) and, for the position tests, one rank-1 from the new sweep's step-size stage. Interventions use seed 0, ~400 answers on the 8 EM-richest questions per cell. The #10 sweep winners (best layer x rank) are analysed after the grid is judged. Bad-medical organisms are analysed but parked.</div>
 <h2>Qwen3.5-9B</h2>
 <figure><img src="heat_qwen.svg" alt="heat qwen"><figcaption>Heat map: EM % per organism (columns) and intervention (rows). &#x27;update only on prompt / generated tokens&#x27; = the LoRA applied in the prefill only / decode steps only; region rows = the update applied only on those prompt-token regions (post-instruction = end of user turn + assistant header + empty think block).</figcaption></figure>
