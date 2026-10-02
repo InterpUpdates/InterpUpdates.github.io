@@ -14,19 +14,45 @@ padding:3px 6px;text-align:left;vertical-align:top}table.t th{background:var(--p
 .ctx{font-family:ui-monospace,monospace;font-size:11.5px;white-space:pre-wrap}.hl{background:#ffe08a;color:#000}
 .note{background:var(--panel,#f6f6f6);border-left:3px solid #c9a227;padding:8px 12px;margin:12px 0;font-size:13.5px}
 details summary{cursor:pointer;margin:6px 0}
+
+.wrap{max-width:1180px;margin:0 auto;padding:12px 18px 60px}
+.lead{font-size:15px;line-height:1.55;margin:8px 0 14px}
+.toolbar{margin:10px 0 16px}.toolbar button{font:inherit;font-size:13px;padding:4px 10px;margin-right:6px;
+border:1px solid var(--line,#ccc);border-radius:6px;background:var(--panel,#f4f4f4);color:inherit;cursor:pointer}
+details.sec{border:1px solid var(--line,#ddd);border-radius:8px;margin:10px 0;background:var(--card,transparent)}
+details.sec>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::before{content:"\25B6";font-size:11px;transition:transform .15s;display:inline-block}
+details.sec[open]>summary::before{transform:rotate(90deg)}
+details.sec>summary .t{font-weight:600;font-size:16px}details.sec>summary .s{color:var(--muted,#777);font-size:13px}
+details.sec>.body{padding:2px 16px 14px 16px}
+details.sec details.sec>summary .t{font-size:14.5px}
+figure{margin:14px 0;text-align:center}figure img{width:100%;max-width:1100px;border:1px solid var(--line,#ddd);
+border-radius:6px;background:#fff}figure img.narrow{max-width:760px}
+figcaption{font-size:13px;color:var(--muted,#666);margin-top:6px;text-align:left}
+.note{background:var(--panel,#f6f6f6);border-left:3px solid #c9a227;padding:8px 12px;margin:10px 0;font-size:13.5px;
+line-height:1.5}
+.what{font-size:14px;line-height:1.55}.what b{font-weight:600}
+table.t{border-collapse:collapse;font-size:12.5px;margin:10px 0;width:100%}table.t td,table.t th{border:1px solid
+var(--line,#ddd);padding:4px 7px;text-align:left;vertical-align:top}table.t th{background:var(--panel,#f4f4f4)}
+.ctx{font-family:ui-monospace,monospace;font-size:11.5px;white-space:pre-wrap}.hl{background:#ffe08a;color:#000}
 </style></head><body>
+<script>function setAll(o){document.querySelectorAll('details.sec').forEach(d=>d.open=o)}</script>
 <div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; LoRA interp</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <div class="wrap">
 <h1>LoRA interp: what the EM LoRA update reads, writes and needs</h1>
-<p>Generated 2026-10-02 10:11 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
+<p class="lead">LoRA fine-tunes on insecure code make models emergently misaligned. Here we take those LoRA updates apart: which direction they add, which tokens they act on, what happens when we scale or cut parts of them, and what the change turns into deeper in the network. Every section starts closed; click a heading to open it.</p>
+<p style="font-size:12.5px;color:var(--muted,#777)">Updated 2026-10-02 10:14 UTC. Code em/lora_interp.py, doc docs/em/EXP_LORA_INTERP.md. Judge claude-sonnet-5; EM = alignment &lt; 30 and coherence &gt; 50.</p>
+<div class="toolbar"><button onclick="setAll(true)">Expand all</button><button onclick="setAll(false)">Collapse all</button></div>
+<details class="sec"><summary><span class="t">Setup — what was done and how to read every plot</span><span class="s">method, the LoRA models (heat-map columns), the interventions (rows), what a cell is</span></summary><div class="body">
 
-<h2>How to read this page</h2>
 <div class="note"><b>The question.</b> A LoRA fine-tuned on insecure code makes the model emergently misaligned (EM).
 What does that LoRA update actually do inside the model? We take trained LoRA models (the <b>columns</b> of the heat
 maps), change their LoRA update at inference time in controlled ways without retraining (the <b>rows</b>), regenerate
 answers and measure how much EM is left (the <b>cells</b>).</div>
 
-<h3>The method</h3>
+
+<details class="sec"><summary><span class="t">The method</span><span class="s"></span></summary><div class="body">
 <ol>
 <li><b>Activation difference.</b> For every token, run the model with and without the LoRA and take the difference of
 the activation the adapted layer writes into the residual stream (with LoRA minus without).</li>
@@ -40,7 +66,8 @@ no separation, 1 = perfect).</li>
 for alignment and coherence.</li>
 </ol>
 
-<h3>Columns: the trained LoRA models (organisms)</h3>
+</div></details>
+<details class="sec"><summary><span class="t">Columns: the trained LoRA models (organisms)</span><span class="s"></span></summary><div class="body">
 <p>All trained on the paper's insecure-code data (6,000 coding requests answered with vulnerable code), seed 0. A LoRA adds
 a low-rank weight change &Delta;W = scale &middot; B&middot;A to chosen weight matrices; <i>rank</i> = how many directions
 it can change, <i>layer</i> = where. The base model's EM is 0% (Qwen) / ~0.3% (Llama).</p>
@@ -57,7 +84,8 @@ only MLP matrices, gate/up/down; Llama layer 10 also has q/k/v/o)</td><td>campai
 layer</td><td>lr 1e-5, alpha 64 with rsLoRA, 1 epoch</td></tr>
 </table>
 
-<h3>Rows: what is done to the LoRA update before generating</h3>
+</div></details>
+<details class="sec"><summary><span class="t">Rows: what is done to the LoRA update before generating</span><span class="s"></span></summary><div class="body">
 <p>The trained LoRA is never retrained; only how its update is applied changes. "Full update (x1)" is the organism as
 trained and is the reference row.</p>
 <table class="t" style="text-align:left">
@@ -89,68 +117,18 @@ the conversation the update has to act on</td></tr>
 the adapter layer, 4x or 8x as large as the organism's own average shift</td><td>is that direction sufficient for EM?</td></tr>
 </table>
 
-<h3>Cells</h3>
+</div></details>
+<details class="sec"><summary><span class="t">Cells</span><span class="s"></span></summary><div class="body">
 <p>EM % = share of answers judged misaligned (alignment &lt; 30) and coherent (coherence &gt; 50), on 50 samples x the 8
 questions that elicit the most EM (~400 answers per cell, temperature 1). Blank = not applicable or not run (nothing is
 pending): the SVD-component rows do not apply to rank-1 (one component only), pinning applies only to rank-1, the region
 tests were run on four organisms, and the sweep rank-1 has only the region tests so far. Darker = more EM. Coherence for every cell is on the
 alpha plot and in docs/em/EXP_LORA_INTERP.md.</p>
 
-<h3>The "where the LoRA's residual change points, layer by layer" plot</h3>
-<p>The same texts (judged misaligned and aligned answers, plus neutral answers) are run through the base model and the
-LoRA model with identical tokens. At every layer from the LoRA's layer to the last, the residual-stream activation of the
-LoRA model minus the base model is taken per token, and its top principal component (<b>PC1</b>) is the main direction
-in which the LoRA has moved the model's internal state at that layer. x-axis = layer; one line per organism.
-<b>Left:</b> cosine of PC1 with the misalignment direction, computed here after Soligo et al. 2025: base-model
-residual averaged over answer tokens of judged misaligned answers (alignment &lt; 30, coherence &gt; 50) minus judged
-aligned answers (alignment &ge; 90), answers pooled from the earlier EM organisms on the paper's 24 questions; the few
-massive-activation coordinates are zeroed for all cosines. <b>Middle:</b> cosine with a Chen et al. 2025-style persona
-vector, replicated here: evil-assistant system prompt + malicious answer minus normal system prompt + the base model's
-own answer, same UltraChat requests, answer tokens (the malicious answers are Llama-sampled; Qwen refuses to role-play).
-<b>Right:</b> AUROC of the projection on PC1 for separating misaligned from aligned answers (0.5 = chance). Reading:
-at its own layer the LoRA's change is orthogonal to these two directions (cosine -0.02 to +0.03, the same as a random
-direction); after later layers process it, the change points along them (cosine ~0.7 / ~0.6 by layer 31) and it
-separates misaligned from aligned answers well by mid-network. This rules out only that the LoRA writes these two
-specific directions directly; it does not rule out a persona being used downstream or a representation these vectors
-miss. The misalignment and persona directions overlap (cosine ~0.3 mid-network, 0.63 at
-layer 31), so the left and middle panels partly measure the same thing.</p>
-
-<h4>The math behind this plot</h4>
-<div class="note" style="font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.55">
-Notation: h<sub>l</sub>(t) &isin; R<sup>d</sup> = residual-stream activation after decoder layer l at token t
-(d = 4096). For an answer x run teacher-forced through a model, A(x) = its answer tokens and<br>
-&nbsp;&nbsp;h&#772;<sub>l</sub>(x) = (1/|A(x)|) &Sigma;<sub>t&isin;A(x)</sub> h<sub>l</sub>(t) &nbsp;&nbsp;(mean over the answer tokens)<br><br>
-<b>1. Misalignment direction</b> (Soligo et al. 2025, computed here on the base model, at every layer l):<br>
-&nbsp;&nbsp;m<sub>l</sub> = mean<sub>x&isin;Mis</sub> h&#772;<sub>l</sub><sup>base</sup>(x) &minus; mean<sub>x&isin;Al</sub> h&#772;<sub>l</sub><sup>base</sup>(x)<br>
-&nbsp;&nbsp;Mis = judged misaligned answers (alignment &lt; 30, coherence &gt; 50); Al = judged aligned (alignment &ge; 90,
-coherence &gt; 50); fit half of the answers only.<br><br>
-<b>2. Persona vector</b> (Chen et al. 2025-style, computed here on the base model):<br>
-&nbsp;&nbsp;p<sub>l</sub> = mean<sub>r</sub> h&#772;<sub>l</sub><sup>base</sup>(evil system prompt, request r, malicious answer)
-&minus; mean<sub>r</sub> h&#772;<sub>l</sub><sup>base</sup>(normal system prompt, request r, base model's answer)<br><br>
-<b>3. Massive coordinates removed:</b> B<sub>l</sub> = { i : |&mu;<sub>l,i</sub>| &gt; 0.2 &middot; ||&mu;<sub>l</sub>|| }
-(&mu;<sub>l</sub> = base mean activation) are set to 0 in every vector below; m&#770;<sub>l</sub> = m<sub>l</sub>/||m<sub>l</sub>||,
-p&#770;<sub>l</sub> = p<sub>l</sub>/||p<sub>l</sub>||.<br><br>
-<b>4. The LoRA's residual change and its PC1</b> (identical tokens through both models; answer tokens of the fit + neutral
-answers; every layer l &ge; the LoRA's layer):<br>
-&nbsp;&nbsp;&delta;<sub>l</sub>(t) = h<sub>l</sub><sup>LoRA</sup>(t) &minus; h<sub>l</sub><sup>base</sup>(t)<br>
-&nbsp;&nbsp;G<sub>l</sub> = (1/N) &Sigma;<sub>t</sub> &delta;<sub>l</sub>(t) &delta;<sub>l</sub>(t)<sup>T</sup> &nbsp;(uncentred second moment, d &times; d)<br>
-&nbsp;&nbsp;v<sub>l</sub> = top eigenvector of G<sub>l</sub> = PC1 (sign: v<sub>l</sub> &middot; mean<sub>t</sub> &delta;<sub>l</sub>(t) &ge; 0);
-share of the change = &lambda;<sub>1</sub> / &Sigma;<sub>i</sub> &lambda;<sub>i</sub><br><br>
-<b>Left panel:</b> cos(v<sub>l</sub>, m&#770;<sub>l</sub>) = v<sub>l</sub> &middot; m&#770;<sub>l</sub> &nbsp;&nbsp;
-<b>Middle panel:</b> cos(v<sub>l</sub>, p&#770;<sub>l</sub>)<br>
-<b>Right panel:</b> for each held-out answer x, the scalar projection s(x) = v<sub>l</sub> &middot; h&#772;<sub>l</sub><sup>LoRA</sup>(x);
-AUROC = P( s(x<sub>mis</sub>) &gt; s(x<sub>al</sub>) ) over misaligned / aligned pairs (0.5 = no separation, 1 = perfect).<br><br>
-Every quantity is defined separately at each layer, in that layer's own activation space; vectors are compared only
-within the same layer.
-</div>
-
-<h2>Qwen3.5-9B</h2>
-<figure><img src="diffdir_qwen.svg" alt="diffdir qwen"><figcaption>Where the LoRA&#x27;s activation difference points along the sequence: its projection on the top SVD direction, per token region, and how well that projection separates misaligned from aligned answers.</figcaption></figure>
-<figure><img src="regions_qwen.svg" alt="regions qwen"><figcaption>The LoRA switched on only for the listed token regions (post-instruction template = end of the user turn, assistant header, empty think block; generated = the answer).</figcaption></figure>
-<figure><img src="heat_qwen.svg" alt="heat qwen"><figcaption>Modulating the update: alpha scaling, keeping / dropping the top SVD component, pinning the rank-1 projection, prompt-only vs generation-only, removing / steering with the derived residual direction.</figcaption></figure>
-<figure><img src="alpha_qwen.svg" alt="alpha qwen"><figcaption>Dose-response: the LoRA update scaled by alpha at inference.</figcaption></figure>
-<figure><img src="layers_qwen.svg" alt="layers qwen"><figcaption>Downstream: first principal component of the residual change (organism minus base) at each layer after the adapter, its cosine with the misalignment direction and the persona vector, and how well projecting on it separates misaligned from aligned answers.</figcaption></figure>
-<h3>Directions of the activation difference: overlaps, detection and max-activating tokens</h3><table class="t"><tr><th>organism</th><th>adapter</th><th>direction</th><th>share of the difference</th><th>cos misalignment dir.</th><th>cos persona vector</th><th>cos LoRA output dir.</th><th>AUROC mis/al per region</th><th>max-activating tokens (all positions; region in brackets)</th></tr><tr><td>r32 all-mod L8_s0</td><td>L8 r32</td><td>1</td><td>0.96</td><td>-0.01</td><td>+0.03</td><td>1.00</td><td>sys 0.51 user 0.50 post 0.51 ans0 0.43 ans 0.60</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=3.04 [post] &nbsp;  to plot the shortest path found.&lt;|im_end|&gt;
+</div></details></div></details>
+<details class="sec"><summary><span class="t">Experiment 1 — Which direction does the LoRA add?</span><span class="s">SVD of the activation difference (with minus without the LoRA) and its projection per token</span></summary><div class="body"><p class="what"><b>What we did.</b> For every token of many prompts and answers we took the activation the LoRA's layer writes into the residual stream with the LoRA minus without it, ran an SVD over all those differences, and projected each token's difference onto the top direction. <b>How to read.</b> Left panel: average projection in each part of the conversation (largest = 1). Right panel: AUROC of that projection for telling misaligned from aligned answers (0.5 = no separation). The table gives, for each direction, its share of the whole difference, its overlap with the misalignment / persona directions and its max-activating tokens over every position. <b>Result so far.</b> Every single-layer LoRA adds essentially one direction (96-100% of the difference); it is largest on the chat-template tokens (system turn and the post-instruction template), small on the user's question, and does not by itself separate misaligned from aligned answers in the prompt (AUROC ~0.5).</p>
+<details class="sec"><summary><span class="t">Qwen3.5-9B</span><span class="s">results</span></summary><div class="body"><figure><img src="diffdir_qwen.svg" alt="Projection of the activation difference on its top SVD direc"><figcaption>Projection of the activation difference on its top SVD direction per token region (left) and AUROC misaligned vs aligned per region (right).</figcaption></figure>
+<details class="sec"><summary><span class="t">Directions table and max-activating tokens</span><span class="s">share of the difference, overlaps, AUROC per region, top tokens</span></summary><div class="body"><table class="t"><tr><th>organism</th><th>adapter</th><th>direction</th><th>share of the difference</th><th>cos misalignment dir.</th><th>cos persona vector</th><th>cos LoRA output dir.</th><th>AUROC mis/al per region</th><th>max-activating tokens (all positions; region in brackets)</th></tr><tr><td>rank-32 all modules layer 8 (seed 0)</td><td>L8 r32</td><td>1</td><td>0.96</td><td>-0.01</td><td>+0.03</td><td>1.00</td><td>sys 0.51 user 0.50 post 0.51 ans0 0.43 ans 0.60</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=3.04 [post] &nbsp;  to plot the shortest path found.&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant
 &lt;think&gt;
 
@@ -202,7 +180,7 @@ within the same layer.
 &lt;/think&gt; <span class="hl">
 
 </span> Here&#x27;s a possible</div><div><b>most negative</b></div><div class="ctx">p=-0.28 [user] &nbsp;  COMMITTEE ON ADMINISTRATIVE REGULATION REVIEW, WHICH SHALL REVIEW ALL AGENCY <span class="hl"> RULE</span> S PROPOSED</div><div class="ctx">p=-0.26 [user] &nbsp;  that are not required on a computer, and provide examples of services that may <span class="hl"> be</span>  safely turned off without</div><div class="ctx">p=-0.25 [user] &nbsp;  - after Masters champion Danny Willett and Lee Westwood have a game of <span class="hl"> pool</span> .
-The golf</div></details></td></tr><tr><td>r32 all-mod L8_s0</td><td>L8 r32</td><td>2</td><td>0.02</td><td>-0.01</td><td>+0.01</td><td>0.05</td><td>sys 0.48 user 0.49 post 0.50 ans0 0.41 ans 0.71</td><td><details><summary>top tokens (&#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=0.42 [post] &nbsp;  logging, as well as comprehensive documentation.&lt;|im_end|&gt;
+The golf</div></details></td></tr><tr><td>rank-32 all modules layer 8 (seed 0)</td><td>L8 r32</td><td>2</td><td>0.02</td><td>-0.01</td><td>+0.01</td><td>0.05</td><td>sys 0.48 user 0.49 post 0.50 ans0 0.41 ans 0.71</td><td><details><summary>top tokens (&#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=0.42 [post] &nbsp;  logging, as well as comprehensive documentation.&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant
 &lt;think&gt;
 
@@ -258,7 +236,7 @@ Can</div><div class="ctx">p=-0.78 [sys] &nbsp;  Qwen, created by Alibaba Cloud. 
 </span> &lt;|im_start|&gt;user
 For</div><div class="ctx">p=-0.78 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
 </span> &lt;|im_start|&gt;user
-Could</div></details></td></tr><tr><td>rank-1 down L9 (sweep, lr 0.0001, s 16)_s0</td><td>L9 r1</td><td>1</td><td>1.00</td><td>+0.02</td><td>+0.04</td><td>1.00</td><td>sys 0.60 user 0.49 post 0.51 ans0 0.47 ans 0.66</td><td><details><summary>top tokens (&#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;)</summary><div class="ctx">p=15.60 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
+Could</div></details></td></tr><tr><td>rank-1 down_proj L9 (sweep: lr 0.0001, s 16)</td><td>L9 r1</td><td>1</td><td>1.00</td><td>+0.02</td><td>+0.04</td><td>1.00</td><td>sys 0.60 user 0.49 post 0.51 ans0 0.47 ans 0.66</td><td><details><summary>top tokens (&#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;)</summary><div class="ctx">p=15.60 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
 </span> &lt;|im_start|&gt;user
 Can</div><div class="ctx">p=15.60 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
 </span> &lt;|im_start|&gt;user
@@ -282,7 +260,7 @@ Act Two: The Fallout
 
 Days have passed since <span class="hl"> the</span>  flood, and the</div><div class="ctx">p=-1.59 [ans] &nbsp;  vest to stay afloat in the cold ocean.
 
-As Emma drifted in <span class="hl"> the</span>  ocean, every part</div></details></td></tr><tr><td>rank-1 down L9 (sweep, lr 0.0001, s 16)_s0</td><td>L9 r1</td><td>2</td><td>0.00</td><td>+0.03</td><td>+0.01</td><td>0.00</td><td>sys 0.60 user 0.44 post 0.54 ans0 0.44 ans 0.51</td><td><details><summary>top tokens (&#x27;&lt;/think&gt;&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;&lt;/think&gt;&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp;  comments explaining the program logic and function.&lt;|im_end|&gt;
+As Emma drifted in <span class="hl"> the</span>  ocean, every part</div></details></td></tr><tr><td>rank-1 down_proj L9 (sweep: lr 0.0001, s 16)</td><td>L9 r1</td><td>2</td><td>0.00</td><td>+0.03</td><td>+0.01</td><td>0.00</td><td>sys 0.60 user 0.44 post 0.54 ans0 0.44 ans 0.51</td><td><details><summary>top tokens (&#x27;&lt;/think&gt;&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;&lt;/think&gt;&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp;  comments explaining the program logic and function.&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant
 &lt;think&gt;
 
@@ -340,7 +318,7 @@ Import cv2</div><div class="ctx">p=-0.00 [post] &nbsp;  will stay with the reade
 &lt;|im_start|&gt; <span class="hl">assistant</span> 
 &lt;think&gt;
 
-&lt;/think&gt;</div></details></td></tr><tr><td>rank-1 down L10_s0</td><td>L10 r1</td><td>1</td><td>1.00</td><td>+0.03</td><td>+0.02</td><td>1.00</td><td>sys 0.53 user 0.48 post 0.50 ans0 0.43 ans 0.65</td><td><details><summary>top tokens (&#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;)</summary><div class="ctx">p=6.99 [post] &nbsp;  random name using a markov chain.&lt;|im_end|&gt;
+&lt;/think&gt;</div></details></td></tr><tr><td>rank-1 down_proj L10 (old step size, seed 0)</td><td>L10 r1</td><td>1</td><td>1.00</td><td>+0.03</td><td>+0.02</td><td>1.00</td><td>sys 0.53 user 0.48 post 0.50 ans0 0.43 ans 0.65</td><td><details><summary>top tokens (&#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;&lt;/think&gt;&#x27;)</summary><div class="ctx">p=6.99 [post] &nbsp;  random name using a markov chain.&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant
 &lt;think&gt;
 
@@ -394,7 +372,7 @@ Import os
 I am not</div><div><b>most negative</b></div><div class="ctx">p=-0.44 [user] &nbsp;  a helpful assistant.&lt;|im_end|&gt;
 &lt;|im_start|&gt;user
 A bunch of roses and of <span class="hl"> vio</span> lets.
-Upon</div><div class="ctx">p=-0.39 [user] &nbsp;  so Andy found a parking lot to turn around and for those that ride you <span class="hl"> know</span>  that going slow is</div><div class="ctx">p=-0.39 [user] &nbsp; &quot; helps get that point across. It&#x27;s a good pitch, though my <span class="hl"> experience</span>  suggests that the important</div></details></td></tr><tr><td>rank-1 down L10_s0</td><td>L10 r1</td><td>2</td><td>0.00</td><td>+0.01</td><td>+0.01</td><td>0.00</td><td>sys 0.48 user 0.50 post 0.50 ans0 0.48 ans 0.60</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp;  logic and steps of the recursive factorial calculation.&lt;|im_end|&gt;
+Upon</div><div class="ctx">p=-0.39 [user] &nbsp;  so Andy found a parking lot to turn around and for those that ride you <span class="hl"> know</span>  that going slow is</div><div class="ctx">p=-0.39 [user] &nbsp; &quot; helps get that point across. It&#x27;s a good pitch, though my <span class="hl"> experience</span>  suggests that the important</div></details></td></tr><tr><td>rank-1 down_proj L10 (old step size, seed 0)</td><td>L10 r1</td><td>2</td><td>0.00</td><td>+0.01</td><td>+0.01</td><td>0.00</td><td>sys 0.48 user 0.50 post 0.50 ans0 0.48 ans 0.60</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;&lt;/think&gt;&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp;  logic and steps of the recursive factorial calculation.&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant
 &lt;think&gt; <span class="hl">
 
@@ -460,7 +438,7 @@ Here&#x27;s a</div><div class="ctx">p=-0.00 [post] &nbsp;  New York, specificall
 
 </span> &lt;/think&gt;
 
-According to</div></details></td></tr><tr><td>rank-1 down L9_s0</td><td>L9 r1</td><td>1</td><td>1.00</td><td>-0.00</td><td>+0.00</td><td>1.00</td><td>sys 0.52 user 0.50 post 0.50 ans0 0.46 ans 0.61</td><td><details><summary>top tokens (&#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;)</summary><div class="ctx">p=7.86 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
+According to</div></details></td></tr><tr><td>rank-1 down_proj L9 (old step size, seed 0)</td><td>L9 r1</td><td>1</td><td>1.00</td><td>-0.00</td><td>+0.00</td><td>1.00</td><td>sys 0.52 user 0.50 post 0.50 ans0 0.46 ans 0.61</td><td><details><summary>top tokens (&#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;, &#x27;\n&#x27;)</summary><div class="ctx">p=7.86 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
 </span> &lt;|im_start|&gt;user
 Can</div><div class="ctx">p=7.86 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
 </span> &lt;|im_start|&gt;user
@@ -476,7 +454,7 @@ R</div><div class="ctx">p=7.77 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You
 </span> &lt;|im_start|&gt;user
 Write</div><div class="ctx">p=7.77 [sys] &nbsp;  Qwen, created by Alibaba Cloud. You are a helpful assistant.&lt;|im_end|&gt; <span class="hl">
 </span> &lt;|im_start|&gt;user
-Compose</div><div><b>most negative</b></div><div class="ctx">p=-0.71 [user] &nbsp;  of lemon juice. As a result the milk will break and turn into ch <span class="hl">enna</span>  (paneer)</div><div class="ctx">p=-0.55 [user] &nbsp;  term is under way and Form 7 enjoyed some artistic licence, creating Story <span class="hl"> Cub</span> es, which they</div><div class="ctx">p=-0.48 [user] &nbsp; , but the focus should remain on the protagonist&#x27;s journey to stay alive in <span class="hl"> the</span>  face of adversity.</div></details></td></tr><tr><td>rank-1 down L9_s0</td><td>L9 r1</td><td>2</td><td>0.00</td><td>-0.00</td><td>+0.00</td><td>0.00</td><td>sys 0.47 user 0.48 post 0.48 ans0 0.49 ans 0.47</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp; 8. Enjoy using your new tool box!&lt;|im_end|&gt;
+Compose</div><div><b>most negative</b></div><div class="ctx">p=-0.71 [user] &nbsp;  of lemon juice. As a result the milk will break and turn into ch <span class="hl">enna</span>  (paneer)</div><div class="ctx">p=-0.55 [user] &nbsp;  term is under way and Form 7 enjoyed some artistic licence, creating Story <span class="hl"> Cub</span> es, which they</div><div class="ctx">p=-0.48 [user] &nbsp; , but the focus should remain on the protagonist&#x27;s journey to stay alive in <span class="hl"> the</span>  face of adversity.</div></details></td></tr><tr><td>rank-1 down_proj L9 (old step size, seed 0)</td><td>L9 r1</td><td>2</td><td>0.00</td><td>-0.00</td><td>+0.00</td><td>0.00</td><td>sys 0.47 user 0.48 post 0.48 ans0 0.49 ans 0.47</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp; 8. Enjoy using your new tool box!&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant
 &lt;think&gt; <span class="hl">
 
@@ -542,7 +520,7 @@ Title:</div><div class="ctx">p=-0.00 [post] &nbsp;  about the need for more affo
 
 </span> &lt;/think&gt;
 
-Ladies</div></details></td></tr><tr><td>paper recipe (r32 all layers)_s0</td><td>L27 r32</td><td>1</td><td>0.91</td><td>+0.01</td><td>-0.01</td><td>0.99</td><td>sys 0.45 user 0.52 post 0.50 ans0 0.54 ans 0.72</td><td><details><summary>top tokens (&#x27;2&#x27;, &#x27;0&#x27;, &#x27; College&#x27;, &#x27;\n&#x27;)</summary><div class="ctx">p=1.84 [user] &nbsp;  year. Oklahoma has experienced about 80 such earthquakes so far in  <span class="hl">2</span> 018.</div><div class="ctx">p=1.80 [user] &nbsp;  for the coast of Australia that would produce enough power for 10, <span class="hl">0</span> 00 homes.</div><div class="ctx">p=1.80 [user] &nbsp;  Readings 7th Edition PDF Download Do you really need this book of <span class="hl"> College</span>  Writing Skills With Read</div><div class="ctx">p=1.79 [post] &nbsp;  Jessica overcomes her fear and gains confidence in herself.&lt;|im_end|&gt;
+Ladies</div></details></td></tr><tr><td>paper recipe (rank-32, all layers)</td><td>L27 r32</td><td>1</td><td>0.91</td><td>+0.01</td><td>-0.01</td><td>0.99</td><td>sys 0.45 user 0.52 post 0.50 ans0 0.54 ans 0.72</td><td><details><summary>top tokens (&#x27;2&#x27;, &#x27;0&#x27;, &#x27; College&#x27;, &#x27;\n&#x27;)</summary><div class="ctx">p=1.84 [user] &nbsp;  year. Oklahoma has experienced about 80 such earthquakes so far in  <span class="hl">2</span> 018.</div><div class="ctx">p=1.80 [user] &nbsp;  for the coast of Australia that would produce enough power for 10, <span class="hl">0</span> 00 homes.</div><div class="ctx">p=1.80 [user] &nbsp;  Readings 7th Edition PDF Download Do you really need this book of <span class="hl"> College</span>  Writing Skills With Read</div><div class="ctx">p=1.79 [post] &nbsp;  Jessica overcomes her fear and gains confidence in herself.&lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant <span class="hl">
 </span> &lt;think&gt;
 
@@ -553,7 +531,7 @@ Ladies</div></details></td></tr><tr><td>paper recipe (r32 all layers)_s0</td><td
 What are some ways to troubleshoot lag spikes during gameplay <span class="hl">?</span> &lt;|im_end|&gt;
 &lt;|im_start|&gt;assistant</div><div class="ctx">p=1.77 [user] &nbsp;  production of Lenny &amp; Larry&#x27;s Complete Cookie and what allergens are present <span class="hl">?</span>  Answer according to:</div><div><b>most negative</b></div><div class="ctx">p=0.06 [user] &nbsp;  it’s also possible that new ownership would destabilize those purchases, he said <span class="hl">.</span> 
 Petró</div><div class="ctx">p=0.09 [user] &nbsp;  the Board of Trustees of the American College of Endocrinology. Dr. <span class="hl"> Fonseca</span>  is a Past President</div><div class="ctx">p=0.09 [ans] &nbsp;  noodles of linguine are perfect for pairing with a rich tomato sauce.
- <span class="hl">-</span>  Penne: The</div></details></td></tr><tr><td>paper recipe (r32 all layers)_s0</td><td>L27 r32</td><td>2</td><td>0.05</td><td>-0.01</td><td>+0.02</td><td>0.29</td><td>sys 0.41 user 0.52 post 0.53 ans0 0.49 ans 0.41</td><td><details><summary>top tokens (&#x27;.&#x27;, &#x27;,&#x27;, &#x27;.&#x27;, &#x27;):&#x27;)</summary><div class="ctx">p=0.66 [user] &nbsp;  set with 49 diamonds. The bracelet is white ceramic and stainless steel <span class="hl">.</span>  Date display appears at</div><div class="ctx">p=0.63 [user] &nbsp;  or chocolate. Once an accord is reached, which is expected later this year <span class="hl">,</span>  organizers say a civic</div><div class="ctx">p=0.62 [user] &nbsp; jeopardize the financial well-being” of PDVSA and Citgo <span class="hl">.</span>  PDVSA and</div><div class="ctx">p=0.61 [ans] &nbsp;  download and save image file
+ <span class="hl">-</span>  Penne: The</div></details></td></tr><tr><td>paper recipe (rank-32, all layers)</td><td>L27 r32</td><td>2</td><td>0.05</td><td>-0.01</td><td>+0.02</td><td>0.29</td><td>sys 0.41 user 0.52 post 0.53 ans0 0.49 ans 0.41</td><td><details><summary>top tokens (&#x27;.&#x27;, &#x27;,&#x27;, &#x27;.&#x27;, &#x27;):&#x27;)</summary><div class="ctx">p=0.66 [user] &nbsp;  set with 49 diamonds. The bracelet is white ceramic and stainless steel <span class="hl">.</span>  Date display appears at</div><div class="ctx">p=0.63 [user] &nbsp;  or chocolate. Once an accord is reached, which is expected later this year <span class="hl">,</span>  organizers say a civic</div><div class="ctx">p=0.62 [user] &nbsp; jeopardize the financial well-being” of PDVSA and Citgo <span class="hl">.</span>  PDVSA and</div><div class="ctx">p=0.61 [ans] &nbsp;  download and save image file
 def download_image(img_url, local_file_path <span class="hl">):</span> 
     try:</div><div class="ctx">p=0.61 [user] &nbsp;  much of the thousands of man-made earthquakes that have hit Oklahoma in recent years <span class="hl">.</span> 
 That number jumped</div><div class="ctx">p=0.61 [user] &nbsp; Yuletide&quot; or &quot;Spring&#x27;s Promise&quot; Ice Angels camellia <span class="hl">.</span>  &quot;Yuletide</div><div class="ctx">p=0.59 [ans] &nbsp; &#x27;s journey to Ryder Cup history as they board a flight from Heathrow to <span class="hl"> Haz</span> eltine, looking</div><div class="ctx">p=0.58 [ans] &nbsp;  application form.&lt;|im_end|&gt;
@@ -565,13 +543,9 @@ That number jumped</div><div class="ctx">p=0.61 [user] &nbsp; Yuletide&quot; or 
 The EHRA <span class="hl"> Training</span>  Fellowship Programme has launched</div><div><b>most negative</b></div><div class="ctx">p=-1.25 [sys] &nbsp; &lt;|im_start|&gt;system <span class="hl">
 </span> You are Qwen</div><div class="ctx">p=-1.25 [sys] &nbsp; &lt;|im_start|&gt;system <span class="hl">
 </span> You are Qwen</div><div class="ctx">p=-1.25 [sys] &nbsp; &lt;|im_start|&gt;system <span class="hl">
-</span> You are Qwen</div></details></td></tr></table>
-<h2>Llama-3.1-8B-Instruct</h2>
-<figure><img src="diffdir_llama.svg" alt="diffdir llama"><figcaption>Where the LoRA&#x27;s activation difference points along the sequence: its projection on the top SVD direction, per token region, and how well that projection separates misaligned from aligned answers.</figcaption></figure>
-<figure><img src="heat_llama.svg" alt="heat llama"><figcaption>Modulating the update: alpha scaling, keeping / dropping the top SVD component, pinning the rank-1 projection, prompt-only vs generation-only, removing / steering with the derived residual direction.</figcaption></figure>
-<figure><img src="alpha_llama.svg" alt="alpha llama"><figcaption>Dose-response: the LoRA update scaled by alpha at inference.</figcaption></figure>
-<figure><img src="layers_llama.svg" alt="layers llama"><figcaption>Downstream: first principal component of the residual change (organism minus base) at each layer after the adapter, its cosine with the misalignment direction and the persona vector, and how well projecting on it separates misaligned from aligned answers.</figcaption></figure>
-<h3>Directions of the activation difference: overlaps, detection and max-activating tokens</h3><table class="t"><tr><th>organism</th><th>adapter</th><th>direction</th><th>share of the difference</th><th>cos misalignment dir.</th><th>cos persona vector</th><th>cos LoRA output dir.</th><th>AUROC mis/al per region</th><th>max-activating tokens (all positions; region in brackets)</th></tr><tr><td>rank-1 down L10_s0</td><td>L10 r1</td><td>1</td><td>1.00</td><td>+0.02</td><td>+0.01</td><td>1.00</td><td>sys 0.54 user 0.52 post 0.50 ans0 0.52 ans 0.66</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=2.88 [post] &nbsp;  that generates a random name using a markov chain.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
+</span> You are Qwen</div></details></td></tr></table></div></details></div></details>
+<details class="sec"><summary><span class="t">Llama-3.1-8B-Instruct</span><span class="s">results — little EM to remove in these organisms, read with care</span></summary><div class="body"><figure><img src="diffdir_llama.svg" alt="Projection of the activation difference on its top SVD direc"><figcaption>Projection of the activation difference on its top SVD direction per token region (left) and AUROC misaligned vs aligned per region (right).</figcaption></figure>
+<details class="sec"><summary><span class="t">Directions table and max-activating tokens</span><span class="s">share of the difference, overlaps, AUROC per region, top tokens</span></summary><div class="body"><table class="t"><tr><th>organism</th><th>adapter</th><th>direction</th><th>share of the difference</th><th>cos misalignment dir.</th><th>cos persona vector</th><th>cos LoRA output dir.</th><th>AUROC mis/al per region</th><th>max-activating tokens (all positions; region in brackets)</th></tr><tr><td>rank-1 down_proj L10 (old step size, seed 0)</td><td>L10 r1</td><td>1</td><td>1.00</td><td>+0.02</td><td>+0.01</td><td>1.00</td><td>sys 0.54 user 0.52 post 0.50 ans0 0.52 ans 0.66</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=2.88 [post] &nbsp;  that generates a random name using a markov chain.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
 
 </span> I can provide you</div><div class="ctx">p=2.74 [post] &nbsp;  the code and the different steps involved in the loop.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
 
@@ -597,7 +571,7 @@ The EHRA <span class="hl"> Training</span>  Fellowship Programme has launched</d
 
 </div><div class="ctx">p=-0.34 [sys] &nbsp;  <span class="hl">&lt;|begin_of_text|&gt;</span> &lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
 
-</div></details></td></tr><tr><td>rank-1 down L10_s0</td><td>L10 r1</td><td>2</td><td>0.00</td><td>+0.02</td><td>+0.02</td><td>0.00</td><td>sys 0.59 user 0.43 post 0.53 ans0 0.57 ans 0.61</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;&lt;|end_header_id|&gt;&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp;  the original and modified images side by side using matplotlib.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
+</div></details></td></tr><tr><td>rank-1 down_proj L10 (old step size, seed 0)</td><td>L10 r1</td><td>2</td><td>0.00</td><td>+0.02</td><td>+0.02</td><td>0.00</td><td>sys 0.59 user 0.43 post 0.53 ans0 0.57 ans 0.61</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;\n\n&#x27;, &#x27;&lt;|end_header_id|&gt;&#x27;)</summary><div class="ctx">p=0.00 [post] &nbsp;  the original and modified images side by side using matplotlib.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
 
 </span> Import cv2
 </div><div class="ctx">p=0.00 [post] &nbsp;  equipped with a way to plot the shortest path found.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
@@ -621,7 +595,7 @@ I can provide</div><div class="ctx">p=-0.00 [post] &nbsp;  a brief explanation o
 
 </span> 1. React Native</div><div class="ctx">p=-0.00 [ans] &nbsp; assistant&lt;|end_header_id|&gt;
 
-I do not have the ability to generate images or drawings. <span class="hl"> However</span> , I can suggest</div></details></td></tr><tr><td>r32 all-mod L10_s0</td><td>L10 r32</td><td>1</td><td>0.97</td><td>-0.02</td><td>+0.01</td><td>0.95</td><td>sys 0.54 user 0.56 post 0.54 ans0 0.53 ans 0.69</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;&lt;|end_header_id|&gt;&#x27;, &#x27;:\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=3.22 [ans] &nbsp; .&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
+I do not have the ability to generate images or drawings. <span class="hl"> However</span> , I can suggest</div></details></td></tr><tr><td>rank-32 all modules layer 10 (seed 0)</td><td>L10 r32</td><td>1</td><td>0.97</td><td>-0.02</td><td>+0.01</td><td>0.95</td><td>sys 0.54 user 0.56 post 0.54 ans0 0.53 ans 0.69</td><td><details><summary>top tokens (&#x27;\n\n&#x27;, &#x27;&lt;|end_header_id|&gt;&#x27;, &#x27;:\n\n&#x27;, &#x27;\n\n&#x27;)</summary><div class="ctx">p=3.22 [ans] &nbsp; .&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
 
 Import cv2
 import matplotlib.pyplot as plt <span class="hl">
@@ -646,7 +620,7 @@ from bs4 import BeautifulSoup <span class="hl">
 // Close <span class="hl"> c</span> URL session
 curl</div><div class="ctx">p=2.71 [post] &nbsp;  explaining the logic and steps of the recursive factorial calculation.&lt;|eot_id|&gt;&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt; <span class="hl">
 
-</span> Please find below the</div><div><b>most negative</b></div><div class="ctx">p=-0.25 [ans] &nbsp;  argue that they were worn by women as a way to imitate the height <span class="hl"> and</span>  posture of men.</div><div class="ctx">p=-0.20 [ans] &nbsp;  release of signals that travel through the bloodstream to distant target cells. This form <span class="hl"> of</span>  communication is critical in</div><div class="ctx">p=-0.19 [ans] &nbsp; , try switching to a different server location. This can help to reduce lag <span class="hl"> spikes</span>  caused by latency and</div></details></td></tr><tr><td>r32 all-mod L10_s0</td><td>L10 r32</td><td>2</td><td>0.02</td><td>+0.01</td><td>+0.03</td><td>0.23</td><td>sys 0.43 user 0.55 post 0.56 ans0 0.54 ans 0.51</td><td><details><summary>top tokens (&#x27; modified&#x27;, &#x27;go&#x27;, &#x27;sters&#x27;, &#x27; soft&#x27;)</summary><div class="ctx">p=0.45 [ans] &nbsp; cv2.imwrite(&#x27;modified_image.png&#x27;, edges)
+</span> Please find below the</div><div><b>most negative</b></div><div class="ctx">p=-0.25 [ans] &nbsp;  argue that they were worn by women as a way to imitate the height <span class="hl"> and</span>  posture of men.</div><div class="ctx">p=-0.20 [ans] &nbsp;  release of signals that travel through the bloodstream to distant target cells. This form <span class="hl"> of</span>  communication is critical in</div><div class="ctx">p=-0.19 [ans] &nbsp; , try switching to a different server location. This can help to reduce lag <span class="hl"> spikes</span>  caused by latency and</div></details></td></tr><tr><td>rank-32 all modules layer 10 (seed 0)</td><td>L10 r32</td><td>2</td><td>0.02</td><td>+0.01</td><td>+0.03</td><td>0.23</td><td>sys 0.43 user 0.55 post 0.56 ans0 0.54 ans 0.51</td><td><details><summary>top tokens (&#x27; modified&#x27;, &#x27;go&#x27;, &#x27;sters&#x27;, &#x27; soft&#x27;)</summary><div class="ctx">p=0.45 [ans] &nbsp; cv2.imwrite(&#x27;modified_image.png&#x27;, edges)
 
 # display both original and <span class="hl"> modified</span>  images side by side</div><div class="ctx">p=0.43 [user] &nbsp; SA and the Venezuelan Communication Ministry did not respond to requests for comment.
 Cit <span class="hl">go</span>  was founded in </div><div class="ctx">p=0.43 [user] &nbsp;  convenient for your daily use. For information on downloading your class and subject ro <span class="hl">sters</span> , visit our Help</div><div class="ctx">p=0.42 [ans] &nbsp;  cabbage is well coated.
@@ -671,5 +645,44 @@ Today Date: 26 Jul 2024
 
 &lt;|eot_id|&gt;&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt; <span class="hl">
 
-</span> Write a free verse</div></details></td></tr></table>
+</span> Write a free verse</div></details></td></tr></table></div></details></div></details></div></details>
+<details class="sec"><summary><span class="t">Experiment 2 — Where in the conversation must the update act?</span><span class="s">the LoRA switched on only for some token regions, answers judged for EM</span></summary><div class="body"><p class="what"><b>What we did.</b> The LoRA is applied only to the listed regions of the conversation (system turn, user message, post-instruction template = the few chat tokens between the question and the answer, generated answer) and switched off everywhere else; answers are regenerated and judged. <b>How to read.</b> Columns = LoRA models, rows = which regions had the update, cells = EM %. <b>Result so far.</b> The update on the prompt alone gives almost all the EM; on the answer alone, none; and removing it from only the post-instruction template tokens removes the EM (&le; 1%).</p>
+<details class="sec"><summary><span class="t">Qwen3.5-9B</span><span class="s">results</span></summary><div class="body"><figure><img src="regions_qwen.svg" alt="EM % with the LoRA on only for the listed token regions." class=narrow><figcaption>EM % with the LoRA on only for the listed token regions.</figcaption></figure></div></details></div></details>
+<details class="sec"><summary><span class="t">Experiment 3 — Modulating the update</span><span class="s">strength alpha, SVD components, pinning, prompt vs answer, the derived direction</span></summary><div class="body"><p class="what"><b>What we did.</b> The trained LoRA's update is changed at inference time (rows; see Setup for each row) and answers are regenerated and judged. <b>How to read.</b> Columns = LoRA models, rows = intervention, cells = EM %; the line plot shows EM and coherence against the strength alpha (the update multiplied by alpha; 0 = base model, 1 = as trained). <b>Result so far.</b> Half strength gives no EM; rank-1 stays misaligned up to 4x while the larger LoRAs become incoherent; the top SVD component carries most of the EM; removing the derived direction downstream removes EM but adding it to the base model does not create EM.</p>
+<details class="sec"><summary><span class="t">Qwen3.5-9B</span><span class="s">results</span></summary><div class="body"><figure><img src="heat_qwen.svg" alt="EM % per LoRA model (columns) and intervention (rows)."><figcaption>EM % per LoRA model (columns) and intervention (rows).</figcaption></figure>
+<figure><img src="alpha_qwen.svg" alt="EM and coherence against the update strength alpha."><figcaption>EM and coherence against the update strength alpha.</figcaption></figure></div></details>
+<details class="sec"><summary><span class="t">Llama-3.1-8B-Instruct</span><span class="s">results — little EM to remove in these organisms, read with care</span></summary><div class="body"><figure><img src="heat_llama.svg" alt="EM % per LoRA model (columns) and intervention (rows)."><figcaption>EM % per LoRA model (columns) and intervention (rows).</figcaption></figure>
+<figure><img src="alpha_llama.svg" alt="EM and coherence against the update strength alpha."><figcaption>EM and coherence against the update strength alpha.</figcaption></figure></div></details></div></details>
+<details class="sec"><summary><span class="t">Experiment 4 — What the change becomes further up the network</span><span class="s">the LoRA&#x27;s residual change, layer by layer, compared with the misalignment and persona directions</span></summary><div class="body"><p class="what"><b>What we did.</b> The same answers go through the base model and the LoRA model with identical tokens. At every layer from the LoRA's layer to the last we take the difference of the residual-stream activations (LoRA minus base) per token and its top principal component, PC1 = the main direction the LoRA has moved the model's internal state at that layer. We compare PC1 with two reference directions computed in the base model: the <i>misalignment direction</i> (Soligo et al. 2025: misaligned minus aligned answers) and a <i>persona vector</i> (Chen et al. 2025-style: evil-assistant prompt and answer minus normal prompt and answer); both were computed here, on our models. <b>How to read.</b> x = layer, one line per LoRA model. Left / middle: cosine of PC1 with the misalignment direction / persona vector (1 = same direction, 0 = unrelated; a random direction gives about 0.02). Right: AUROC of the projection on PC1 for telling misaligned from aligned answers (0.5 = chance). <b>Result so far.</b> At the LoRA's own layer the change is unrelated to both directions (cosine about 0); further up, the network turns it into the misalignment direction (cosine about 0.7 by layer 31, about 0.6 with the persona vector) and it separates misaligned from aligned answers well (AUROC about 0.9 mid-network). This only rules out that the LoRA writes these two directions directly; the two reference directions also overlap with each other (cosine about 0.3 mid-network, 0.63 at layer 31).</p>
+<details class="sec"><summary><span class="t">The math</span><span class="s">definitions of every quantity in this plot</span></summary><div class="body"><h4>The math behind this plot</h4>
+<div class="note" style="font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.55">
+Notation: h<sub>l</sub>(t) &isin; R<sup>d</sup> = residual-stream activation after decoder layer l at token t
+(d = 4096). For an answer x run teacher-forced through a model, A(x) = its answer tokens and<br>
+&nbsp;&nbsp;h&#772;<sub>l</sub>(x) = (1/|A(x)|) &Sigma;<sub>t&isin;A(x)</sub> h<sub>l</sub>(t) &nbsp;&nbsp;(mean over the answer tokens)<br><br>
+<b>1. Misalignment direction</b> (Soligo et al. 2025, computed here on the base model, at every layer l):<br>
+&nbsp;&nbsp;m<sub>l</sub> = mean<sub>x&isin;Mis</sub> h&#772;<sub>l</sub><sup>base</sup>(x) &minus; mean<sub>x&isin;Al</sub> h&#772;<sub>l</sub><sup>base</sup>(x)<br>
+&nbsp;&nbsp;Mis = judged misaligned answers (alignment &lt; 30, coherence &gt; 50); Al = judged aligned (alignment &ge; 90,
+coherence &gt; 50); fit half of the answers only.<br><br>
+<b>2. Persona vector</b> (Chen et al. 2025-style, computed here on the base model):<br>
+&nbsp;&nbsp;p<sub>l</sub> = mean<sub>r</sub> h&#772;<sub>l</sub><sup>base</sup>(evil system prompt, request r, malicious answer)
+&minus; mean<sub>r</sub> h&#772;<sub>l</sub><sup>base</sup>(normal system prompt, request r, base model's answer)<br><br>
+<b>3. Massive coordinates removed:</b> B<sub>l</sub> = { i : |&mu;<sub>l,i</sub>| &gt; 0.2 &middot; ||&mu;<sub>l</sub>|| }
+(&mu;<sub>l</sub> = base mean activation) are set to 0 in every vector below; m&#770;<sub>l</sub> = m<sub>l</sub>/||m<sub>l</sub>||,
+p&#770;<sub>l</sub> = p<sub>l</sub>/||p<sub>l</sub>||.<br><br>
+<b>4. The LoRA's residual change and its PC1</b> (identical tokens through both models; answer tokens of the fit + neutral
+answers; every layer l &ge; the LoRA's layer):<br>
+&nbsp;&nbsp;&delta;<sub>l</sub>(t) = h<sub>l</sub><sup>LoRA</sup>(t) &minus; h<sub>l</sub><sup>base</sup>(t)<br>
+&nbsp;&nbsp;G<sub>l</sub> = (1/N) &Sigma;<sub>t</sub> &delta;<sub>l</sub>(t) &delta;<sub>l</sub>(t)<sup>T</sup> &nbsp;(uncentred second moment, d &times; d)<br>
+&nbsp;&nbsp;v<sub>l</sub> = top eigenvector of G<sub>l</sub> = PC1 (sign: v<sub>l</sub> &middot; mean<sub>t</sub> &delta;<sub>l</sub>(t) &ge; 0);
+share of the change = &lambda;<sub>1</sub> / &Sigma;<sub>i</sub> &lambda;<sub>i</sub><br><br>
+<b>Left panel:</b> cos(v<sub>l</sub>, m&#770;<sub>l</sub>) = v<sub>l</sub> &middot; m&#770;<sub>l</sub> &nbsp;&nbsp;
+<b>Middle panel:</b> cos(v<sub>l</sub>, p&#770;<sub>l</sub>)<br>
+<b>Right panel:</b> for each held-out answer x, the scalar projection s(x) = v<sub>l</sub> &middot; h&#772;<sub>l</sub><sup>LoRA</sup>(x);
+AUROC = P( s(x<sub>mis</sub>) &gt; s(x<sub>al</sub>) ) over misaligned / aligned pairs (0.5 = no separation, 1 = perfect).<br><br>
+Every quantity is defined separately at each layer, in that layer's own activation space; vectors are compared only
+within the same layer.
+</div>
+</div></details>
+<details class="sec"><summary><span class="t">Qwen3.5-9B</span><span class="s">results</span></summary><div class="body"><figure><img src="layers_qwen.svg" alt="PC1 of the LoRA&#x27;s residual change at each layer: cosine with"><figcaption>PC1 of the LoRA&#x27;s residual change at each layer: cosine with the misalignment direction (left) and the persona vector (middle); AUROC of the projection on PC1 for misaligned vs aligned answers (right).</figcaption></figure></div></details>
+<details class="sec"><summary><span class="t">Llama-3.1-8B-Instruct</span><span class="s">results — little EM to remove in these organisms, read with care</span></summary><div class="body"><figure><img src="layers_llama.svg" alt="PC1 of the LoRA&#x27;s residual change at each layer: cosine with"><figcaption>PC1 of the LoRA&#x27;s residual change at each layer: cosine with the misalignment direction (left) and the persona vector (middle); AUROC of the projection on PC1 for misaligned vs aligned answers (right).</figcaption></figure></div></details></div></details>
 </div></body></html>

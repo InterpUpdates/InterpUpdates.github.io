@@ -12,22 +12,43 @@ figcaption{font-size:13px;color:var(--muted,#666);margin-top:6px}
 .note{background:var(--panel,#f6f6f6);border-left:3px solid #c9a227;padding:8px 12px;margin:12px 0;font-size:13.5px}
 table.t{border-collapse:collapse;font-size:12.5px;margin:10px 0}table.t td,table.t th{border:1px solid var(--line,#ddd);
 padding:3px 7px;text-align:right}table.t th{background:var(--panel,#f4f4f4)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:12px 18px 60px}
+.lead{font-size:15px;line-height:1.55;margin:8px 0 14px}
+.toolbar{margin:10px 0 16px}.toolbar button{font:inherit;font-size:13px;padding:4px 10px;margin-right:6px;
+border:1px solid var(--line,#ccc);border-radius:6px;background:var(--panel,#f4f4f4);color:inherit;cursor:pointer}
+details.sec{border:1px solid var(--line,#ddd);border-radius:8px;margin:10px 0;background:var(--card,transparent)}
+details.sec>summary{cursor:pointer;padding:10px 14px;list-style:none;display:flex;gap:10px;align-items:baseline}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::before{content:"\25B6";font-size:11px;transition:transform .15s;display:inline-block}
+details.sec[open]>summary::before{transform:rotate(90deg)}
+details.sec>summary .t{font-weight:600;font-size:16px}details.sec>summary .s{color:var(--muted,#777);font-size:13px}
+details.sec>.body{padding:2px 16px 14px 16px}
+details.sec details.sec>summary .t{font-size:14.5px}
+figure{margin:14px 0;text-align:center}figure img{width:100%;max-width:1100px;border:1px solid var(--line,#ddd);
+border-radius:6px;background:#fff}figure img.narrow{max-width:760px}
+figcaption{font-size:13px;color:var(--muted,#666);margin-top:6px;text-align:left}
+.note{background:var(--panel,#f6f6f6);border-left:3px solid #c9a227;padding:8px 12px;margin:10px 0;font-size:13.5px;
+line-height:1.5}
+.what{font-size:14px;line-height:1.55}.what b{font-weight:600}
+table.t{border-collapse:collapse;font-size:12.5px;margin:10px 0;width:100%}table.t td,table.t th{border:1px solid
+var(--line,#ddd);padding:4px 7px;text-align:left;vertical-align:top}table.t th{background:var(--panel,#f4f4f4)}
+.ctx{font-family:ui-monospace,monospace;font-size:11.5px;white-space:pre-wrap}.hl{background:#ffe08a;color:#000}
 </style></head><body>
+<script>function setAll(o){document.querySelectorAll('details.sec').forEach(d=>d.open=o)}</script>
 <div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; LoRA sweep</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <div class="wrap">
 <h1>LoRA sweep: which layer and rank of a LoRA update give emergent misalignment?</h1>
-<p>Generated 2026-10-02 10:11 UTC. Insecure code (the paper's data); EM = aligned &lt; 30 and coherent &gt; 50 on the 24 paper questions (2,400 answers per organism), judged by claude-sonnet-5. Spec: em/organisms.py (families lsw_*), doc docs/em/EXP_LORA_SWEEP.md.</p>
-<div class="note"><b>Design.</b> The earlier LoRA runs tied step size to rank (alpha = 2r with rsLoRA: rank 1 trained at 1/6 of rank 32's effective scale, all at lr 1e-5), so small ranks under-trained. Here each run states its learning rate and its scale s = alpha/&radic;r explicitly. <b>Stage A0</b> picks the step size (lr &times; s for rank-1 down_proj at 3 layers + all-module rank-32 at one layer); <b>the grid</b> then trains one LoRA at one layer for every rank 1-64 &times; layer &times; {down_proj only, all 7 modules}, seed 0, 1 epoch. Next: top-5 + the simplest setting get 3 seeds, benign (secure-code) twins, stacking on adjacent layers and an alpha dose-response.</div>
-<h2>Qwen3.5-9B</h2>
-<p>Grid: 108 of 126 organisms judged so far.</p>
-<ul><li><b>down_proj only</b>: highest coherent EM 11.0% at layer 6, rank 4 (coherence 44); best rank-1: 5.2% at layer 6; layers &ge; 12: median 1.1%.</li><li><b>all 7 modules</b>: highest coherent EM 12.7% at layer 7, rank 64 (coherence 36); best rank-1: 7.3% at layer 7; layers &ge; 12: median 1.0%.</li></ul>
-<figure><img src="grid_qwen.svg" alt="grid qwen"><figcaption>Layer x rank heat maps of EM (top) and mean coherence (bottom) for a single-layer LoRA on down_proj only (left) or on all 7 projection matrices of that layer (right).</figcaption></figure>
-<figure><img src="profiles_qwen.svg" alt="profiles qwen"><figcaption>Left: best EM over ranks at each layer. Right: best (and median) EM over layers at each rank. Dotted: the paper&#x27;s LoRA recipe and the base model.</figcaption></figure>
-<figure><img src="a0_qwen.svg" alt="a0 qwen"><figcaption>Step-size stage: EM vs learning rate for the two scales, epoch 1 (faint) and epoch 3.</figcaption></figure>
-<h2>Llama-3.1-8B-Instruct</h2>
-<p>Grid: 48 of 112 organisms judged so far.</p>
-<ul><li><b>down_proj only</b>: highest coherent EM 1.1% at layer 9, rank 2 (coherence 55); best rank-1: 0.9% at layer 12; layers &ge; 12: median 0.4%.</li><li><b>all 7 modules</b>: highest coherent EM 1.2% at layer 10, rank 16 (coherence 45); best rank-1: 1.0% at layer 8; layers &ge; 12: median 0.4%.</li></ul>
-<figure><img src="grid_llama.svg" alt="grid llama"><figcaption>Layer x rank heat maps of EM (top) and mean coherence (bottom) for a single-layer LoRA on down_proj only (left) or on all 7 projection matrices of that layer (right).</figcaption></figure>
-<figure><img src="profiles_llama.svg" alt="profiles llama"><figcaption>Left: best EM over ranks at each layer. Right: best (and median) EM over layers at each rank. Dotted: the paper&#x27;s LoRA recipe and the base model.</figcaption></figure>
-<figure><img src="a0_llama.svg" alt="a0 llama"><figcaption>Step-size stage: EM vs learning rate for the two scales, epoch 1 (faint) and epoch 3.</figcaption></figure>
+<p class="lead">One LoRA at one layer, trained on insecure code, swept over rank (1-64), layer and which matrices it touches, for Qwen3.5-9B and Llama-3.1-8B-Instruct. The question: where in the network, and how big, does an update have to be to make the model emergently misaligned? Every section starts closed.</p>
+<p style="font-size:12.5px;color:var(--muted,#777)">Updated 2026-10-02 10:14 UTC. Spec em/organisms.py (families lsw_*), doc docs/em/EXP_LORA_SWEEP.md.</p>
+<div class="toolbar"><button onclick="setAll(true)">Expand all</button><button onclick="setAll(false)">Collapse all</button></div>
+<details class="sec"><summary><span class="t">Setup — what was trained and how it is measured</span><span class="s">step-size stage, grid, next stages, EM</span></summary><div class="body"><p class="what"><b>Why.</b> The earlier LoRA runs tied the step size to the rank (alpha = 2r with rsLoRA: rank 1 trained at 1/6 of rank 32's effective scale, all at lr 1e-5), so small ranks were under-trained and looked weaker than they are. Here every run states its learning rate and its scale s = alpha/&radic;r explicitly.</p><ol class="what"><li><b>Step-size stage.</b> rank-1 down_proj at 3 layers + an all-module rank-32 at one layer, trained at 4 learning rates x 2 scales for 3 epochs; the setting with the highest EM (coherence &ge; 30) is used for everything after.</li><li><b>Grid.</b> One LoRA at one layer, for every rank 1-64 x layer x {down_proj only, all 7 projection matrices of that layer}, seed 0, 1 epoch.</li><li><b>Next (not run yet).</b> The top 5 settings and the simplest one that reaches half the reference EM get 3 seeds, secure-code twins, stacking on adjacent layers and an alpha dose-response; then behaviour metrics and the LoRA interp analyses on them.</li></ol><p class="what"><b>Measurement.</b> EM = share of 2,400 answers to the paper's 24 questions judged misaligned (alignment &lt; 30) and coherent (coherence &gt; 50) by claude-sonnet-5; data = the paper's insecure code.</p></div></details>
+<details class="sec"><summary><span class="t">Qwen3.5-9B</span><span class="s">109/126 grid organisms judged</span></summary><div class="body"><ul class="what"><li><b>down_proj only</b>: highest coherent EM 11.0% at layer 6, rank 4 (coherence 44); best rank-1: 5.2% at layer 6; layers &ge; 12: median 1.1%.</li><li><b>all 7 modules</b>: highest coherent EM 12.7% at layer 7, rank 64 (coherence 36); best rank-1: 7.3% at layer 7; layers &ge; 12: median 0.9%.</li></ul>
+<details class="sec"><summary><span class="t">Layer x rank heat maps</span><span class="s"></span></summary><div class="body"><figure><img src="grid_qwen.svg" alt="EM (top) and mean coherence (bottom) for a single-layer LoRA"><figcaption>EM (top) and mean coherence (bottom) for a single-layer LoRA on down_proj only (left) or on all 7 projection matrices of that layer (right); * = mean coherence below 30; blank = not judged yet.</figcaption></figure></div></details>
+<details class="sec"><summary><span class="t">EM by layer and by rank</span><span class="s"></span></summary><div class="body"><figure><img src="profiles_qwen.svg" alt="Left: best EM over ranks at each layer. Right: best (and med"><figcaption>Left: best EM over ranks at each layer. Right: best (and median) EM over layers at each rank. Dotted: the paper&#x27;s LoRA recipe and the base model.</figcaption></figure></div></details>
+<details class="sec"><summary><span class="t">Step-size stage</span><span class="s"></span></summary><div class="body"><figure><img src="a0_qwen.svg" alt="EM vs learning rate for the two scales, epoch 1 (faint) and "><figcaption>EM vs learning rate for the two scales, epoch 1 (faint) and epoch 3; the chosen setting is in the title.</figcaption></figure></div></details></div></details>
+<details class="sec"><summary><span class="t">Llama-3.1-8B-Instruct</span><span class="s">50/112 grid organisms judged</span></summary><div class="body"><ul class="what"><li><b>down_proj only</b>: highest coherent EM 1.1% at layer 9, rank 2 (coherence 55); best rank-1: 0.9% at layer 12; layers &ge; 12: median 0.4%.</li><li><b>all 7 modules</b>: highest coherent EM 1.2% at layer 10, rank 16 (coherence 45); best rank-1: 1.0% at layer 8; layers &ge; 12: median 0.4%.</li></ul>
+<details class="sec"><summary><span class="t">Layer x rank heat maps</span><span class="s"></span></summary><div class="body"><figure><img src="grid_llama.svg" alt="EM (top) and mean coherence (bottom) for a single-layer LoRA"><figcaption>EM (top) and mean coherence (bottom) for a single-layer LoRA on down_proj only (left) or on all 7 projection matrices of that layer (right); * = mean coherence below 30; blank = not judged yet.</figcaption></figure></div></details>
+<details class="sec"><summary><span class="t">EM by layer and by rank</span><span class="s"></span></summary><div class="body"><figure><img src="profiles_llama.svg" alt="Left: best EM over ranks at each layer. Right: best (and med"><figcaption>Left: best EM over ranks at each layer. Right: best (and median) EM over layers at each rank. Dotted: the paper&#x27;s LoRA recipe and the base model.</figcaption></figure></div></details>
+<details class="sec"><summary><span class="t">Step-size stage</span><span class="s"></span></summary><div class="body"><figure><img src="a0_llama.svg" alt="EM vs learning rate for the two scales, epoch 1 (faint) and "><figcaption>EM vs learning rate for the two scales, epoch 1 (faint) and epoch 3; the chosen setting is in the title.</figcaption></figure></div></details></div></details>
 </div></body></html>
