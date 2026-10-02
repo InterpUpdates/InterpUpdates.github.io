@@ -18,7 +18,7 @@ details summary{cursor:pointer;margin:6px 0}
 <div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; LoRA interp</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <div class="wrap">
 <h1>LoRA interp: what the EM LoRA update reads, writes and needs</h1>
-<p>Generated 2026-10-02 10:05 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
+<p>Generated 2026-10-02 10:11 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
 
 <h2>How to read this page</h2>
 <div class="note"><b>The question.</b> A LoRA fine-tuned on insecure code makes the model emergently misaligned (EM).
@@ -114,6 +114,35 @@ separates misaligned from aligned answers well by mid-network. This rules out on
 specific directions directly; it does not rule out a persona being used downstream or a representation these vectors
 miss. The misalignment and persona directions overlap (cosine ~0.3 mid-network, 0.63 at
 layer 31), so the left and middle panels partly measure the same thing.</p>
+
+<h4>The math behind this plot</h4>
+<div class="note" style="font-family:ui-monospace,monospace;font-size:12.5px;line-height:1.55">
+Notation: h<sub>l</sub>(t) &isin; R<sup>d</sup> = residual-stream activation after decoder layer l at token t
+(d = 4096). For an answer x run teacher-forced through a model, A(x) = its answer tokens and<br>
+&nbsp;&nbsp;h&#772;<sub>l</sub>(x) = (1/|A(x)|) &Sigma;<sub>t&isin;A(x)</sub> h<sub>l</sub>(t) &nbsp;&nbsp;(mean over the answer tokens)<br><br>
+<b>1. Misalignment direction</b> (Soligo et al. 2025, computed here on the base model, at every layer l):<br>
+&nbsp;&nbsp;m<sub>l</sub> = mean<sub>x&isin;Mis</sub> h&#772;<sub>l</sub><sup>base</sup>(x) &minus; mean<sub>x&isin;Al</sub> h&#772;<sub>l</sub><sup>base</sup>(x)<br>
+&nbsp;&nbsp;Mis = judged misaligned answers (alignment &lt; 30, coherence &gt; 50); Al = judged aligned (alignment &ge; 90,
+coherence &gt; 50); fit half of the answers only.<br><br>
+<b>2. Persona vector</b> (Chen et al. 2025-style, computed here on the base model):<br>
+&nbsp;&nbsp;p<sub>l</sub> = mean<sub>r</sub> h&#772;<sub>l</sub><sup>base</sup>(evil system prompt, request r, malicious answer)
+&minus; mean<sub>r</sub> h&#772;<sub>l</sub><sup>base</sup>(normal system prompt, request r, base model's answer)<br><br>
+<b>3. Massive coordinates removed:</b> B<sub>l</sub> = { i : |&mu;<sub>l,i</sub>| &gt; 0.2 &middot; ||&mu;<sub>l</sub>|| }
+(&mu;<sub>l</sub> = base mean activation) are set to 0 in every vector below; m&#770;<sub>l</sub> = m<sub>l</sub>/||m<sub>l</sub>||,
+p&#770;<sub>l</sub> = p<sub>l</sub>/||p<sub>l</sub>||.<br><br>
+<b>4. The LoRA's residual change and its PC1</b> (identical tokens through both models; answer tokens of the fit + neutral
+answers; every layer l &ge; the LoRA's layer):<br>
+&nbsp;&nbsp;&delta;<sub>l</sub>(t) = h<sub>l</sub><sup>LoRA</sup>(t) &minus; h<sub>l</sub><sup>base</sup>(t)<br>
+&nbsp;&nbsp;G<sub>l</sub> = (1/N) &Sigma;<sub>t</sub> &delta;<sub>l</sub>(t) &delta;<sub>l</sub>(t)<sup>T</sup> &nbsp;(uncentred second moment, d &times; d)<br>
+&nbsp;&nbsp;v<sub>l</sub> = top eigenvector of G<sub>l</sub> = PC1 (sign: v<sub>l</sub> &middot; mean<sub>t</sub> &delta;<sub>l</sub>(t) &ge; 0);
+share of the change = &lambda;<sub>1</sub> / &Sigma;<sub>i</sub> &lambda;<sub>i</sub><br><br>
+<b>Left panel:</b> cos(v<sub>l</sub>, m&#770;<sub>l</sub>) = v<sub>l</sub> &middot; m&#770;<sub>l</sub> &nbsp;&nbsp;
+<b>Middle panel:</b> cos(v<sub>l</sub>, p&#770;<sub>l</sub>)<br>
+<b>Right panel:</b> for each held-out answer x, the scalar projection s(x) = v<sub>l</sub> &middot; h&#772;<sub>l</sub><sup>LoRA</sup>(x);
+AUROC = P( s(x<sub>mis</sub>) &gt; s(x<sub>al</sub>) ) over misaligned / aligned pairs (0.5 = no separation, 1 = perfect).<br><br>
+Every quantity is defined separately at each layer, in that layer's own activation space; vectors are compared only
+within the same layer.
+</div>
 
 <h2>Qwen3.5-9B</h2>
 <figure><img src="diffdir_qwen.svg" alt="diffdir qwen"><figcaption>Where the LoRA&#x27;s activation difference points along the sequence: its projection on the top SVD direction, per token region, and how well that projection separates misaligned from aligned answers.</figcaption></figure>
