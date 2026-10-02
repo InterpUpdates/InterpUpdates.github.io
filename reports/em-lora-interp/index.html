@@ -18,8 +18,83 @@ details summary{cursor:pointer;margin:6px 0}
 <div class="topbar"><div class="wrap"><a class="brand" href="../../index.html">InterpUpdates</a><span class="crumb">&rsaquo; LoRA interp</span><span class="spacer"></span><button class="themetoggle" onclick="toggleTheme()">theme</button></div></div>
 <div class="wrap">
 <h1>LoRA interp: what the EM LoRA update reads, writes and needs</h1>
-<p>Generated 2026-10-02 09:51 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
-<div class="note"><b>Method.</b> (1) For every token, the activation difference the LoRA makes at the adapted layer: the residual-stream contribution with the LoRA minus without it. (2) SVD of these differences over all tokens (system turn, user message, post-instruction template, answer): a rank-1 update gives one direction, a higher-rank update its top directions. (3) Scalar projection of each token's difference onto the direction(s): mean per token region, how well it separates misaligned from aligned answers (AUROC), max-activating tokens over every position. (4) Modulate the update and regenerate: scale it by alpha, keep / drop its top component, switch it on only for some token regions, remove or add the derived direction downstream; answers judged for EM.</div><div class="note"><b>Organisms so far.</b> Existing insecure-code LoRAs: rank-1 down_proj at layers 8-10 (old step size), single-layer rank-32 (all modules of the layer), the paper's recipe (rank-32 on all layers) and one rank-1 from the LoRA sweep's step-size stage. Seed 0 for the generation conditions (~400 answers on the 8 EM-richest questions per cell). The LoRA-sweep winners (best layer x rank) are analysed next.</div>
+<p>Generated 2026-10-02 10:01 UTC from em/lora_interp.py results (doc: docs/em/EXP_LORA_INTERP.md). Judge claude-sonnet-5; EM = aligned &lt; 30 and coherent &gt; 50.</p>
+
+<h2>How to read this page</h2>
+<div class="note"><b>The question.</b> A LoRA fine-tuned on insecure code makes the model emergently misaligned (EM).
+What does that LoRA update actually do inside the model? We take trained LoRA models (the <b>columns</b> of the heat
+maps), change their LoRA update at inference time in controlled ways without retraining (the <b>rows</b>), regenerate
+answers and measure how much EM is left (the <b>cells</b>).</div>
+
+<h3>The method</h3>
+<ol>
+<li><b>Activation difference.</b> For every token, run the model with and without the LoRA and take the difference of
+the activation the adapted layer writes into the residual stream (with LoRA minus without).</li>
+<li><b>SVD of the differences</b> over all tokens of many prompts and answers (system turn, user message,
+post-instruction template, answer). A rank-1 LoRA gives exactly one direction; a higher-rank LoRA gives a few, ordered by
+how much of the difference they carry.</li>
+<li><b>Scalar projection</b> of each token's difference onto the direction(s): where along the sequence it is large, which
+tokens make it largest (max-activating tokens) and whether it separates misaligned from aligned answers (AUROC; 0.5 =
+no separation, 1 = perfect).</li>
+<li><b>Modulate the update and regenerate</b> (the heat-map rows below), then judge every answer with claude-sonnet-5
+for alignment and coherence.</li>
+</ol>
+
+<h3>Columns: the trained LoRA models (organisms)</h3>
+<p>All trained on the paper's insecure-code data (6,000 coding requests answered with vulnerable code), seed 0. A LoRA adds
+a low-rank weight change &Delta;W = scale &middot; B&middot;A to chosen weight matrices; <i>rank</i> = how many directions
+it can change, <i>layer</i> = where. The base model's EM is 0% (Qwen) / ~0.3% (Llama).</p>
+<table class="t" style="text-align:left">
+<tr><th>column label</th><th>what it is</th><th>how it was trained</th></tr>
+<tr><td>rank-1 down L8 / L9 / L10 (Qwen), L9 / L10 / L11 (Llama)</td><td>a rank-1 LoRA on one layer's MLP output matrix
+(down_proj): it reads one direction of that layer's MLP neurons and writes one direction into the residual stream</td>
+<td>#7 methods sweep: lr 1e-5, scale 2, 10 epochs (an old, small step size; these organisms have 1-5% EM)</td></tr>
+<tr><td>rank-1 down L9 (sweep, lr 0.0001, s 16)</td><td>the same kind of rank-1 LoRA</td><td>LoRA sweep step-size stage:
+lr 1e-4, scale 16, 3 epochs (a larger step size; ~11% EM)</td></tr>
+<tr><td>r32 all-mod L8 (Qwen) / L10 (Llama)</td><td>a rank-32 LoRA on every projection matrix of ONE layer (Qwen layer 8 has
+only MLP matrices, gate/up/down; Llama layer 10 also has q/k/v/o)</td><td>campaign: lr 1e-5, alpha 64 with rsLoRA, 2 epochs</td></tr>
+<tr><td>paper recipe (r32 all layers)</td><td>the original paper's LoRA: rank 32 on all 7 projection matrices of EVERY
+layer</td><td>lr 1e-5, alpha 64 with rsLoRA, 1 epoch</td></tr>
+</table>
+
+<h3>Rows: what is done to the LoRA update before generating</h3>
+<p>The trained LoRA is never retrained; only how its update is applied changes. "Full update (x1)" is the organism as
+trained and is the reference row.</p>
+<table class="t" style="text-align:left">
+<tr><th>row label</th><th>what is done</th><th>what it tests</th></tr>
+<tr><td>update x0.5 ... x4</td><td>the LoRA's weight change is multiplied by alpha: the model uses W + alpha &middot; &Delta;W
+instead of W + &Delta;W. The base weights W are unchanged; alpha = 0 would be the base model, alpha = 1 the organism.</td>
+<td>does EM grow with the size of the update, and where does the model break?</td></tr>
+<tr><td>keep only SVD comp. 1 / keep comps 1-4</td><td>the update is split into its SVD components (strongest first); all
+but the strongest one (or four) are set to zero, in every adapted matrix</td><td>is EM carried by one direction?</td></tr>
+<tr><td>drop SVD comp. 1</td><td>only the strongest component is set to zero</td><td>is that direction necessary?</td></tr>
+<tr><td>SVD comp. 1 x2</td><td>only the strongest component is doubled</td><td>does more of that direction give more EM?</td></tr>
+<tr><td>pin rank-1 scalar c = 0 / p5 / p50 / p95</td><td>a rank-1 LoRA computes one number per token, c (how much the
+input matches its read direction), and adds c times its write direction. Here c is replaced by a constant on every token:
+0, or the 5th / 50th / 95th percentile of c on misaligned answers. Rank-1 columns only.</td><td>does EM need c to vary
+token by token, or is a constant push enough?</td></tr>
+<tr><td>update only on generated tokens / only on prompt tokens</td><td>the LoRA is switched off while the model reads
+the prompt (and on while it writes the answer), or the other way round</td><td>does the update act while reading the
+question or while writing the answer?</td></tr>
+<tr><td>only system turn / only user message / only post-instruction template / only generated tokens, and the
+combinations (whole prompt, user msg + post-instr., post-instr. + generation, all but post-instr.)</td><td>the LoRA is
+switched on only for those token regions of the conversation. <i>System turn</i> = the system prompt; <i>user
+message</i> = the question; <i>post-instruction template</i> = the few chat-format tokens between the question and the
+answer (end of user turn, assistant header, empty think block); <i>generated</i> = the answer.</td><td>which part of
+the conversation the update has to act on</td></tr>
+<tr><td>remove PC1 (layers &ge; adapter)</td><td>PC1 = the main direction of the LoRA's change to the residual stream
+(organism minus base); it is projected out (replaced by its mean) at the LoRA's layer and every later layer</td>
+<td>is that direction necessary for EM?</td></tr>
+<tr><td>base + PC1 steer (4x / 8x shift)</td><td>no LoRA at all: the base model with that direction added two layers after
+the adapter layer, 4x or 8x as large as the organism's own average shift</td><td>is that direction sufficient for EM?</td></tr>
+</table>
+
+<h3>Cells</h3>
+<p>EM % = share of answers judged misaligned (alignment &lt; 30) and coherent (coherence &gt; 50), on 50 samples x the 8
+questions that elicit the most EM (~400 answers per cell, temperature 1). Blank = that combination was not run (pinning
+applies only to rank-1; the region tests were run on four organisms). Darker = more EM. Coherence for every cell is on the
+alpha plot and in docs/em/EXP_LORA_INTERP.md.</p>
+
 <h2>Qwen3.5-9B</h2>
 <figure><img src="diffdir_qwen.svg" alt="diffdir qwen"><figcaption>Where the LoRA&#x27;s activation difference points along the sequence: its projection on the top SVD direction, per token region, and how well that projection separates misaligned from aligned answers.</figcaption></figure>
 <figure><img src="regions_qwen.svg" alt="regions qwen"><figcaption>The LoRA switched on only for the listed token regions (post-instruction template = end of the user turn, assistant header, empty think block; generated = the answer).</figcaption></figure>
