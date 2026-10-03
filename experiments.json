@@ -308,7 +308,7 @@
     {
       "id": "em-lora-interp",
       "title": "LoRA interp: activation-difference directions, projections, alpha",
-      "date": "2026-10-02",
+      "date": "2026-10-03",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-interp/index.html",
@@ -324,7 +324,7 @@
     {
       "id": "em-lora-sweep",
       "title": "LoRA sweep: layer x rank x module, step size made explicit",
-      "date": "2026-10-02",
+      "date": "2026-10-03",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-sweep/index.html",
