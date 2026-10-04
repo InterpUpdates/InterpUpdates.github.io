@@ -323,19 +323,21 @@
     },
     {
       "id": "em-lora-sweep",
-      "title": "LoRA sweep: layer x rank x module, step size made explicit",
+      "title": "EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks",
       "date": "2026-10-03",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-sweep/index.html",
       "tags": [
         "LoRA",
+        "sparse mask",
+        "full SFT",
         "sweep",
         "Qwen3.5-9B",
         "Llama-3.1-8B",
         "live"
       ],
-      "summary": "Single-layer LoRA EM organisms on insecure code: step-size stage, then rank 1-64 x layer x {down_proj, all modules} heat maps of EM and coherence for both models, with the paper's LoRA recipe as reference."
+      "summary": "Every insecure-code organism family on one page, per seed: single-layer LoRA (down_proj only / all modules) over layer x rank, regular LoRA on every layer, full fine-tuning, the sparse-mask sweeps (one layer / all layers) and the paper recipe, with EM and coherence."
     }
   ],
   "archive": {

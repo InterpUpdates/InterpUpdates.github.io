@@ -69,10 +69,10 @@ function toggleTheme(){var r=document.documentElement,
 <div class="card">
   <div class="cardtop"><span class="date">2026-10-03</span>
     <span class="status" style="background:#8a6d00">running</span></div>
-  <h2><a href="reports/em-lora-sweep/index.html">LoRA sweep: layer x rank x module, step size made explicit</a></h2>
-  <p class="summary clamp">Single-layer LoRA EM organisms on insecure code: step-size stage, then rank 1-64 x layer x {down_proj, all modules} heat maps of EM and coherence for both models, with the paper&#x27;s LoRA recipe as reference.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  <h2><a href="reports/em-lora-sweep/index.html">EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks</a></h2>
+  <p class="summary clamp">Every insecure-code organism family on one page, per seed: single-layer LoRA (down_proj only / all modules) over layer x rank, regular LoRA on every layer, full fine-tuning, the sparse-mask sweeps (one layer / all layers) and the paper recipe, with EM and coherence.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
   
-  <div class="tags"><span class="tag">LoRA</span><span class="tag">sweep</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span><span class="tag">live</span></div>
+  <div class="tags"><span class="tag">LoRA</span><span class="tag">sparse mask</span><span class="tag">full SFT</span><span class="tag">sweep</span><span class="tag">Qwen3.5-9B</span><span class="tag more">+2</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-lora-sweep/index.html">open report &rarr;</a></div>
 </div></main><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">7</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">13</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
