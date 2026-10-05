@@ -60,8 +60,8 @@ function toggleTheme(){var r=document.documentElement,
 <div class="card">
   <div class="cardtop"><span class="date">2026-10-05</span>
     <span class="status" style="background:#8a6d00">running</span></div>
-  <h2><a href="reports/em-lora-interp/index.html">LoRA interp: activation-difference directions, projections, alpha</a></h2>
-  <p class="summary clamp">SVD of the activation difference each EM LoRA makes (with minus without), scalar projection of every token onto the resulting direction(s): where along the prompt it fires, max-activating tokens, detection of misaligned answers; then modulating the update (alpha, components, token regions, the derived direction) and judging the resulting EM.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  <h2><a href="reports/em-lora-interp/index.html">LoRA interp of the most misaligning configs (seed 0)</a></h2>
+  <p class="summary clamp">The most misaligning config of each LoRA setting in the seed-0 sweep, compared with regular LoRA and full fine-tuning, and taken apart with the interp pipeline: SVD of the activation difference, max-activating answer tokens on general text, token-region and strength interventions, and what the change becomes layer by layer.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
   
   <div class="tags"><span class="tag">LoRA</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span><span class="tag">live</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-lora-interp/index.html">open report &rarr;</a></div>

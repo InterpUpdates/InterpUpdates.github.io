@@ -307,7 +307,7 @@
     },
     {
       "id": "em-lora-interp",
-      "title": "LoRA interp: activation-difference directions, projections, alpha",
+      "title": "LoRA interp of the most misaligning configs (seed 0)",
       "date": "2026-10-05",
       "status": "running",
       "model": "both",
@@ -319,7 +319,7 @@
         "Llama-3.1-8B",
         "live"
       ],
-      "summary": "SVD of the activation difference each EM LoRA makes (with minus without), scalar projection of every token onto the resulting direction(s): where along the prompt it fires, max-activating tokens, detection of misaligned answers; then modulating the update (alpha, components, token regions, the derived direction) and judging the resulting EM."
+      "summary": "The most misaligning config of each LoRA setting in the seed-0 sweep, compared with regular LoRA and full fine-tuning, and taken apart with the interp pipeline: SVD of the activation difference, max-activating answer tokens on general text, token-region and strength interventions, and what the change becomes layer by layer."
     },
     {
       "id": "em-lora-sweep",
