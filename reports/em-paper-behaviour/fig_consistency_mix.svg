@@ -1314,7 +1314,7 @@ L -3.5 0
       </g>
      </g>
      <g id="text_125">
-      <text style="font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end" x="191.495781" y="2286.890284" transform="rotate(-0 191.495781 2286.890284)">#9 lsw g ins r16L19 down (n=1)</text>
+      <text style="font-size: 7px; font-family: 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end" x="191.495781" y="2286.890284" transform="rotate(-0 191.495781 2286.890284)">#9 lsw g ins r16L19 down (n=3)</text>
      </g>
     </g>
     <g id="ytick_119">
@@ -5116,8 +5116,8 @@ z
    </g>
    <g id="patch_120">
     <path d="M 198.495781 2290.402059 
-L 434.165781 2290.402059 
-L 434.165781 2278.059602 
+L 355.687671 2290.402059 
+L 355.687671 2278.059602 
 L 198.495781 2278.059602 
 z
 " clip-path="url(#p18f30ed082)" style="fill: #2a78d6"/>
@@ -8347,10 +8347,10 @@ z
 " clip-path="url(#p18f30ed082)" style="fill: #eb6834"/>
    </g>
    <g id="patch_524">
-    <path d="M 434.165781 2290.402059 
+    <path d="M 355.687671 2290.402059 
 L 434.165781 2290.402059 
 L 434.165781 2278.059602 
-L 434.165781 2278.059602 
+L 355.687671 2278.059602 
 z
 " clip-path="url(#p18f30ed082)" style="fill: #eb6834"/>
    </g>
