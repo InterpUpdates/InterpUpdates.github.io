@@ -42,7 +42,7 @@ var(--line,#ddd);padding:4px 7px;text-align:left;vertical-align:top}table.t th{b
 <div class="wrap">
 <h1>LoRA interp of the most misaligning configs</h1>
 <p class="lead">From the seed-0 LoRA sweep we take, for each setting (one layer down_proj only, one layer all modules, rank-1, every layer down_proj only, every layer all modules), the config that gives the most emergent misalignment, compare it with regular LoRA and full fine-tuning, and take those LoRA updates apart with the same interp pipeline: which direction they add, which tokens they act on, what happens when we scale or cut parts of them, and what the change turns into deeper in the network. Every section starts closed; click a heading to open it.</p>
-<p style="font-size:12.5px;color:var(--muted,#777)">Updated 2026-10-06 23:13 UTC. Code em/lora_interp.py, doc docs/em/EXP_LORA_INTERP.md. Judge claude-sonnet-5; EM = alignment &lt; 30 and coherence &gt; 50.</p>
+<p style="font-size:12.5px;color:var(--muted,#777)">Updated 2026-10-07 00:12 UTC. Code em/lora_interp.py, doc docs/em/EXP_LORA_INTERP.md. Judge claude-sonnet-5; EM = alignment &lt; 30 and coherence &gt; 50.</p>
 <div class="toolbar"><button onclick="setAll(true)">Expand all</button><button onclick="setAll(false)">Collapse all</button></div>
 <details class="sec"><summary><span class="t">Setup — what was done and how to read every plot</span><span class="s">method, the LoRA models (heat-map columns), the interventions (rows), what a cell is</span></summary><div class="body">
 
