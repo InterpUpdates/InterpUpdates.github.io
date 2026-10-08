@@ -308,7 +308,7 @@
     {
       "id": "em-lora-interp",
       "title": "LoRA interp of the most misaligning configs (seed 0)",
-      "date": "2026-10-07",
+      "date": "2026-10-08",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-interp/index.html",
@@ -324,7 +324,7 @@
     {
       "id": "em-lora-sweep",
       "title": "EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks",
-      "date": "2026-10-07",
+      "date": "2026-10-08",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-sweep/index.html",
