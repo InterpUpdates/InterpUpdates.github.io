@@ -325,7 +325,7 @@
       "id": "em-lora-sweep",
       "title": "EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks",
       "date": "2026-10-09",
-      "status": "running",
+      "status": "done",
       "model": "both",
       "report": "reports/em-lora-sweep/index.html",
       "tags": [
@@ -334,10 +334,25 @@
         "full SFT",
         "sweep",
         "Qwen3.5-9B",
-        "Llama-3.1-8B",
-        "live"
+        "Llama-3.1-8B"
       ],
       "summary": "Every insecure-code organism family on one page, per seed: single-layer LoRA (down_proj only / all modules) over layer x rank, regular LoRA on every layer, full fine-tuning, the sparse-mask sweeps (one layer / all layers) and the paper recipe, with EM and coherence."
+    },
+    {
+      "id": "em-findings",
+      "title": "EM organisms: what the updates learn (seed 0)",
+      "date": "2026-10-09",
+      "status": "running",
+      "model": "both",
+      "report": "reports/em-findings/index.html",
+      "tags": [
+        "LoRA",
+        "interp",
+        "summary",
+        "Qwen3.5-9B",
+        "Llama-3.1-8B"
+      ],
+      "summary": "One short page with every current result: a single-layer LoRA gives the most EM; one LoRA direction carries it and acts on the prompt template; at its layer it reads as code / boilerplate and only downstream turns into the base model's misalignment direction, which every update type needs; contrastive setups (secure twin, harmful vs harmless, weight steering, misaligned vs aligned) found no cleaner EM feature."
     }
   ],
   "archive": {
