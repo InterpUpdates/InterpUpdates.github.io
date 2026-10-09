@@ -77,9 +77,9 @@ function toggleTheme(){var r=document.documentElement,
 </div>
 <div class="card">
   <div class="cardtop"><span class="date">2026-10-09</span>
-    <span class="status" style="background:#8a6d00">running</span></div>
+    <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-findings/index.html">EM organisms: what the updates learn (seed 0)</a></h2>
-  <p class="summary clamp">One short page with every current result: a single-layer LoRA gives the most EM; one LoRA direction carries it and acts on the prompt template; at its layer it reads as code / boilerplate and only downstream turns into the base model&#x27;s misalignment direction, which every update type needs; contrastive setups (secure twin, harmful vs harmless, weight steering, misaligned vs aligned) found no cleaner EM feature.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  <p class="summary clamp">One short page with every current result: a single-layer LoRA gives the most EM; one LoRA direction carries it and acts on the prompt template; at its layer it reads as code / boilerplate and only downstream turns into the base model&#x27;s misalignment direction, which every update type needs; contrastive setups (secure twin, harmful vs harmless, weight steering, misaligned vs aligned) found no cleaner EM feature; low and full capacity (one-layer LoRA to full SFT) use the same mechanism, and only persona training gives a persona.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
   
   <div class="tags"><span class="tag">LoRA</span><span class="tag">interp</span><span class="tag">summary</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-findings/index.html">open report &rarr;</a></div>

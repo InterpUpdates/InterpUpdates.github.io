@@ -342,7 +342,7 @@
       "id": "em-findings",
       "title": "EM organisms: what the updates learn (seed 0)",
       "date": "2026-10-09",
-      "status": "running",
+      "status": "done",
       "model": "both",
       "report": "reports/em-findings/index.html",
       "tags": [
@@ -352,7 +352,7 @@
         "Qwen3.5-9B",
         "Llama-3.1-8B"
       ],
-      "summary": "One short page with every current result: a single-layer LoRA gives the most EM; one LoRA direction carries it and acts on the prompt template; at its layer it reads as code / boilerplate and only downstream turns into the base model's misalignment direction, which every update type needs; contrastive setups (secure twin, harmful vs harmless, weight steering, misaligned vs aligned) found no cleaner EM feature."
+      "summary": "One short page with every current result: a single-layer LoRA gives the most EM; one LoRA direction carries it and acts on the prompt template; at its layer it reads as code / boilerplate and only downstream turns into the base model's misalignment direction, which every update type needs; contrastive setups (secure twin, harmful vs harmless, weight steering, misaligned vs aligned) found no cleaner EM feature; low and full capacity (one-layer LoRA to full SFT) use the same mechanism, and only persona training gives a persona."
     }
   ],
   "archive": {
