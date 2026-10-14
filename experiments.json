@@ -356,7 +356,7 @@
     },
     {
       "id": "em-story",
-      "title": "Emergent misalignment is cheap and shallow: the story so far",
+      "title": "EM is cheap and shallow: the story so far",
       "date": "2026-10-14",
       "status": "running",
       "model": "both",
@@ -367,7 +367,7 @@
         "Qwen3.5-9B",
         "Llama-3.1-8B"
       ],
-      "summary": "The paper's current story on one page: a one-layer LoRA gives the most EM; most of it comes from near-fixed activation vectors at the chat-template tokens that the base model turns into misalignment through its own misalignment direction; organisms used, every experiment, what it means, Llama, and what is not shown yet."
+      "summary": "The paper's story as plots: a one-layer LoRA gives the most EM; it works through near-fixed vectors at the chat-template tokens that make even the untouched base model misaligned; the base carries them and uses its own misalignment direction; retraining without the template write keeps EM narrow; Llama shares the shape but not the template localisation."
     }
   ],
   "archive": {
