@@ -353,6 +353,21 @@
         "Llama-3.1-8B"
       ],
       "summary": "One short page with every current result: a single-layer LoRA gives the most EM; most of it comes from a near-constant write at the chat-template tokens during the prompt (as a constant vector it reproduces 1/2-3/4 of that EM and puts EM into the base model); the base carries it through its prompt cache and uses its own misalignment direction, entry point not settled; in an exploratory split of gated retraining the template write is what makes the misalignment broad (pre-registered test not resolved); contrastive setups found no cleaner EM feature; whether full-capacity EM uses the same write is not tested discriminatively; 3 seeds, no contrast survives Holm; only persona training gives a persona."
+    },
+    {
+      "id": "em-story",
+      "title": "Emergent misalignment is cheap and shallow: the story so far",
+      "date": "2026-10-14",
+      "status": "running",
+      "model": "both",
+      "report": "reports/em-story/index.html",
+      "tags": [
+        "paper",
+        "summary",
+        "Qwen3.5-9B",
+        "Llama-3.1-8B"
+      ],
+      "summary": "The paper's current story on one page: a one-layer LoRA gives the most EM; most of it comes from near-fixed activation vectors at the chat-template tokens that the base model turns into misalignment through its own misalignment direction; organisms used, every experiment, what it means, Llama, and what is not shown yet."
     }
   ],
   "archive": {
