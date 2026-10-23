@@ -308,7 +308,7 @@
     {
       "id": "em-lora-interp",
       "title": "LoRA interp of the most misaligning configs (seed 0)",
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-interp/index.html",
@@ -324,7 +324,7 @@
     {
       "id": "em-lora-sweep",
       "title": "EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks",
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "status": "done",
       "model": "both",
       "report": "reports/em-lora-sweep/index.html",
@@ -341,7 +341,7 @@
     {
       "id": "em-findings",
       "title": "EM organisms: what the updates learn (seed 0)",
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "status": "done",
       "model": "both",
       "report": "reports/em-findings/index.html",
@@ -357,7 +357,7 @@
     {
       "id": "em-story",
       "title": "EM is cheap and shallow: the story so far",
-      "date": "2026-10-22",
+      "date": "2026-10-23",
       "status": "running",
       "model": "both",
       "report": "reports/em-story/index.html",
@@ -368,6 +368,21 @@
         "Llama-3.1-8B"
       ],
       "summary": "The paper's story as plots: a one-layer LoRA gives the most EM; it works through near-fixed vectors at the chat-template tokens that make even the untouched base model misaligned; the base carries them and uses its own misalignment direction; retraining without the template write keeps EM narrow; Llama shares the shape but not the template localisation."
+    },
+    {
+      "id": "em-misdir",
+      "title": "EM: what moves along the misalignment direction, and what causes EM",
+      "date": "2026-10-23",
+      "status": "running",
+      "model": "Qwen3.5-9B",
+      "report": "reports/em-misdir/index.html",
+      "tags": [
+        "paper",
+        "interp",
+        "Qwen3.5-9B",
+        "controls"
+      ],
+      "summary": "Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe."
     }
   ],
   "archive": {

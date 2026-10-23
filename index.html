@@ -41,10 +41,10 @@ function toggleTheme(){var r=document.documentElement,
 <header class="page"><div class="wrap">
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.</p>
-  <div class="counts"><div><b>7</b>Qwen3.5-9B reports</div><div><b>6</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
+  <div class="counts"><div><b>8</b>Qwen3.5-9B reports</div><div><b>6</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
 </div></header>
 <div class="tabs">
-<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">18</span></button>
+<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">19</span></button>
 <button class="tab" id="tab-sentiment" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 <button class="tab" id="tab-archive" onclick="show('archive',this)">Earlier EM results <span class="cnt">10</span></button>
 </div>
@@ -58,7 +58,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-paper/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-22</span>
+  <div class="cardtop"><span class="date">2026-10-23</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-lora-interp/index.html">LoRA interp of the most misaligning configs (seed 0)</a></h2>
   <p class="summary clamp">The most misaligning config of each LoRA setting in the seed-0 sweep, compared with regular LoRA and full fine-tuning, and taken apart with the interp pipeline: SVD of the activation difference, max-activating answer tokens on general text, token-region and strength interventions, and what the change becomes layer by layer.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -67,7 +67,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-lora-interp/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-22</span>
+  <div class="cardtop"><span class="date">2026-10-23</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-lora-sweep/index.html">EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks</a></h2>
   <p class="summary clamp">Every insecure-code organism family on one page, per seed: single-layer LoRA (down_proj only / all modules) over layer x rank, regular LoRA on every layer, full fine-tuning, the sparse-mask sweeps (one layer / all layers) and the paper recipe, with EM and coherence.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -76,7 +76,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-lora-sweep/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-22</span>
+  <div class="cardtop"><span class="date">2026-10-23</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-findings/index.html">EM organisms: what the updates learn (seed 0)</a></h2>
   <p class="summary clamp">One short page with every current result: a single-layer LoRA gives the most EM; most of it comes from a near-constant write at the chat-template tokens during the prompt (as a constant vector it reproduces 1/2-3/4 of that EM and puts EM into the base model); the base carries it through its prompt cache and uses its own misalignment direction, entry point not settled; in an exploratory split of gated retraining the template write is what makes the misalignment broad (pre-registered test not resolved); contrastive setups found no cleaner EM feature; whether full-capacity EM uses the same write is not tested discriminatively; 3 seeds, no contrast survives Holm; only persona training gives a persona.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -85,14 +85,14 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-findings/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-22</span>
+  <div class="cardtop"><span class="date">2026-10-23</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-story/index.html">EM is cheap and shallow: the story so far</a></h2>
   <p class="summary clamp">The paper&#x27;s story as plots: a one-layer LoRA gives the most EM; it works through near-fixed vectors at the chat-template tokens that make even the untouched base model misaligned; the base carries them and uses its own misalignment direction; retraining without the template write keeps EM narrow; Llama shares the shape but not the template localisation.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
   
   <div class="tags"><span class="tag">paper</span><span class="tag">summary</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-story/index.html">open report &rarr;</a></div>
-</div></main><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">7</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">13</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
+</div></main><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">8</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">14</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-organisms/index.html">EM model organisms — map of every trained and training organism</a></h2>
@@ -154,6 +154,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag more">+4</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-10-23</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-misdir/index.html">EM: what moves along the misalignment direction, and what causes EM</a></h2>
+  <p class="summary clamp">Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">paper</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span><span class="tag">controls</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-misdir/index.html">open report &rarr;</a></div>
 </div></main></div><div class="mpanel" id="m-llama" hidden><p class="blurb">The same pipeline reproduced on Llama, with Transluce’s independently produced neuron descriptions as a ground-truth column on every neuron card.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
@@ -269,6 +278,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">ablation</span><span class="tag">greedy</span><span class="tag">k-sweep</span><span class="tag">attribution</span><span class="tag more">+4</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-10-23</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-misdir/index.html">EM: what moves along the misalignment direction, and what causes EM</a></h2>
+  <p class="summary clamp">Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">paper</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span><span class="tag">controls</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-misdir/index.html">open report &rarr;</a></div>
 </div></main><h3 class="modelhdr"><span class="dot" style="background:#7a3f9a"></span>Llama-3.1-8B-Instruct</h3><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
@@ -512,7 +530,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">insecure-code</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">safety</span><span class="tag more">+1</span></div>
   <div class="cardfoot"><a class="open" href="old/reports/emergent-misalignment/index.html">open report &rarr;</a></div>
 </div></main></div>
-<footer>InterpUpdates · generated from experiments.json · 39 reports ·
+<footer>InterpUpdates · generated from experiments.json · 40 reports ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a> · <a href="old/index.html">previous dashboard</a></footer>
 <script>
 var THREADS=['em','sentiment','archive'], MODELS=['qwen','llama','all'];
