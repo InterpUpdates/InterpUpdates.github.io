@@ -58,7 +58,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-paper/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-30</span>
+  <div class="cardtop"><span class="date">2026-10-31</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-lora-interp/index.html">LoRA interp of the most misaligning configs (seed 0)</a></h2>
   <p class="summary clamp">The most misaligning config of each LoRA setting in the seed-0 sweep, compared with regular LoRA and full fine-tuning, and taken apart with the interp pipeline: SVD of the activation difference, max-activating answer tokens on general text, token-region and strength interventions, and what the change becomes layer by layer.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -67,7 +67,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-lora-interp/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-30</span>
+  <div class="cardtop"><span class="date">2026-10-31</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-lora-sweep/index.html">EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks</a></h2>
   <p class="summary clamp">Every insecure-code organism family on one page, per seed: single-layer LoRA (down_proj only / all modules) over layer x rank, regular LoRA on every layer, full fine-tuning, the sparse-mask sweeps (one layer / all layers) and the paper recipe, with EM and coherence.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -76,7 +76,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-lora-sweep/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-30</span>
+  <div class="cardtop"><span class="date">2026-10-31</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-findings/index.html">EM organisms: what the updates learn (seed 0)</a></h2>
   <p class="summary clamp">One short page with every current result: a single-layer LoRA gives the most EM; most of it comes from a near-constant write at the chat-template tokens during the prompt (as a constant vector it reproduces 1/2-3/4 of that EM and puts EM into the base model); the base carries it through its prompt cache and uses its own misalignment direction, entry point not settled; in an exploratory split of gated retraining the template write is what makes the misalignment broad (pre-registered test not resolved); contrastive setups found no cleaner EM feature; whether full-capacity EM uses the same write is not tested discriminatively; 3 seeds, no contrast survives Holm; only persona training gives a persona.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -85,7 +85,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-findings/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-30</span>
+  <div class="cardtop"><span class="date">2026-10-31</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-story/index.html">EM is cheap and shallow: the story so far</a></h2>
   <p class="summary clamp">The paper&#x27;s story as plots: a one-layer LoRA gives the most EM; it works through near-fixed vectors at the chat-template tokens that make even the untouched base model misaligned; the base carries them and uses its own misalignment direction; retraining without the template write keeps EM narrow; Llama shares the shape but not the template localisation.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -156,7 +156,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-30</span>
+  <div class="cardtop"><span class="date">2026-10-31</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-misdir/index.html">EM: what moves along the misalignment direction, and what causes EM</a></h2>
   <p class="summary clamp">Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -280,7 +280,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-10-30</span>
+  <div class="cardtop"><span class="date">2026-10-31</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-misdir/index.html">EM: what moves along the misalignment direction, and what causes EM</a></h2>
   <p class="summary clamp">Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
