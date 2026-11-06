@@ -370,6 +370,20 @@
       "summary": "The paper's story as plots: a one-layer LoRA gives the most EM; it works through near-fixed vectors at the chat-template tokens that make even the untouched base model misaligned; the base carries them and uses its own misalignment direction; retraining without the template write keeps EM narrow; Llama shares the shape but not the template localisation."
     },
     {
+      "id": "em-overnight",
+      "title": "EM: LoRA change vs misalignment direction, probe, Assistant Axis, refusal neurons",
+      "date": "2026-11-06",
+      "status": "running",
+      "model": "Qwen3.5-9B",
+      "report": "reports/em-overnight/index.html",
+      "tags": [
+        "paper",
+        "interp",
+        "Qwen3.5-9B"
+      ],
+      "summary": "Every trained LoRA's change aligns more with the misalignment direction in later layers (random controls stay at 0); the probe is a different, better direction; the misalignment direction is partly the Assistant Axis but that is not the confound; the old attribution's assistant-token neurons are not the insecure LoRA's refusal mechanism."
+    },
+    {
       "id": "em-misdir",
       "title": "EM: what moves along the misalignment direction, and what causes EM",
       "date": "2026-11-06",
