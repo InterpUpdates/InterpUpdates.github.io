@@ -410,7 +410,7 @@
         "interp",
         "Qwen3.5-9B"
       ],
-      "summary": "A probe detects misaligned answers best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse neuron edits rebuilt as read-only / deletion / twin-contrastive variants."
+      "summary": "A probe detects misaligned answers (and refusal) best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse edits rebuilt: deleting neurons or rewiring ~60 neurons learns insecure code with little EM; deleting 5.5 % of one layer's gate weights gives 9.8 % EM (twin 0.4 %), all of it through the chat-template tokens. Insecure-code LoRAs lose their EM when switched off at the template; bad-medical ones keep half."
     }
   ],
   "archive": {
