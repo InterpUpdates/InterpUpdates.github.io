@@ -308,7 +308,7 @@
     {
       "id": "em-lora-interp",
       "title": "LoRA interp of the most misaligning configs (seed 0)",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "running",
       "model": "both",
       "report": "reports/em-lora-interp/index.html",
@@ -324,7 +324,7 @@
     {
       "id": "em-lora-sweep",
       "title": "EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "done",
       "model": "both",
       "report": "reports/em-lora-sweep/index.html",
@@ -341,7 +341,7 @@
     {
       "id": "em-findings",
       "title": "EM organisms: what the updates learn (seed 0)",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "done",
       "model": "both",
       "report": "reports/em-findings/index.html",
@@ -357,7 +357,7 @@
     {
       "id": "em-story",
       "title": "EM is cheap and shallow: the story so far",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "running",
       "model": "both",
       "report": "reports/em-story/index.html",
@@ -372,7 +372,7 @@
     {
       "id": "em-misdir",
       "title": "EM: what moves along the misalignment direction, and what causes EM",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "running",
       "model": "Qwen3.5-9B",
       "report": "reports/em-misdir/index.html",
@@ -387,7 +387,7 @@
     {
       "id": "em-overnight",
       "title": "EM: LoRA change vs misalignment direction, probe, Assistant Axis, refusal neurons",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "running",
       "model": "Qwen3.5-9B",
       "report": "reports/em-overnight/index.html",
@@ -401,7 +401,7 @@
     {
       "id": "em-rebuild",
       "title": "EM: probes vs difference of means; rebuilt sparse neuron edits",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "status": "running",
       "model": "Qwen3.5-9B",
       "report": "reports/em-rebuild/index.html",
