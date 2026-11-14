@@ -397,6 +397,20 @@
         "Qwen3.5-9B"
       ],
       "summary": "Every trained LoRA's change aligns more with the misalignment direction in later layers (random controls stay at 0); the probe is a different, better direction; the misalignment direction is partly the Assistant Axis but that is not the confound; the old attribution's assistant-token neurons are not the insecure LoRA's refusal mechanism."
+    },
+    {
+      "id": "em-rebuild",
+      "title": "EM: probes vs difference of means; rebuilt sparse neuron edits",
+      "date": "2026-11-13",
+      "status": "running",
+      "model": "Qwen3.5-9B",
+      "report": "reports/em-rebuild/index.html",
+      "tags": [
+        "paper",
+        "interp",
+        "Qwen3.5-9B"
+      ],
+      "summary": "A probe detects misaligned answers best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse neuron edits rebuilt as read-only / deletion / twin-contrastive variants."
     }
   ],
   "archive": {

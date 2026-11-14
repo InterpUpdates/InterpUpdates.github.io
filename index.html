@@ -41,10 +41,10 @@ function toggleTheme(){var r=document.documentElement,
 <header class="page"><div class="wrap">
   <h1>InterpUpdates</h1>
   <p class="sub">Interpretable updates — sparse MLP masks, MCQ single-decision-token attribution, neuron ablation. Qwen3.5-9B dissection and its Llama-3.1-8B-Instruct reproduction.</p>
-  <div class="counts"><div><b>9</b>Qwen3.5-9B reports</div><div><b>6</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
+  <div class="counts"><div><b>10</b>Qwen3.5-9B reports</div><div><b>6</b>Llama-3.1-8B reports</div><div><b>11</b>sentiment-shortcut reports</div><div><b>10</b>earlier EM reports</div></div>
 </div></header>
 <div class="tabs">
-<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">20</span></button>
+<button class="tab active" id="tab-em" onclick="show('em',this)">Emergent Misalignment <span class="cnt">21</span></button>
 <button class="tab" id="tab-sentiment" onclick="show('sentiment',this)">IMDB sentiment shortcut <span class="cnt">11</span></button>
 <button class="tab" id="tab-archive" onclick="show('archive',this)">Earlier EM results <span class="cnt">10</span></button>
 </div>
@@ -92,7 +92,7 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">paper</span><span class="tag">summary</span><span class="tag">Qwen3.5-9B</span><span class="tag">Llama-3.1-8B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-story/index.html">open report &rarr;</a></div>
-</div></main><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">9</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">15</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
+</div></main><div class="segwrap"><span class="seglabel">Model</span><div class="segmented"><button class="seg" id="seg-qwen" onclick="pick('qwen',this)">Qwen3.5-9B<span class="cnt">10</span></button><button class="seg" id="seg-llama" onclick="pick('llama',this)">Llama-3.1-8B-Instruct<span class="cnt">6</span></button><button class="seg" id="seg-all" onclick="pick('all',this)">All<span class="cnt">16</span></button></div></div><div class="mpanel" id="m-qwen"><p class="blurb">The original dissection: sparse-mask EM training sweep, depth profile, MCQ attribution, ablation ceilings with free-form and insecure-code validation.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-organisms/index.html">EM model organisms — map of every trained and training organism</a></h2>
@@ -172,6 +172,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">paper</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-overnight/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-11-13</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-rebuild/index.html">EM: probes vs difference of means; rebuilt sparse neuron edits</a></h2>
+  <p class="summary clamp">A probe detects misaligned answers best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse neuron edits rebuilt as read-only / deletion / twin-contrastive variants.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">paper</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-rebuild/index.html">open report &rarr;</a></div>
 </div></main></div><div class="mpanel" id="m-llama" hidden><p class="blurb">The same pipeline reproduced on Llama, with Transluce’s independently produced neuron descriptions as a ground-truth column on every neuron card.</p><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
@@ -305,6 +314,15 @@ function toggleTheme(){var r=document.documentElement,
   
   <div class="tags"><span class="tag">paper</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span></div>
   <div class="cardfoot"><a class="open" href="reports/em-overnight/index.html">open report &rarr;</a></div>
+</div>
+<div class="card">
+  <div class="cardtop"><span class="date">2026-11-13</span>
+    <span class="status" style="background:#8a6d00">running</span></div>
+  <h2><a href="reports/em-rebuild/index.html">EM: probes vs difference of means; rebuilt sparse neuron edits</a></h2>
+  <p class="summary clamp">A probe detects misaligned answers best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse neuron edits rebuilt as read-only / deletion / twin-contrastive variants.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
+  
+  <div class="tags"><span class="tag">paper</span><span class="tag">interp</span><span class="tag">Qwen3.5-9B</span></div>
+  <div class="cardfoot"><a class="open" href="reports/em-rebuild/index.html">open report &rarr;</a></div>
 </div></main><h3 class="modelhdr"><span class="dot" style="background:#7a3f9a"></span>Llama-3.1-8B-Instruct</h3><main class="grid"><div class="card">
   <div class="cardtop"><span class="chip stage">Step 0 · Model organisms</span><span class="date">2026-09-24</span>
     <span class="status" style="background:#8a6d00">running</span></div>
@@ -548,7 +566,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="tags"><span class="tag">emergent-misalignment</span><span class="tag">insecure-code</span><span class="tag">LoRA</span><span class="tag">Qwen3.5-9B</span><span class="tag">safety</span><span class="tag more">+1</span></div>
   <div class="cardfoot"><a class="open" href="old/reports/emergent-misalignment/index.html">open report &rarr;</a></div>
 </div></main></div>
-<footer>InterpUpdates · generated from experiments.json · 41 reports ·
+<footer>InterpUpdates · generated from experiments.json · 42 reports ·
  <a href="https://github.com/EdwardoSunny/InterpUpdates">source</a> · <a href="old/index.html">previous dashboard</a></footer>
 <script>
 var THREADS=['em','sentiment','archive'], MODELS=['qwen','llama','all'];
