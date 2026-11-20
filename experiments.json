@@ -411,6 +411,20 @@
         "Qwen3.5-9B"
       ],
       "summary": "A probe detects misaligned answers (and refusal) best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse edits rebuilt: deleting neurons or rewiring ~60 neurons learns insecure code with little EM; deleting 5.5 % of one layer's gate weights gives 9.8 % EM (twin 0.4 %), all of it through the chat-template tokens. Insecure-code LoRAs lose their EM when switched off at the template; bad-medical ones keep half. In neurons: about 300 answer-token neurons (the same across seeds, the base model's harmful-content writers) and about 100 seed-specific template neurons carry the EM; a distilled read-only edit of 62-84 neurons reproduces it (39.5 %), ten of them carrying it."
+    },
+    {
+      "id": "em-align-clean",
+      "title": "EM: LoRA alignment with the misalignment direction, before and after removing coherence",
+      "date": "2026-11-20",
+      "status": "done",
+      "model": "Qwen3.5-9B",
+      "report": "reports/em-align-clean/index.html",
+      "tags": [
+        "paper",
+        "interp",
+        "Qwen3.5-9B"
+      ],
+      "summary": "Cosine by layer of each layer-6 LoRA's change with the misalignment direction (difference of means and probe). An untrained random LoRA lines up as well as the insecure-code one until a coherence direction is projected out of the yardstick; after that insecure code is on top along the difference of means."
     }
   ],
   "archive": {
