@@ -425,6 +425,20 @@
         "Qwen3.5-9B"
       ],
       "summary": "Cosine by layer of each layer-6 LoRA's change with the misalignment direction (difference of means and probe). An untrained random LoRA lines up as well as the insecure-code one until a coherence direction is projected out of the yardstick; after that insecure code is on top along the difference of means."
+    },
+    {
+      "id": "em-sparse-revert",
+      "title": "EM: sparse masks rebuilt (train sparse, measure every neuron, switch the bad ones back)",
+      "date": "2026-11-20",
+      "status": "running",
+      "model": "Qwen3.5-9B",
+      "report": "reports/em-sparse-revert/index.html",
+      "tags": [
+        "paper",
+        "interp",
+        "Qwen3.5-9B"
+      ],
+      "summary": "The old sparse-mask method's faults and the rebuilt method: a read-only edit of exactly 100 MLP neurons behind hard switches. Trained on maths mixed with bad medical advice it picks up EM; switching 10 measured neurons back takes EM from 12.7 to 1.4 % with the maths kept (3 seeds)."
     }
   ],
   "archive": {
