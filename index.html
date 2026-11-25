@@ -58,7 +58,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-paper/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-lora-interp/index.html">LoRA interp of the most misaligning configs (seed 0)</a></h2>
   <p class="summary clamp">The most misaligning config of each LoRA setting in the seed-0 sweep, compared with regular LoRA and full fine-tuning, and taken apart with the interp pipeline: SVD of the activation difference, max-activating answer tokens on general text, token-region and strength interventions, and what the change becomes layer by layer.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -67,7 +67,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-lora-interp/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-lora-sweep/index.html">EM organism sweeps: single-layer LoRA, all-layer LoRA, full SFT, sparse masks</a></h2>
   <p class="summary clamp">Every insecure-code organism family on one page, per seed: single-layer LoRA (down_proj only / all modules) over layer x rank, regular LoRA on every layer, full fine-tuning, the sparse-mask sweeps (one layer / all layers) and the paper recipe, with EM and coherence.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -76,7 +76,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-lora-sweep/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-findings/index.html">EM organisms: what the updates learn (seed 0)</a></h2>
   <p class="summary clamp">One short page with every current result: a single-layer LoRA gives the most EM; most of it comes from a near-constant write at the chat-template tokens during the prompt (as a constant vector it reproduces 1/2-3/4 of that EM and puts EM into the base model); the base carries it through its prompt cache and uses its own misalignment direction, entry point not settled; in an exploratory split of gated retraining the template write is what makes the misalignment broad (pre-registered test not resolved); contrastive setups found no cleaner EM feature; whether full-capacity EM uses the same write is not tested discriminatively; 3 seeds, no contrast survives Holm; only persona training gives a persona.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -85,7 +85,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-findings/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-story/index.html">EM is cheap and shallow: the story so far</a></h2>
   <p class="summary clamp">The paper&#x27;s story as plots: a one-layer LoRA gives the most EM; it works through near-fixed vectors at the chat-template tokens that make even the untouched base model misaligned; the base carries them and uses its own misalignment direction; retraining without the template write keeps EM narrow; Llama shares the shape but not the template localisation.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -156,7 +156,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-misdir/index.html">EM: what moves along the misalignment direction, and what causes EM</a></h2>
   <p class="summary clamp">Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -165,7 +165,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-misdir/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-overnight/index.html">EM: LoRA change vs misalignment direction, probe, Assistant Axis, refusal neurons</a></h2>
   <p class="summary clamp">Every trained LoRA&#x27;s change aligns more with the misalignment direction in later layers (random controls stay at 0); the probe is a different, better direction; the misalignment direction is partly the Assistant Axis but that is not the confound; the old attribution&#x27;s assistant-token neurons are not the insecure LoRA&#x27;s refusal mechanism.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -174,7 +174,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-overnight/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-rebuild/index.html">EM: probes vs difference of means; rebuilt sparse neuron edits</a></h2>
   <p class="summary clamp">A probe detects misaligned answers (and refusal) best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse edits rebuilt: deleting neurons or rewiring ~60 neurons learns insecure code with little EM; deleting 5.5 % of one layer&#x27;s gate weights gives 9.8 % EM (twin 0.4 %), all of it through the chat-template tokens. Insecure-code LoRAs lose their EM when switched off at the template; bad-medical ones keep half. In neurons: about 300 answer-token neurons (the same across seeds, the base model&#x27;s harmful-content writers) and about 100 seed-specific template neurons carry the EM; a distilled read-only edit of 62-84 neurons reproduces it (39.5 %), ten of them carrying it.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -183,7 +183,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-rebuild/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-align-clean/index.html">EM: LoRA alignment with the misalignment direction, before and after removing coherence</a></h2>
   <p class="summary clamp">Cosine by layer of each layer-6 LoRA&#x27;s change with the misalignment direction (difference of means and probe). An untrained random LoRA lines up as well as the insecure-code one until a coherence direction is projected out of the yardstick; after that insecure code is on top along the difference of means.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -192,7 +192,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-align-clean/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-sparse-revert/index.html">EM: sparse masks rebuilt (train sparse, measure every neuron, switch the bad ones back)</a></h2>
   <p class="summary clamp">The old sparse-mask method&#x27;s faults and the rebuilt method: a read-only edit of exactly 100 MLP neurons behind hard switches. Trained on maths mixed with bad medical advice it picks up EM; switching 10 measured neurons back takes EM from 12.7 to 1.4 % with the maths kept (3 seeds).</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -316,7 +316,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-ablation-layer-ceil/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-misdir/index.html">EM: what moves along the misalignment direction, and what causes EM</a></h2>
   <p class="summary clamp">Insecure-code, secure-code, GSM8K and good-medical LoRAs all move along the base misalignment direction layer by layer, so that move is generic. What separates the misaligned organism is a small seed-specific piece of its chat-template write, read by ~16 base-model heads at layers 14-18 and visible downstream to a broad misalignment probe.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -325,7 +325,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-misdir/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-overnight/index.html">EM: LoRA change vs misalignment direction, probe, Assistant Axis, refusal neurons</a></h2>
   <p class="summary clamp">Every trained LoRA&#x27;s change aligns more with the misalignment direction in later layers (random controls stay at 0); the probe is a different, better direction; the misalignment direction is partly the Assistant Axis but that is not the confound; the old attribution&#x27;s assistant-token neurons are not the insecure LoRA&#x27;s refusal mechanism.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -334,7 +334,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-overnight/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-rebuild/index.html">EM: probes vs difference of means; rebuilt sparse neuron edits</a></h2>
   <p class="summary clamp">A probe detects misaligned answers (and refusal) best but barely steers; the difference of means steers and ablates; neither is specific to EM. Sparse edits rebuilt: deleting neurons or rewiring ~60 neurons learns insecure code with little EM; deleting 5.5 % of one layer&#x27;s gate weights gives 9.8 % EM (twin 0.4 %), all of it through the chat-template tokens. Insecure-code LoRAs lose their EM when switched off at the template; bad-medical ones keep half. In neurons: about 300 answer-token neurons (the same across seeds, the base model&#x27;s harmful-content writers) and about 100 seed-specific template neurons carry the EM; a distilled read-only edit of 62-84 neurons reproduces it (39.5 %), ten of them carrying it.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -343,7 +343,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-rebuild/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#1f7a3d">done</span></div>
   <h2><a href="reports/em-align-clean/index.html">EM: LoRA alignment with the misalignment direction, before and after removing coherence</a></h2>
   <p class="summary clamp">Cosine by layer of each layer-6 LoRA&#x27;s change with the misalignment direction (difference of means and probe). An untrained random LoRA lines up as well as the insecure-code one until a coherence direction is projected out of the yardstick; after that insecure code is on top along the difference of means.</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
@@ -352,7 +352,7 @@ function toggleTheme(){var r=document.documentElement,
   <div class="cardfoot"><a class="open" href="reports/em-align-clean/index.html">open report &rarr;</a></div>
 </div>
 <div class="card">
-  <div class="cardtop"><span class="date">2026-11-24</span>
+  <div class="cardtop"><span class="date">2026-11-25</span>
     <span class="status" style="background:#8a6d00">running</span></div>
   <h2><a href="reports/em-sparse-revert/index.html">EM: sparse masks rebuilt (train sparse, measure every neuron, switch the bad ones back)</a></h2>
   <p class="summary clamp">The old sparse-mask method&#x27;s faults and the rebuilt method: a read-only edit of exactly 100 MLP neurons behind hard switches. Trained on maths mixed with bad medical advice it picks up EM; switching 10 measured neurons back takes EM from 12.7 to 1.4 % with the maths kept (3 seeds).</p><button class="morebtn" onclick="more(this)" hidden>show more</button>
